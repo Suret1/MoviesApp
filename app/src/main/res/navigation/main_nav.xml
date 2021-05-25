@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/main_nav"
+    app:startDestination="@id/movies">
+
+    <fragment
+        android:id="@+id/movies"
+        android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
+        android:label="MoviesFragment" />
+    <fragment
+        android:id="@+id/favourite"
+        android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
+        android:label="FavouritesFragment" />
+</navigation>
