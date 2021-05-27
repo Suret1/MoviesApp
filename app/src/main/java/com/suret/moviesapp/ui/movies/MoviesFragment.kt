@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.google.android.material.snackbar.Snackbar
+import com.suret.moviesapp.R
 import com.suret.moviesapp.data.api.API
 import com.suret.moviesapp.data.db.MovieDatabase
 import com.suret.moviesapp.data.domain.MovieRepository
@@ -48,6 +50,7 @@ class MoviesFragment : Fragment() {
             .addInterceptor(logging)
             .build()
 
+
         val retrofit = Retrofit.Builder()
             .baseUrl("https://api.themoviedb.org/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -61,10 +64,23 @@ class MoviesFragment : Fragment() {
         movieViewModel =
             ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
 
+        val bundle = Bundle()
+
+
         movieAdapter = TrendMovieListAdapter()
 
         moviesBinding.apply {
             trendMoviesRV.adapter = movieAdapter
+
+        }
+
+        movieAdapter.setOnClickListener { movie ->
+            movie.let {
+                bundle.apply {
+                    putParcelable("movieModel", movie)
+                }
+            }
+            view.findNavController().navigate(R.id.action_to_movieDetailsFragment, bundle)
         }
 
         moviesBinding.apply {

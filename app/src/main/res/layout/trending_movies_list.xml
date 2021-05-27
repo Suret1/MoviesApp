@@ -13,8 +13,8 @@
 
 
         <com.google.android.material.card.MaterialCardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:cardBackgroundColor="#20202D"
             app:cardCornerRadius="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -30,10 +30,10 @@
 
                 <ImageView
                     android:id="@+id/movie_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="260dp"
                     android:scaleType="centerCrop"
-                    app:layout_constraintBottom_toTopOf="@id/frame_layout_of_genre"
+                    app:layout_constraintBottom_toBottomOf="@id/frame_layout_of_genre"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -100,7 +100,7 @@
                                 android:layout_gravity="center"
                                 android:layout_marginHorizontal="8dp"
                                 android:fontFamily="@font/gilroy_light"
-                                android:text="6.7"
+                                tools:text="6.7"
                                 android:textColor="@color/white"
                                 android:textSize="8sp"
                                 app:layout_constraintBottom_toBottomOf="parent"

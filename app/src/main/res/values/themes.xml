@@ -2,7 +2,7 @@
     <!-- Base application theme. -->
     <style name="Theme.MoviesApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimary">@color/background_color</item>
         <item name="colorPrimaryVariant">@color/background_color</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
@@ -17,6 +17,10 @@
 
     <style name="BottomNavTextStyle">
         <item name="android:fontFamily">@font/roboto_slab_bold</item>
+    </style>
+
+    <style name="CollapsingTitleStyle">
+        <item name="android:fontFamily">@font/gilroy_bold</item>
     </style>
 
 </resources>

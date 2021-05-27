@@ -31,10 +31,14 @@ class TrendMovieListAdapter :
     val differ = AsyncListDiffer(this, differCallBack)
 
 
-    inner class TrendViewHolder(private val trendingMoviesListBinding: TrendingMoviesListBinding) :
+    inner class TrendViewHolder(
+        private val trendingMoviesListBinding: TrendingMoviesListBinding,
+        setOnItemClickListener: ((TrendingMoviesModel) -> Unit)?
+    ) :
         RecyclerView.ViewHolder(trendingMoviesListBinding.root) {
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
+
             if (trendingMoviesModel?.title == null) {
                 trendingMoviesListBinding.movieTitle.text = trendingMoviesModel?.name
                 if (trendingMoviesModel?.name == null) {
@@ -53,6 +57,11 @@ class TrendMovieListAdapter :
 
             trendingMoviesListBinding.ratingTV.text = trendingMoviesModel?.vote_average?.toString()
 
+            trendingMoviesListBinding.root.setOnClickListener {
+                trendingMoviesModel?.let { movies ->
+                    setOnItemClick?.invoke(movies)
+                }
+            }
 
         }
 
@@ -62,7 +71,7 @@ class TrendMovieListAdapter :
         val layoutInflater = LayoutInflater.from(parent.context)
         val trendingMoviesListBinding =
             TrendingMoviesListBinding.inflate(layoutInflater, parent, false)
-        return TrendViewHolder(trendingMoviesListBinding)
+        return TrendViewHolder(trendingMoviesListBinding, setOnItemClick)
 
     }
 
@@ -71,5 +80,12 @@ class TrendMovieListAdapter :
     }
 
     override fun getItemCount(): Int = differ.currentList.size
+
+    private var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
+
+    fun setOnClickListener(listener: (TrendingMoviesModel) -> Unit) {
+        setOnItemClick = listener
+    }
+
 
 }

@@ -2,6 +2,7 @@ plugins {
     id 'com.android.application'
     id 'kotlin-android'
     id 'kotlin-kapt'
+    id 'kotlin-parcelize'
 }
 
 android {
@@ -31,7 +32,7 @@ android {
     kotlinOptions {
         jvmTarget = '1.8'
     }
-    buildFeatures{
+    buildFeatures {
         dataBinding true
     }
 }
@@ -82,8 +83,11 @@ dependencies {
     //Coil
     implementation("io.coil-kt:coil:1.2.1")
 
+    //RatingBar
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
 
+    //Palette API
+    implementation 'androidx.palette:palette-ktx:1.0.0'
 
 
 }

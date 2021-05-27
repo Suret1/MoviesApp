@@ -4,12 +4,22 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/movies">
 
+    <action
+        android:id="@+id/action_to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment" />
+
     <fragment
         android:id="@+id/movies"
         android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
-        android:label="MoviesFragment" />
+        android:label="MoviesFragment">
+
+    </fragment>
     <fragment
         android:id="@+id/favourite"
         android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
         android:label="FavouritesFragment" />
+    <fragment
+        android:id="@+id/movieDetailsFragment"
+        android:name="com.suret.moviesapp.ui.moviedetails.MovieDetailsFragment"
+        android:label="MovieDetailsFragment" />
 </navigation>

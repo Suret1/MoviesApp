@@ -16,8 +16,8 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
         class Success(val result: List<TrendingMoviesModel>) : Event()
         class Failure(val errorText: String) : Event()
         object Loading : Event()
-    }
 
+    }
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
 

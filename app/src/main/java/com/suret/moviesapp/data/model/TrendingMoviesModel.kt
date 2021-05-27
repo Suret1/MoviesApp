@@ -1,8 +1,11 @@
 package com.suret.moviesapp.data.model
 
+import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 @Entity(tableName = "movie_table")
 data class TrendingMoviesModel(
     val backdrop_path: String? = null,
@@ -20,4 +23,4 @@ data class TrendingMoviesModel(
     val title: String? = null,
     val vote_average: Double? = null,
     val vote_count: Int? = null
-)
+) : Parcelable
