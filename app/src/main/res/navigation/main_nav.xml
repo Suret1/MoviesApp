@@ -6,7 +6,11 @@
 
     <action
         android:id="@+id/action_to_movieDetailsFragment"
-        app:destination="@id/movieDetailsFragment" />
+        app:destination="@id/movieDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
 
     <fragment
         android:id="@+id/movies"

@@ -64,9 +64,8 @@
                     android:ellipsize="end"
                     android:fontFamily="@font/gilroy_bold"
                     android:maxLines="2"
-                    android:text="Avengers: End Game"
-                    android:textSize="36sp" />
-
+                    android:textSize="36sp"
+                    tools:text="Avengers: End Game" />
 
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -183,6 +182,13 @@
 
                 </LinearLayout>
 
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/cast_list_layout" />
             </LinearLayout>
 
         </androidx.core.widget.NestedScrollView>
