@@ -79,8 +79,6 @@ class MovieDetailsFragment() : Fragment() {
             ratingTV.text = moviesModel.vote_average.toString()
             storyLineTV.text = moviesModel.overview
 
-
-
             appbarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
                 if (appBarLayout != null) {
                     if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {

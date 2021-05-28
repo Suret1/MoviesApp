@@ -1,5 +1,7 @@
 package com.suret.moviesapp.ui.movies
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.api.API
@@ -24,13 +28,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class MoviesFragment : Fragment() {
     private lateinit var moviesBinding: FragmentMoviesBinding
     private lateinit var movieViewModel: MovieViewModel
     private lateinit var movieViewModelFactory: MovieViewModelFactory
     private lateinit var movieRepository: MovieRepository
     private lateinit var movieAdapter: TrendMovieListAdapter
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -42,6 +46,7 @@ class MoviesFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         val logging = HttpLoggingInterceptor()
         logging.level = HttpLoggingInterceptor.Level.BODY
@@ -68,6 +73,8 @@ class MoviesFragment : Fragment() {
 
 
         movieAdapter = TrendMovieListAdapter()
+
+        movieAdapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         moviesBinding.apply {
             trendMoviesRV.adapter = movieAdapter
@@ -109,5 +116,7 @@ class MoviesFragment : Fragment() {
         }
 
     }
+
+
 
 }

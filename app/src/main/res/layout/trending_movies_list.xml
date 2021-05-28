@@ -37,7 +37,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    tools:srcCompat="@drawable/sad" />
+                    tools:srcCompat="@drawable/movie_poster" />
 
                 <FrameLayout
                     android:id="@+id/frame_layout_of_genre"
