@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -48,81 +47,61 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
 
-                    <LinearLayout
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
+                        android:layout_height="wrap_content">
+
+                        <com.willy.ratingbar.ScaleRatingBar
+                            android:id="@+id/ratingBar"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginHorizontal="8dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toStartOf="@id/ratingTV"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:srb_clearRatingEnabled="false"
+                            app:srb_clickable="false"
+                            app:srb_drawableEmpty="@drawable/star_empty"
+                            app:srb_drawableFilled="@drawable/star_full"
+                            app:srb_isIndicator="false"
+                            app:srb_minimumStars="1"
+                            app:srb_numStars="10"
+                            tools:srb_rating="6.7"
+                            app:srb_scrollable="false"
+                            app:srb_starHeight="10dp"
+                            app:srb_starPadding="2dp"
+                            app:srb_starWidth="10dp"
+                            app:srb_stepSize="0.1" />
+
 
                         <TextView
-                            android:id="@+id/genres_TV"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="6dp"
-                            android:ellipsize="end"
-                            android:fontFamily="@font/gilroy_light"
-                            android:maxLines="1"
-                            android:text="Action, Adventure, Drama"
-                            android:textColor="@color/main_red"
-                            android:textSize="10sp" />
-
-                        <androidx.constraintlayout.widget.ConstraintLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content">
-
-                            <com.willy.ratingbar.ScaleRatingBar
-                                android:id="@+id/ratingBar"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginHorizontal="8dp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toStartOf="@id/ratingTV"
-                                app:layout_constraintStart_toStartOf="parent"
-                                app:layout_constraintTop_toTopOf="parent"
-                                app:srb_clearRatingEnabled="false"
-                                app:srb_clickable="false"
-                                app:srb_drawableEmpty="@drawable/star_empty"
-                                app:srb_drawableFilled="@drawable/star_full"
-                                app:srb_isIndicator="false"
-                                app:srb_minimumStars="1"
-                                app:srb_numStars="10"
-                                app:srb_rating="6.7"
-                                app:srb_scrollable="false"
-                                app:srb_starHeight="10dp"
-                                app:srb_starPadding="2dp"
-                                app:srb_starWidth="10dp"
-                                app:srb_stepSize="0.1" />
-
-
-                            <TextView
-                                android:id="@+id/ratingTV"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:layout_marginHorizontal="8dp"
-                                android:fontFamily="@font/gilroy_light"
-                                tools:text="6.7"
-                                android:textColor="@color/white"
-                                android:textSize="8sp"
-                                app:layout_constraintBottom_toBottomOf="parent"
-                                app:layout_constraintEnd_toEndOf="parent"
-                                app:layout_constraintTop_toTopOf="parent" />
-                        </androidx.constraintlayout.widget.ConstraintLayout>
-                    </LinearLayout>
+                            style="@style/GilroyLightTextStyle"
+                            android:id="@+id/ratingTV"
+                            android:layout_gravity="center"
+                            android:layout_marginHorizontal="8dp"
+                            android:textSize="8sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:text="6.7" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
                 </FrameLayout>
 
                 <TextView
                     android:id="@+id/movie_title"
+                    style="@style/GilroyBoldTextStyle"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
                     android:layout_marginHorizontal="8dp"
                     android:layout_marginTop="8dp"
                     android:layout_marginBottom="20dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/lato_bold"
                     android:maxLines="1"
                     android:textAlignment="textStart"
-                    android:textColor="#CACACA"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

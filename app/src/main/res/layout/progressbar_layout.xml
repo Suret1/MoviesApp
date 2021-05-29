@@ -21,6 +21,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fontFamily="@font/source_sans_pro_semibold"
-        android:text="Loading..."
+        android:text="@string/loading"
         android:textColor="@color/white" />
 </LinearLayout>

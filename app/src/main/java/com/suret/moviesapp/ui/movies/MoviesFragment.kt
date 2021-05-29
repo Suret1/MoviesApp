@@ -35,6 +35,7 @@ class MoviesFragment : Fragment() {
     private lateinit var movieViewModelFactory: MovieViewModelFactory
     private lateinit var movieRepository: MovieRepository
     private lateinit var movieAdapter: TrendMovieListAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

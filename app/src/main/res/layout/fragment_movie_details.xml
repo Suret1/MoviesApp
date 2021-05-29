@@ -83,11 +83,9 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/GilroyLightTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
-                    android:fontFamily="@font/gilroy_light"
                     android:text="Action, Adventure, Drama"
                     android:textColor="@color/main_red"
                     android:textSize="18sp" />
@@ -119,36 +117,25 @@
 
                     <TextView
                         android:id="@+id/ratingTV"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/GilroyLightTextStyle"
                         android:layout_gravity="center"
                         android:layout_margin="8dp"
-                        android:fontFamily="@font/gilroy_light"
-                        android:textColor="@color/white"
-                        android:textSize="16sp"
                         tools:text="7.7" />
 
                 </LinearLayout>
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/GilroyBoldTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/gilroy_bold"
-                    android:text="@string/storyline"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
+                    android:text="@string/storyline" />
 
                 <TextView
                     android:id="@+id/storyLineTV"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    style="@style/GilroyLightTextStyle"
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="4dp"
-                    android:fontFamily="@font/gilroy_light"
-                    android:textColor="@color/white"
-                    android:textSize="18sp"
                     tools:text="After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe." />
 
                 <LinearLayout
@@ -158,27 +145,20 @@
                     android:weightSum="2">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/GilroyBoldTextStyle"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/gilroy_bold"
-                        android:text="@string/cast"
-                        android:textColor="@color/white"
-                        android:textSize="18sp" />
+                        android:text="@string/cast" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        style="@style/GilroyLightTextStyle"
                         android:layout_marginHorizontal="16dp"
                         android:layout_marginTop="8dp"
                         android:layout_weight="1"
-                        android:fontFamily="@font/gilroy_light"
                         android:text="@string/see_all"
                         android:textAlignment="textEnd"
-                        android:textColor="@color/main_grey"
-                        android:textSize="18sp" />
+                        android:textColor="@color/main_grey" />
 
                 </LinearLayout>
 

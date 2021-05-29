@@ -57,6 +57,7 @@ class TrendMovieListAdapter :
 
             trendingMoviesListBinding.ratingTV.text = trendingMoviesModel?.vote_average?.toString()
 
+
             trendingMoviesListBinding.root.setOnClickListener {
                 trendingMoviesModel?.let { movies ->
                     setOnItemClick?.invoke(movies)
