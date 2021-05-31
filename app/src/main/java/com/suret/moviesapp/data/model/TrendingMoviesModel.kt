@@ -3,6 +3,8 @@ package com.suret.moviesapp.data.model
 import android.os.Parcelable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.suret.moviesapp.util.GenreConverter
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
@@ -10,6 +12,8 @@ import kotlinx.parcelize.Parcelize
 data class TrendingMoviesModel(
     val backdrop_path: String? = null,
     val first_air_date: String? = null,
+    @TypeConverters(GenreConverter::class)
+    val genre_ids: List<Int>? = null,
     @PrimaryKey(autoGenerate = true)
     val id: Int? = null,
     val name: String? = null,

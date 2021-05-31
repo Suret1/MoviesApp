@@ -57,12 +57,11 @@
 
                 <com.suret.moviesapp.util.MyGradientTextView
                     android:id="@+id/movie_title"
+                    style="@style/GilroyBoldTextStyle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
                     android:layout_marginHorizontal="8dp"
                     android:ellipsize="end"
-                    android:fontFamily="@font/gilroy_bold"
                     android:maxLines="2"
                     android:textSize="36sp"
                     tools:text="Avengers: End Game" />
@@ -83,12 +82,13 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/genre_TV"
                     style="@style/GilroyLightTextStyle"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="8dp"
-                    android:text="Action, Adventure, Drama"
                     android:textColor="@color/main_red"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    tools:text="Action, Adventure, Drama" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -134,7 +134,7 @@
                 <TextView
                     android:id="@+id/storyLineTV"
                     style="@style/GilroyLightTextStyle"
-                    android:layout_marginStart="16dp"
+                    android:layout_marginHorizontal="16dp"
                     android:layout_marginTop="4dp"
                     tools:text="After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe." />
 

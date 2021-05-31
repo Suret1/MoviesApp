@@ -14,4 +14,6 @@ interface MovieDao {
 
     @Query("SELECT * FROM movie_table")
     fun getAllMovies(): List<TrendingMoviesModel>
+
+
 }

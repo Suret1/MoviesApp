@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import com.suret.moviesapp.data.api.API
 import com.suret.moviesapp.data.db.MovieDao
+import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.util.Resource
 
@@ -24,8 +25,8 @@ class MovieRepositoryImpl(
 
             result?.let {
                 return if (response.isSuccessful) {
-                    it.results?.let { it1 ->
-                        dao.insertMovie(it1)
+                    it.results?.let { movieList ->
+                        dao.insertMovie(movieList)
                     }
                     Resource.Success(result.results!!)
                 } else {
@@ -37,7 +38,24 @@ class MovieRepositoryImpl(
 
             return Resource.Success(result)
         }
-        return Resource.Error("unknown error occured")
+        return Resource.Error("unknown error occurred")
+    }
+
+    override suspend fun getGenreList(): Resource<List<GenreModel>> {
+        if (isNetworkAvailable(activity)) {
+            val response = api.getGenreList("1f05bf0419f372e983c4708603be70b4")
+            val result = response.body()
+            result?.let {
+                return if (response.isSuccessful) {
+                    Resource.Success(result.genres!!)
+                } else {
+                    Resource.Error(response.message())
+                }
+            }
+        } else {
+            return Resource.Error("unknown error occurred")
+        }
+        return Resource.Error("unknown error occurred")
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {

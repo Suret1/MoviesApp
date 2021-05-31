@@ -28,7 +28,9 @@ class TrendMovieListAdapter :
         }
 
     }
+
     val differ = AsyncListDiffer(this, differCallBack)
+
 
 
     inner class TrendViewHolder(
