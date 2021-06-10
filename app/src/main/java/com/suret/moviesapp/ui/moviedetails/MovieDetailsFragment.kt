@@ -2,6 +2,7 @@ package com.suret.moviesapp.ui.moviedetails
 
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -116,8 +117,11 @@ class MovieDetailsFragment() : Fragment() {
             }
         }
         movieDetailsBinding.apply {
-            genresString.deleteCharAt(genresString.length - 2)
-            genreTV.text = genresString
+            if(genresString.isNotEmpty()){
+                genresString.deleteCharAt(genresString.length - 2)
+                genreTV.text = genresString
+            }
+
         }
     }
 

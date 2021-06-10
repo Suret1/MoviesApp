@@ -92,7 +92,7 @@ dependencies {
     implementation 'androidx.palette:palette-ktx:1.0.0'
 
     //RecyclerView
-    implementation "androidx.recyclerview:recyclerview:1.2.0"
+    implementation "androidx.recyclerview:recyclerview:1.2.1"
 
     //Dagger Hilt
     implementation("com.google.dagger:hilt-android:$hilt_version")
