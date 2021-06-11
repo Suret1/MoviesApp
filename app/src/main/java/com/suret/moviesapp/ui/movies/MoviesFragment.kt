@@ -20,6 +20,7 @@ import com.suret.moviesapp.data.viewmodel.MovieViewModel
 import com.suret.moviesapp.data.viewmodel.MovieViewModelFactory
 import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.adapters.TrendMovieListAdapter
+import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import javax.inject.Inject
@@ -60,6 +61,7 @@ class MoviesFragment : Fragment() {
 
         val bundle = Bundle()
 
+        val progressBar = PopUps.progressDialog(requireActivity())
 
         movieAdapter = TrendMovieListAdapter()
 
@@ -87,14 +89,14 @@ class MoviesFragment : Fragment() {
 
                     when (event) {
                         is MovieViewModel.Event.Loading ->
-                            loading.visibility = View.VISIBLE
+                            progressBar.show()
                         is MovieViewModel.Event.Failure -> {
-                            loading.visibility = View.GONE
+                            progressBar.dismiss()
                             Snackbar.make(requireView(), event.errorText, Snackbar.LENGTH_SHORT)
                                 .show()
                         }
                         is MovieViewModel.Event.Success -> {
-                            loading.visibility = View.GONE
+                            progressBar.dismiss()
                             movieAdapter.differ.submitList(event.result)
                         }
                     }

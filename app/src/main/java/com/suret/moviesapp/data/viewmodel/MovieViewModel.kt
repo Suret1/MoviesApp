@@ -1,12 +1,12 @@
 package com.suret.moviesapp.data.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.domain.MovieRepository
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.util.Resource
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
@@ -28,7 +28,13 @@ class MovieViewModel(private val repository: MovieRepository) : ViewModel() {
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
 
-    fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO) {
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
+        viewModelScope.launch {
+            trendingMoviesChannel.send(Event.Failure("Something went wrong"))
+        }
+    }
+
+    fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         trendingMoviesChannel.send(Event.Loading)
 
         when (val response = repository.getTrendingMovies()) {

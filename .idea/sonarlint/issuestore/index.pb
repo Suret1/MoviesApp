@@ -9,12 +9,8 @@ z
 Japp/src/main/java/com/suret/moviesapp/ui/adapters/TrendMovieListAdapter.kt,4\5\45738357134324d5a411c1c641457234bd9e2e6d
 }
 Mapp/src/main/java/com/suret/moviesapp/data/viewmodel/MovieViewModelFactory.kt,a\e\ae7c6e3e12d260219c4219deaca098bb3b704339
-q
-Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
 t
 Dapp/src/main/java/com/suret/moviesapp/data/domain/MovieRepository.kt,e\c\ec4b026a261bb012e1b71f90d936be4f0e6b0a82
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 m
@@ -23,8 +19,6 @@ j
 :app/src/main/java/com/suret/moviesapp/data/di/AppModule.kt,1\9\196242a89f45c83990a460be4e321f0e40e0f037
 e
 5app/src/main/java/com/suret/moviesapp/data/api/API.kt,5\f\5ff62c2f80f52f8944fa6cd2a35341de4f67fc37
-v
-Fapp/src/main/java/com/suret/moviesapp/data/viewmodel/MovieViewModel.kt,4\e\4eee0b8de8c5da6829d16955e07b0c3f43dc3d3a
 l
 <app/src/main/java/com/suret/moviesapp/util/GenreConverter.kt,c\b\cbb47db7bd6dd2de20f77d2c052ab06d99be5ec9
 n
