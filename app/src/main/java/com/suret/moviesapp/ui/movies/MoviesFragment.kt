@@ -83,7 +83,7 @@ class MoviesFragment : Fragment() {
 
         moviesBinding.apply {
 
-            lifecycleScope.launchWhenCreated {
+           viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 movieViewModel.getTrendingMovies()
                 movieViewModel.trendingMoviesFlow.collect { event ->
 
