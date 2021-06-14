@@ -75,7 +75,7 @@ class MovieDetailsFragment() : Fragment() {
             )
 
 
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             movieViewModel.getGenreList()
             movieViewModel.trendingMoviesFlow.collect { event ->
                 when (event) {

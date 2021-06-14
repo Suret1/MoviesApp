@@ -68,6 +68,8 @@ class MoviesFragment : Fragment() {
         movieAdapter.stateRestorationPolicy =
             RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
+        movieViewModel.getTrendingMovies()
+
         moviesBinding.apply {
             trendMoviesRV.adapter = movieAdapter
         }
@@ -84,9 +86,7 @@ class MoviesFragment : Fragment() {
         moviesBinding.apply {
 
            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                movieViewModel.getTrendingMovies()
                 movieViewModel.trendingMoviesFlow.collect { event ->
-
                     when (event) {
                         is MovieViewModel.Event.Loading ->
                             progressBar.show()

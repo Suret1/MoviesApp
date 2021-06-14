@@ -37,7 +37,7 @@ x
 Happ/src/main/java/com/suret/moviesapp/data/domain/MovieRepositoryImpl.kt,4\3\432264a93d95f8577734fed6916719a671dc2e04
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
-}
-Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
 d
 4app/src/main/java/com/suret/moviesapp/util/PopUps.kt,a\6\a6a8dd4fd5c1979fda80da1db2616c7bde14e617
+v
+Fapp/src/main/java/com/suret/moviesapp/data/viewmodel/MovieViewModel.kt,4\e\4eee0b8de8c5da6829d16955e07b0c3f43dc3d3a
