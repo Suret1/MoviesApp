@@ -9,7 +9,7 @@ import com.suret.moviesapp.data.model.TrendingMoviesModel
 @Dao
 interface MovieDao {
 
-    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertMovie(movieModel: List<TrendingMoviesModel>)
 
     @Query("SELECT * FROM movie_table")

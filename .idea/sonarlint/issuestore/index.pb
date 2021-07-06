@@ -19,8 +19,6 @@ t
 Dapp/src/main/java/com/suret/moviesapp/data/domain/MovieRepository.kt,e\c\ec4b026a261bb012e1b71f90d936be4f0e6b0a82
 f
 6app/src/main/java/com/suret/moviesapp/util/Resource.kt,1\b\1b2765e6ac043de2cccbbd1199eb97feb46af1aa
-i
-9app/src/main/java/com/suret/moviesapp/data/db/MovieDao.kt,b\2\b2f6700cb88a36f1e7f2d43e1223b3d739398829
 F
 app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
 X
@@ -31,19 +29,20 @@ p
 @app/src/main/java/com/suret/moviesapp/util/MyGradientTextView.kt,0\9\098648e5f595762728f867616e3883c68da327b5
 v
 Fapp/src/main/java/com/suret/moviesapp/data/model/TrendingMoviesRoot.kt,d\a\dae54a277b0962c4857a3f55a40f7bc61dfce0af
-q
-Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
 €
 Papp/src/main/java/com/suret/moviesapp/ui/movies/adapter/TrendMovieListAdapter.kt,6\c\6c775a5f0b58a7ec36b70f372d5065d19e62eb27
-x
-Happ/src/main/java/com/suret/moviesapp/data/domain/MovieRepositoryImpl.kt,4\3\432264a93d95f8577734fed6916719a671dc2e04
 j
 :app/src/main/java/com/suret/moviesapp/data/di/AppModule.kt,1\9\196242a89f45c83990a460be4e321f0e40e0f037
-{
-Kapp/src/main/java/com/suret/moviesapp/ui/movies/viewmodel/MovieViewModel.kt,5\a\5aa4c0b06bcc84eea695c1d37f9e3dc308dafa3b
 <
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 }
 Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
+>
+app/.gitignore,5\1\51e1c5d383dfaa35e0e7e5873a0a99355a86880f
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+A
+gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4

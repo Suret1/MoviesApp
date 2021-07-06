@@ -83,23 +83,30 @@ class MovieViewModel @Inject constructor(
                     )
                 }
             }
+        } else {
+            trendingMoviesChannel.send(
+                Event.Failure(
+                    movieDao.getAllMovies(),
+                    "No Internet" ?: ""
+                )
+            )
         }
 
     }
 
     fun getGenreList() = viewModelScope.launch(Dispatchers.IO) {
-        if(isNetworkAvailable(context)){
+        if (isNetworkAvailable(context)) {
             trendingMoviesChannel.send(Event.Loading)
             when (val response = repository.getGenreList()) {
                 is Resource.Success -> {
                     response.data?.let {
                         trendingMoviesChannel.send(Event.Success(null, response.data))
                     } ?: kotlin.run {
-                        trendingMoviesChannel.send(Event.Failure(null,response.message ?: ""))
+                        trendingMoviesChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
                 is Resource.Error -> {
-                    trendingMoviesChannel.send(Event.Failure(null,response.message ?: ""))
+                    trendingMoviesChannel.send(Event.Failure(null, response.message ?: ""))
                 }
             }
         }
