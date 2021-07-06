@@ -116,12 +116,7 @@ class MovieDetailsFragment() : Fragment() {
         movieDetailsBinding.apply {
 
             movieImage.load(Constants.IMAGE_URL + moviesModel.backdrop_path)
-//
-//            movieImage.load(
-//                "https://image.tmdb.org/t/p/original${
-//                    moviesModel.backdrop_path
-//                }"
-//            )
+
             if (moviesModel.title == null) {
                 movieTitle.text = moviesModel.name
                 if (moviesModel.name == null) {
