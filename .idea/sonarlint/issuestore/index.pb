@@ -25,8 +25,6 @@ F
 app/proguard-rules.pro,9\e\9e08934d811afe28fbc77aaa3c0d747b94348db9
 X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-A
-gradle.properties,2\a\2afbb999f001938c88fa43fc2ef52abf0f8213e4
 m
 =app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
 p
