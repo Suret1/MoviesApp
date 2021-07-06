@@ -1,4 +1,4 @@
-package com.suret.moviesapp.ui.adapters
+package com.suret.moviesapp.ui.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.TrendingMoviesListBinding
 
 class TrendMovieListAdapter :
@@ -50,9 +51,8 @@ class TrendMovieListAdapter :
                 trendingMoviesListBinding.movieTitle.text = trendingMoviesModel.title
             }
             trendingMoviesListBinding.movieImage.load(
-                "https://image.tmdb.org/t/p/original${
-                    differ.currentList.getOrNull(adapterPosition)?.poster_path
-                }"
+                Constants.IMAGE_URL+
+                    differ.currentList.getOrNull(bindingAdapterPosition)?.poster_path
             )
             trendingMoviesListBinding.ratingBar.rating =
                 trendingMoviesModel?.vote_average?.toFloat() ?: 0f

@@ -1,4 +1,4 @@
-package com.suret.moviesapp.ui.adapters
+package com.suret.moviesapp.ui.moviedetails.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

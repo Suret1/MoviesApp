@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbarLayout"
             android:layout_width="match_parent"
-            android:layout_height="280dp"
+            android:layout_height="@dimen/_240sdp"
             android:fitsSystemWindows="true"
             android:theme="@style/ThemeOverlay.MaterialComponents.Dark">
 
@@ -23,13 +23,13 @@
                 android:layout_height="match_parent"
                 android:fitsSystemWindows="true"
                 app:contentScrim="@color/background_color"
-                app:expandedTitleMarginBottom="20dp"
-                app:expandedTitleMarginStart="15dp"
+                app:expandedTitleMarginBottom="@dimen/_18sdp"
+                app:expandedTitleMarginStart="@dimen/_14sdp"
                 app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
                 app:statusBarScrim="@android:color/transparent">
 
 
-                <ImageView
+                <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/movie_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -48,10 +48,9 @@
                     app:navigationIcon="@drawable/back_btn"
                     app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
-
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="100dp"
+                    android:layout_height="@dimen/_45sdp"
                     android:layout_gravity="bottom"
                     android:background="@drawable/title_bg" />
 
@@ -60,14 +59,12 @@
                     style="@style/GilroyBoldTextStyle"
                     android:layout_width="match_parent"
                     android:layout_gravity="bottom"
-                    android:layout_marginHorizontal="8dp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textSize="36sp"
+                    android:textSize="@dimen/_28ssp"
                     tools:text="Avengers: End Game" />
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
-
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -81,13 +78,13 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/genre_TV"
                     style="@style/GilroyLightTextStyle"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:textColor="@color/main_red"
-                    android:textSize="18sp"
+                    android:textSize="@dimen/_14ssp"
                     tools:text="Action, Adventure, Drama" />
 
                 <LinearLayout
@@ -100,7 +97,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_margin="8dp"
+                        android:layout_marginHorizontal="@dimen/_13sdp"
                         app:srb_clearRatingEnabled="false"
                         app:srb_clickable="false"
                         app:srb_drawableEmpty="@drawable/star_empty"
@@ -109,33 +106,33 @@
                         app:srb_minimumStars="1"
                         app:srb_numStars="10"
                         app:srb_scrollable="false"
-                        app:srb_starHeight="20dp"
-                        app:srb_starPadding="5dp"
-                        app:srb_starWidth="20dp"
+                        app:srb_starHeight="@dimen/_14sdp"
+                        app:srb_starPadding="@dimen/_4sdp"
+                        app:srb_starWidth="@dimen/_15sdp"
                         app:srb_stepSize="0.1"
                         tools:srb_rating="7.7" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/ratingTV"
                         style="@style/GilroyLightTextStyle"
                         android:layout_gravity="center"
-                        android:layout_margin="8dp"
+                        android:layout_margin="@dimen/_6sdp"
                         tools:text="7.7" />
 
                 </LinearLayout>
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     style="@style/GilroyBoldTextStyle"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginStart="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:fontFamily="@font/gilroy_bold"
                     android:text="@string/storyline" />
 
-                <TextView
+                <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/storyLineTV"
                     style="@style/GilroyLightTextStyle"
-                    android:layout_marginHorizontal="16dp"
-                    android:layout_marginTop="4dp"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_4sdp"
                     tools:text="After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe." />
 
                 <LinearLayout
@@ -144,24 +141,23 @@
                     android:orientation="horizontal"
                     android:weightSum="2">
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/GilroyBoldTextStyle"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/cast" />
 
-                    <TextView
+                    <androidx.appcompat.widget.AppCompatTextView
                         style="@style/GilroyLightTextStyle"
-                        android:layout_marginHorizontal="16dp"
-                        android:layout_marginTop="8dp"
+                        android:layout_marginHorizontal="@dimen/_16sdp"
+                        android:layout_marginTop="@dimen/_8sdp"
                         android:layout_weight="1"
                         android:text="@string/see_all"
                         android:textAlignment="textEnd"
                         android:textColor="@color/main_grey" />
 
                 </LinearLayout>
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:layout_width="0dp"

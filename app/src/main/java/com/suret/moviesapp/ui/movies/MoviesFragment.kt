@@ -5,41 +5,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
-import com.suret.moviesapp.data.api.API
-import com.suret.moviesapp.data.db.MovieDao
-import com.suret.moviesapp.data.db.MovieDatabase
-import com.suret.moviesapp.data.domain.MovieRepository
-import com.suret.moviesapp.data.domain.MovieRepositoryImpl
-import com.suret.moviesapp.data.viewmodel.MovieViewModel
-import com.suret.moviesapp.data.viewmodel.MovieViewModelFactory
+import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
+import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.databinding.FragmentMoviesBinding
-import com.suret.moviesapp.ui.adapters.TrendMovieListAdapter
+import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
 import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
-    @Inject
-    lateinit var api: API
 
-    @Inject
-    lateinit var database: MovieDatabase
-
-    @Inject
-    lateinit var dao: MovieDao
+    private val movieViewModel: MovieViewModel by viewModels()
 
     private lateinit var moviesBinding: FragmentMoviesBinding
-    private lateinit var movieViewModel: MovieViewModel
-    private lateinit var movieViewModelFactory: MovieViewModelFactory
-    private lateinit var movieRepository: MovieRepository
+
     private lateinit var movieAdapter: TrendMovieListAdapter
 
     override fun onCreateView(
@@ -54,10 +40,6 @@ class MoviesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieRepository = MovieRepositoryImpl(requireActivity(), dao, api)
-        movieViewModelFactory = MovieViewModelFactory(repository = movieRepository)
-        movieViewModel =
-            ViewModelProvider(this, movieViewModelFactory).get(MovieViewModel::class.java)
 
         val bundle = Bundle()
 
@@ -77,15 +59,14 @@ class MoviesFragment : Fragment() {
         movieAdapter.setOnClickListener { movie ->
             movie.let {
                 bundle.apply {
-                    putParcelable("movieModel", movie)
+                    putParcelable(MOVIE_MODEL, movie)
                 }
             }
             view.findNavController().navigate(R.id.action_to_movieDetailsFragment, bundle)
         }
 
         moviesBinding.apply {
-
-           viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 movieViewModel.trendingMoviesFlow.collect { event ->
                     when (event) {
                         is MovieViewModel.Event.Loading ->
@@ -94,6 +75,7 @@ class MoviesFragment : Fragment() {
                             progressBar.dismiss()
                             Snackbar.make(requireView(), event.errorText, Snackbar.LENGTH_SHORT)
                                 .show()
+                            movieAdapter.differ.submitList(event.localData)
                         }
                         is MovieViewModel.Event.Success -> {
                             progressBar.dismiss()
