@@ -15,3 +15,6 @@
 local.properties
 /app/src/main/java/com/suret/moviesapp/util/
 gradle.properties
+libs/
+src/main/res/drawable-v24/
+src/main/res/mipmap-anydpi-v26/
