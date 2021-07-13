@@ -53,7 +53,9 @@ class TrendMovieListAdapter :
             trendingMoviesListBinding.movieImage.load(
                 Constants.IMAGE_URL+
                     differ.currentList.getOrNull(bindingAdapterPosition)?.poster_path
-            )
+            ){
+                crossfade(true)
+            }
             trendingMoviesListBinding.ratingBar.rating =
                 trendingMoviesModel?.vote_average?.toFloat() ?: 0f
 

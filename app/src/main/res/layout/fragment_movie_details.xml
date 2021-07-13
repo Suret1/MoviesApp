@@ -149,6 +149,7 @@
                         android:text="@string/cast" />
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvSeeAll"
                         style="@style/GilroyLightTextStyle"
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_marginTop="@dimen/_8sdp"
@@ -160,8 +161,12 @@
                 </LinearLayout>
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:layout_width="0dp"
+                    android:id="@+id/rvCast"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    android:padding="@dimen/_4sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/cast_list_layout" />

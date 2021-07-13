@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.domain.MovieRepository
+import com.suret.moviesapp.data.model.ActorModel
+import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.util.Resource
@@ -29,9 +31,21 @@ class MovieViewModel @Inject constructor(
 ) : ViewModel() {
 
     sealed class Event {
-        class Success(
-            val result: List<TrendingMoviesModel>?,
-            val genreModel: List<GenreModel>?
+        class TrendingSuccess(
+            val trendingMoviesModel: List<TrendingMoviesModel>?,
+
+            ) : Event()
+
+        class GenreSuccess(
+            val genreModel: List<GenreModel>?,
+        ) : Event()
+
+        class CastSuccess(
+            val cast: List<Cast>?
+        ) : Event()
+
+        class ActorSuccess(
+            val actor: ActorModel?
         ) : Event()
 
         class Failure(
@@ -45,6 +59,15 @@ class MovieViewModel @Inject constructor(
 
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
+
+    private val genreChannel = Channel<Event>()
+    val genreFlow = genreChannel.receiveAsFlow()
+
+    private val castChannel = Channel<Event>()
+    val castFlow = castChannel.receiveAsFlow()
+
+    private val actorChannel = Channel<Event>()
+    val actorFlow = actorChannel.receiveAsFlow()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
@@ -63,7 +86,7 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getTrendingMovies()) {
                 is Resource.Success -> {
                     response.data?.let {
-                        trendingMoviesChannel.send(Event.Success(response.data, null))
+                        trendingMoviesChannel.send(Event.TrendingSuccess(response.data))
                         movieDao.insertMovie(response.data)
                     } ?: kotlin.run {
                         trendingMoviesChannel.send(
@@ -96,21 +119,58 @@ class MovieViewModel @Inject constructor(
 
     fun getGenreList() = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(context)) {
-            trendingMoviesChannel.send(Event.Loading)
+            genreChannel.send(Event.Loading)
             when (val response = repository.getGenreList()) {
                 is Resource.Success -> {
                     response.data?.let {
-                        trendingMoviesChannel.send(Event.Success(null, response.data))
+                        genreChannel.send(Event.GenreSuccess(response.data))
                     } ?: kotlin.run {
-                        trendingMoviesChannel.send(Event.Failure(null, response.message ?: ""))
+                        genreChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
                 is Resource.Error -> {
-                    trendingMoviesChannel.send(Event.Failure(null, response.message ?: ""))
+                    genreChannel.send(Event.Failure(null, response.message ?: ""))
                 }
             }
         }
 
+    }
+
+    fun getCredits(idMovie: Int) = viewModelScope.launch(Dispatchers.IO) {
+        if (isNetworkAvailable(context)) {
+            castChannel.send(Event.Loading)
+            when (val response = repository.getCredits(idMovie)) {
+                is Resource.Success -> {
+                    response.data?.let {
+                        castChannel.send(Event.CastSuccess(response.data))
+                    } ?: kotlin.run {
+                        castChannel.send(Event.Failure(null, response.message ?: ""))
+                    }
+                }
+                is Resource.Error -> {
+                    castChannel.send(Event.Failure(null, response.message ?: ""))
+                }
+            }
+        }
+
+    }
+
+    fun getPersonData(personId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        if (isNetworkAvailable(context)) {
+            actorChannel.send(Event.Loading)
+            when (val response = repository.getPersonData(personId)) {
+                is Resource.Success -> {
+                    response.data?.let {
+                        actorChannel.send(Event.ActorSuccess(response.data))
+                    } ?: kotlin.run {
+                        actorChannel.send(Event.Failure(null, response.message ?: ""))
+                    }
+                }
+                is Resource.Error -> {
+                    actorChannel.send(Event.Failure(null, response.message ?: ""))
+                }
+            }
+        }
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {

@@ -6,32 +6,46 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import com.suret.moviesapp.R
+import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants
+import com.suret.moviesapp.data.other.Constants.CAST_LIST
+import com.suret.moviesapp.data.other.Constants.CAST_MODEL
 import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
+import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
+import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import kotlin.math.abs
 
+
 @AndroidEntryPoint
-class MovieDetailsFragment() : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()
-
     private lateinit var movieDetailsBinding: FragmentMovieDetailsBinding
-
     private var genreModelList: List<GenreModel>? = null
     private var movieModel: TrendingMoviesModel? = null
+    private var castList: List<Cast>? = null
+    private val bundle = Bundle()
+    private lateinit var castListAdapter: FullCastAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,23 +60,72 @@ class MovieDetailsFragment() : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fullStatusBar()
+
         movieModel = arguments?.getParcelable(MOVIE_MODEL)
+        castListAdapter = FullCastAdapter()
+        castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
         if (movieModel != null) {
             movieSetData(movieModel!!)
+            movieDetailsBinding.apply {
+                rvCast.adapter = castListAdapter
+                viewLifecycleOwner.lifecycleScope.launch {
+                    movieModel!!.id?.let {
+                        movieViewModel.getCredits(it)
+                        movieViewModel.castFlow.collect { event ->
+                            when (event) {
+                                is MovieViewModel.Event.CastSuccess -> {
+                                    castList = event.cast
+                                    castListAdapter.differ.submitList(event.cast)
+                                }
+                                is MovieViewModel.Event.Failure -> {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        event.errorText,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                is MovieViewModel.Event.Loading -> {
+                                }
+                            }
+                        }
+                    }
+                }
+                tvSeeAll.setOnClickListener {
+                    if (castList != null) {
+                        val castList = Gson().toJson(castList)
+                        bundle.apply {
+                            putString(CAST_LIST, castList)
+                        }
+                        findNavController().navigate(R.id.action_to_fullFragment, bundle)
+                    }
+                }
+            }
+            castListAdapter.setOnItemClickListener {
+                bundle.apply {
+                    putParcelable(CAST_MODEL, it)
+                }
+                findNavController().navigate(R.id.action_to_personDetailsFragment, bundle)
+            }
+            castListAdapter.stateRestorationPolicy =
+                PREVENT_WHEN_EMPTY
+
         }
 
 
-
-        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launch {
             movieViewModel.getGenreList()
-            movieViewModel.trendingMoviesFlow.collect { event ->
+            movieViewModel.genreFlow.collect { event ->
                 when (event) {
                     is MovieViewModel.Event.Loading -> {
                     }
                     is MovieViewModel.Event.Failure -> {
-                        Snackbar.make(requireView(), "No internet", Snackbar.LENGTH_SHORT).show()
+                        Snackbar.make(
+                            requireView(),
+                            getString(R.string.no_internet),
+                            Snackbar.LENGTH_SHORT
+                        ).show()
                     }
-                    is MovieViewModel.Event.Success -> {
+                    is MovieViewModel.Event.GenreSuccess -> {
                         genreModelList = event.genreModel
                         if (genreModelList != null) {
                             setMovieGenre(genreModelList!!)

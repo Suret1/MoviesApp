@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main_nav"
     app:startDestination="@id/movies">
 
@@ -12,18 +13,45 @@
         app:popEnterAnim="@anim/wait_anim"
         app:popExitAnim="@anim/slide_right" />
 
+    <action
+        android:id="@+id/action_to_fullFragment"
+        app:destination="@id/fullCastFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_to_personDetailsFragment"
+        app:destination="@id/personDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
     <fragment
         android:id="@+id/movies"
+        tools:layout="@layout/fragment_movies"
         android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
         android:label="MoviesFragment">
 
     </fragment>
     <fragment
         android:id="@+id/favourite"
+        tools:layout="@layout/fragment_favourites"
         android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
         android:label="FavouritesFragment" />
     <fragment
         android:id="@+id/movieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details"
         android:name="com.suret.moviesapp.ui.moviedetails.MovieDetailsFragment"
         android:label="MovieDetailsFragment" />
+    <fragment
+        android:id="@+id/fullCastFragment"
+        tools:layout="@layout/fragment_full_cast"
+        android:name="com.suret.moviesapp.ui.fullcast.FullCastFragment"
+        android:label="FullCastFragment" />
+    <fragment
+        android:id="@+id/personDetailsFragment"
+        tools:layout="@layout/fragment_person_details"
+        android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsFragment"
+        android:label="PersonDetailsFragment" />
 </navigation>

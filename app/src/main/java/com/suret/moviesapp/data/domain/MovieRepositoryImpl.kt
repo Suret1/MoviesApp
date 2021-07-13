@@ -2,6 +2,8 @@ package com.suret.moviesapp.data.domain
 
 import com.suret.moviesapp.BuildConfig
 import com.suret.moviesapp.data.api.IAPI
+import com.suret.moviesapp.data.model.ActorModel
+import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.util.Resource
@@ -34,4 +36,29 @@ class MovieRepositoryImpl(
         return Resource.Error("unknown error occurred")
     }
 
+    override suspend fun getCredits(movieId: Int): Resource<List<Cast>> {
+        val response = api.getCredits(movieId, BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(result.cast!!)
+            } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    override suspend fun getPersonData(personId: Int): Resource<ActorModel> {
+        val response = api.getPersonData(personId, BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(result)
+            } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
 }

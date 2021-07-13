@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
@@ -48,7 +49,7 @@ class MoviesFragment : Fragment() {
         movieAdapter = TrendMovieListAdapter()
 
         movieAdapter.stateRestorationPolicy =
-            RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+            PREVENT_WHEN_EMPTY
 
         movieViewModel.getTrendingMovies()
 
@@ -77,9 +78,9 @@ class MoviesFragment : Fragment() {
                                 .show()
                             movieAdapter.differ.submitList(event.localData)
                         }
-                        is MovieViewModel.Event.Success -> {
+                        is MovieViewModel.Event.TrendingSuccess-> {
                             progressBar.dismiss()
-                            movieAdapter.differ.submitList(event.result)
+                            movieAdapter.differ.submitList(event.trendingMoviesModel)
                         }
                     }
 
