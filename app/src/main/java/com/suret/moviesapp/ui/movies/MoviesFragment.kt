@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -42,8 +43,6 @@ class MoviesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val bundle = Bundle()
-
         val progressBar = PopUps.progressDialog(requireActivity())
 
         movieAdapter = TrendMovieListAdapter()
@@ -59,11 +58,8 @@ class MoviesFragment : Fragment() {
 
         movieAdapter.setOnClickListener { movie ->
             movie.let {
-                bundle.apply {
-                    putParcelable(MOVIE_MODEL, movie)
-                }
+                view.findNavController().navigate(R.id.action_to_movieDetailsFragment, bundleOf().apply { putParcelable(MOVIE_MODEL, movie) })
             }
-            view.findNavController().navigate(R.id.action_to_movieDetailsFragment, bundle)
         }
 
         moviesBinding.apply {

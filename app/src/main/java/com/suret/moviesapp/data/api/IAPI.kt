@@ -1,9 +1,6 @@
 package com.suret.moviesapp.data.api
 
-import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.model.CreditsModelRoot
-import com.suret.moviesapp.data.model.GenreModelRoot
-import com.suret.moviesapp.data.model.TrendingMoviesRoot
+import com.suret.moviesapp.data.model.*
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -28,5 +25,11 @@ interface IAPI {
         @Path("personId") id: Int,
         @Query("api_key") apiKey: String
     ): Response<ActorModel>
+
+    @GET("/3/movie/{id}/videos")
+    suspend fun getMovieTrailer(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String
+    ): Response<TrailerModelRoot>
 
 }

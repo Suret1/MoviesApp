@@ -52,8 +52,10 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         if (holder is CastViewHolder) {
             holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path)
             holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
-            holder.tvCharacterName.text =
-                "(" + differ.currentList.getOrNull(position)?.character + ")"
+            if (!differ.currentList.getOrNull(position)?.character.isNullOrEmpty()) {
+                holder.tvCharacterName.text =
+                    "(" + differ.currentList.getOrNull(position)?.character + ")"
+            }
         } else if (holder is FullCastViewHolder) {
             holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path)
             holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
@@ -65,8 +67,6 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 onItemClickListener?.invoke(it)
             }
         }
-
-
     }
 
     override fun getItemCount(): Int = differ.currentList.size
@@ -84,9 +84,9 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val tvDepartment: AppCompatTextView = itemView.findViewById(R.id.tvDepartment)
     }
 
-    private var onItemClickListener:((Cast)->Unit)?=null
+    private var onItemClickListener: ((Cast) -> Unit)? = null
 
-    fun setOnItemClickListener(listener : (Cast)->Unit){
+    fun setOnItemClickListener(listener: (Cast) -> Unit) {
         onItemClickListener = listener
     }
 

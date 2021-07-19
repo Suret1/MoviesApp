@@ -1,6 +1,7 @@
 package com.suret.moviesapp
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
@@ -29,7 +30,25 @@ class MainActivity : AppCompatActivity() {
             NavigationUI.setupWithNavController(bottomNav, navController)
             bottomNav.setOnNavigationItemReselectedListener { }
         }
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.movieDetailsFragment, R.id.fullCastFragment, R.id.personDetailsFragment -> hideBottomNav()
+                else -> {
+                    showBottomNav()
+                }
+            }
+        }
+    }
 
+    private fun hideBottomNav() {
+        activityMainBinding.apply {
+            bottomNav.visibility = View.GONE
+        }
+    }
 
+    private fun showBottomNav() {
+        activityMainBinding.apply {
+            bottomNav.visibility = View.VISIBLE
+        }
     }
 }

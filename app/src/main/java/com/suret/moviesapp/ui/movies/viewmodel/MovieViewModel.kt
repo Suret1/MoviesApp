@@ -4,14 +4,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.domain.MovieRepository
-import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.model.Cast
-import com.suret.moviesapp.data.model.GenreModel
-import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -48,6 +46,10 @@ class MovieViewModel @Inject constructor(
             val actor: ActorModel?
         ) : Event()
 
+        class TrailerSuccess(
+            val trailerList: List<Result>?
+        ) : Event()
+
         class Failure(
             val localData: List<TrendingMoviesModel>?,
             val errorText: String
@@ -69,6 +71,9 @@ class MovieViewModel @Inject constructor(
     private val actorChannel = Channel<Event>()
     val actorFlow = actorChannel.receiveAsFlow()
 
+    private val trailerChannel = Channel<Event>()
+    val trailerFlow = trailerChannel.receiveAsFlow()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
             trendingMoviesChannel.send(
@@ -86,8 +91,8 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getTrendingMovies()) {
                 is Resource.Success -> {
                     response.data?.let {
-                        trendingMoviesChannel.send(Event.TrendingSuccess(response.data))
-                        movieDao.insertMovie(response.data)
+                        trendingMoviesChannel.send(Event.TrendingSuccess(it))
+                        movieDao.insertMovie(it)
                     } ?: kotlin.run {
                         trendingMoviesChannel.send(
                             Event.Failure(
@@ -123,7 +128,7 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getGenreList()) {
                 is Resource.Success -> {
                     response.data?.let {
-                        genreChannel.send(Event.GenreSuccess(response.data))
+                        genreChannel.send(Event.GenreSuccess(it))
                     } ?: kotlin.run {
                         genreChannel.send(Event.Failure(null, response.message ?: ""))
                     }
@@ -142,7 +147,7 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getCredits(idMovie)) {
                 is Resource.Success -> {
                     response.data?.let {
-                        castChannel.send(Event.CastSuccess(response.data))
+                        castChannel.send(Event.CastSuccess(it))
                     } ?: kotlin.run {
                         castChannel.send(Event.Failure(null, response.message ?: ""))
                     }
@@ -161,9 +166,27 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getPersonData(personId)) {
                 is Resource.Success -> {
                     response.data?.let {
-                        actorChannel.send(Event.ActorSuccess(response.data))
+                        actorChannel.send(Event.ActorSuccess(it))
                     } ?: kotlin.run {
                         actorChannel.send(Event.Failure(null, response.message ?: ""))
+                    }
+                }
+                is Resource.Error -> {
+                    actorChannel.send(Event.Failure(null, response.message ?: ""))
+                }
+            }
+        }
+    }
+
+    fun getMovieTrailer(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        if (isNetworkAvailable(context)) {
+            trailerChannel.send(Event.Loading)
+            when (val response = repository.getMovieTrailer(movieId)) {
+                is Resource.Success -> {
+                    response.data?.let {
+                        trailerChannel.send(Event.TrailerSuccess(it))
+                    } ?: kotlin.run {
+                        trailerChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
                 is Resource.Error -> {

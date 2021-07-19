@@ -2,10 +2,7 @@ package com.suret.moviesapp.data.domain
 
 import com.suret.moviesapp.BuildConfig
 import com.suret.moviesapp.data.api.IAPI
-import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.model.Cast
-import com.suret.moviesapp.data.model.GenreModel
-import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
 
 class MovieRepositoryImpl(
@@ -15,11 +12,15 @@ class MovieRepositoryImpl(
     override suspend fun getTrendingMovies(): Resource<List<TrendingMoviesModel>> {
         val response = api.getTrendingMovies(BuildConfig.API_KEY)
         val result = response.body()
-        return if (response.isSuccessful) {
-            Resource.Success(result?.results!!)
-        } else {
-            Resource.Error(response.message())
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(it.results!!)
+            } else {
+                Resource.Error(response.message())
+            }
         }
+        return Resource.Error(response.message())
+
     }
 
     override suspend fun getGenreList(): Resource<List<GenreModel>> {
@@ -28,12 +29,12 @@ class MovieRepositoryImpl(
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
-                Resource.Success(result.genres!!)
+                Resource.Success(it.genres!!)
             } else {
                 Resource.Error(response.message())
             }
         }
-        return Resource.Error("unknown error occurred")
+        return Resource.Error(response.message())
     }
 
     override suspend fun getCredits(movieId: Int): Resource<List<Cast>> {
@@ -41,7 +42,7 @@ class MovieRepositoryImpl(
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
-                Resource.Success(result.cast!!)
+                Resource.Success(it.cast!!)
             } else {
                 Resource.Error(response.message())
             }
@@ -56,6 +57,19 @@ class MovieRepositoryImpl(
             return if (response.isSuccessful) {
                 Resource.Success(result)
             } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
+    override suspend fun getMovieTrailer(movieId: Int): Resource<List<Result>> {
+        val response = api.getMovieTrailer(movieId,BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if(response.isSuccessful){
+                Resource.Success(it.results!!)
+            }else{
                 Resource.Error(response.message())
             }
         }

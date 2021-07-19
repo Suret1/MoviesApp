@@ -58,9 +58,7 @@ class TrendMovieListAdapter :
             }
             trendingMoviesListBinding.ratingBar.rating =
                 trendingMoviesModel?.vote_average?.toFloat() ?: 0f
-
             trendingMoviesListBinding.ratingTV.text = trendingMoviesModel?.vote_average?.toString()
-
 
             trendingMoviesListBinding.root.setOnClickListener {
                 trendingMoviesModel?.let { movies ->

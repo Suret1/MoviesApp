@@ -1,8 +1,6 @@
 package com.suret.moviesapp.ui.persondetails
 
-import android.graphics.Bitmap
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,7 +25,6 @@ class PersonDetailsFragment : Fragment() {
     private var castModel: Cast? = null
     private val movieViewModel: MovieViewModel by viewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -40,11 +37,10 @@ class PersonDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         castModel = arguments?.getParcelable(CAST_MODEL)
-        Log.d("asdsad", castModel.toString())
 
-        if (castModel != null) {
+        castModel?.let{
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                castModel!!.id?.let { personId ->
+                it.id?.let { personId ->
                     movieViewModel.getPersonData(personId)
                     movieViewModel.actorFlow.collect { event ->
                         when (event) {
@@ -59,6 +55,7 @@ class PersonDetailsFragment : Fragment() {
                                 ).show()
                             }
                             is MovieViewModel.Event.Loading -> {
+                                //
                             }
                         }
                     }

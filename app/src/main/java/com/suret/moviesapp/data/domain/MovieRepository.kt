@@ -1,11 +1,7 @@
 package com.suret.moviesapp.data.domain
 
-import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.model.Cast
-import com.suret.moviesapp.data.model.GenreModel
-import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
-import retrofit2.http.Path
 
 interface MovieRepository {
 
@@ -16,4 +12,6 @@ interface MovieRepository {
     suspend fun getCredits(movieId: Int): Resource<List<Cast>>
 
     suspend fun getPersonData(personId: Int): Resource<ActorModel>
+
+    suspend fun getMovieTrailer(movieId: Int): Resource<List<Result>>
 }

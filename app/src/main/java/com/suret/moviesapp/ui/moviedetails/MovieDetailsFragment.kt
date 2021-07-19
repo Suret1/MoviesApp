@@ -7,21 +7,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
-import coil.load
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.data.other.Constants.CAST_LIST
 import com.suret.moviesapp.data.other.Constants.CAST_MODEL
 import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
@@ -43,9 +43,8 @@ class MovieDetailsFragment : Fragment() {
     private var genreModelList: List<GenreModel>? = null
     private var movieModel: TrendingMoviesModel? = null
     private var castList: List<Cast>? = null
-    private val bundle = Bundle()
     private lateinit var castListAdapter: FullCastAdapter
-
+    private var youtubeKey = ""
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,12 +63,13 @@ class MovieDetailsFragment : Fragment() {
         movieModel = arguments?.getParcelable(MOVIE_MODEL)
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
-        if (movieModel != null) {
-            movieSetData(movieModel!!)
+
+        movieModel?.let {
             movieDetailsBinding.apply {
                 rvCast.adapter = castListAdapter
+                movieSetData(it)
                 viewLifecycleOwner.lifecycleScope.launch {
-                    movieModel!!.id?.let {
+                    it.id?.let {
                         movieViewModel.getCredits(it)
                         movieViewModel.castFlow.collect { event ->
                             when (event) {
@@ -85,58 +85,89 @@ class MovieDetailsFragment : Fragment() {
                                     ).show()
                                 }
                                 is MovieViewModel.Event.Loading -> {
+                                    //
                                 }
                             }
                         }
                     }
                 }
-                tvSeeAll.setOnClickListener {
-                    if (castList != null) {
-                        val castList = Gson().toJson(castList)
-                        bundle.apply {
-                            putString(CAST_LIST, castList)
-                        }
-                        findNavController().navigate(R.id.action_to_fullFragment, bundle)
-                    }
-                }
-            }
-            castListAdapter.setOnItemClickListener {
-                bundle.apply {
-                    putParcelable(CAST_MODEL, it)
-                }
-                findNavController().navigate(R.id.action_to_personDetailsFragment, bundle)
-            }
-            castListAdapter.stateRestorationPolicy =
-                PREVENT_WHEN_EMPTY
-
-        }
-
-
-        viewLifecycleOwner.lifecycleScope.launch {
-            movieViewModel.getGenreList()
-            movieViewModel.genreFlow.collect { event ->
-                when (event) {
-                    is MovieViewModel.Event.Loading -> {
-                    }
-                    is MovieViewModel.Event.Failure -> {
-                        Snackbar.make(
-                            requireView(),
-                            getString(R.string.no_internet),
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-                    is MovieViewModel.Event.GenreSuccess -> {
-                        genreModelList = event.genreModel
-                        if (genreModelList != null) {
-                            setMovieGenre(genreModelList!!)
+                viewLifecycleOwner.lifecycleScope.launch {
+                    it.id?.let { id -> movieViewModel.getMovieTrailer(id) }
+                    movieViewModel.trailerFlow.collect { event ->
+                        when (event) {
+                            is MovieViewModel.Event.Loading -> {
+                                //
+                            }
+                            is MovieViewModel.Event.Failure -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    event.errorText,
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is MovieViewModel.Event.TrailerSuccess -> {
+                                event.trailerList?.let { trailerList ->
+                                    if (!trailerList.isNullOrEmpty()) {
+                                        youtubeKey = trailerList[0].key.toString()
+                                        setTrailer(youtubeKey)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
+                viewLifecycleOwner.lifecycleScope.launch {
+                    movieViewModel.getGenreList()
+                    movieViewModel.genreFlow.collect { event ->
+                        when (event) {
+                            is MovieViewModel.Event.Loading -> {
+                                //
+                            }
+                            is MovieViewModel.Event.Failure -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    event.errorText,
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is MovieViewModel.Event.GenreSuccess -> {
+                                genreModelList = event.genreModel
+                                if (genreModelList != null) {
+                                    setMovieGenre(genreModelList!!)
+                                }
+                            }
+                        }
+                    }
+                }
+                goToFullCastFragment()
             }
-
-
         }
+        goToPersonDetailFragment()
+        castListAdapter.stateRestorationPolicy =
+            PREVENT_WHEN_EMPTY
+        setToolBar()
+    }
 
+    private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
+        tvSeeAll.setOnClickListener {
+            if (castList != null) {
+                val castList = Gson().toJson(castList)
+                findNavController().navigate(
+                    R.id.action_to_fullFragment,
+                    bundleOf().apply { putString(CAST_LIST, castList) })
+            }
+        }
+    }
+
+    private fun goToPersonDetailFragment() {
+        castListAdapter.setOnItemClickListener {
+            findNavController().navigate(
+                R.id.action_to_personDetailsFragment,
+                bundleOf().apply { putParcelable(CAST_MODEL, it) })
+        }
+    }
+
+    private fun setToolBar() {
         movieDetailsBinding.apply {
             toolbar.setNavigationIcon(R.drawable.back_btn)
             toolbar.setNavigationOnClickListener {
@@ -162,7 +193,6 @@ class MovieDetailsFragment : Fragment() {
                 genresString.deleteCharAt(genresString.length - 2)
                 genreTV.text = genresString
             }
-
         }
     }
 
@@ -177,35 +207,63 @@ class MovieDetailsFragment : Fragment() {
 
     private fun movieSetData(moviesModel: TrendingMoviesModel) {
         movieDetailsBinding.apply {
-
-            movieImage.load(Constants.IMAGE_URL + moviesModel.backdrop_path)
-
-            if (moviesModel.title == null) {
-                movieTitle.text = moviesModel.name
-                if (moviesModel.name == null) {
-                    movieTitle.text = moviesModel.original_title
-                }
-            } else {
-                movieTitle.text = moviesModel.title
-            }
-            movieTitle.setColor(R.color.white, R.color.silver)
-            ratingBar.rating = moviesModel.vote_average!!.toFloat()
-            ratingTV.text = moviesModel.vote_average.toString()
-            storyLineTV.text = moviesModel.overview
-
-            appbarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-                if (appBarLayout != null) {
-                    if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                        movieTitle.visibility = View.GONE
-                        collapsingToolbar.title = movieTitle.text
-                        collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingTitleStyle)
-                    } else {
-                        movieTitle.visibility = View.VISIBLE
-                        collapsingToolbar.title = ""
-                    }
-                }
-            })
+            setMovieTitle(moviesModel)
+            setRatingData(moviesModel)
+            setStoryline(moviesModel)
+            appBarListener()
         }
+    }
+
+    private fun FragmentMovieDetailsBinding.setStoryline(moviesModel: TrendingMoviesModel) {
+        storyLineTV.text = moviesModel.overview
+    }
+
+    private fun FragmentMovieDetailsBinding.setTrailer(youtubeKey: String?) {
+        lifecycle.addObserver(youtubePlayerView)
+        youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+            override fun onReady(youTubePlayer: YouTubePlayer) {
+                if (youtubeKey != null) {
+                    youTubePlayer.cueVideo(
+                        youtubeKey, 0f
+                    )
+                }
+            }
+
+        })
+    }
+
+    private fun FragmentMovieDetailsBinding.setRatingData(
+        moviesModel: TrendingMoviesModel
+    ) {
+        ratingBar.rating = moviesModel.vote_average?.toFloat() ?: 0.0f
+        ratingTV.text = moviesModel.vote_average.toString()
+    }
+
+    private fun FragmentMovieDetailsBinding.appBarListener() {
+        appbarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            if (appBarLayout != null) {
+                if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
+                    movieTitle.visibility = View.GONE
+                    collapsingToolbar.title = movieTitle.text
+                    collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingTitleStyle)
+                } else {
+                    movieTitle.visibility = View.VISIBLE
+                    collapsingToolbar.title = ""
+                }
+            }
+        })
+    }
+
+    private fun FragmentMovieDetailsBinding.setMovieTitle(moviesModel: TrendingMoviesModel) {
+        if (moviesModel.title == null) {
+            movieTitle.text = moviesModel.name
+            if (moviesModel.name == null) {
+                movieTitle.text = moviesModel.original_title
+            }
+        } else {
+            movieTitle.text = moviesModel.title
+        }
+        movieTitle.setColor(R.color.white, R.color.silver)
     }
 
 }
