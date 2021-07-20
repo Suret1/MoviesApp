@@ -38,6 +38,16 @@
                     app:layout_constraintTop_toTopOf="parent"
                     tools:srcCompat="@drawable/movie_poster" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iwFavorite"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_10sdp"
+                    android:padding="@dimen/_5sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:srcCompat="@drawable/ic_favorite_movie" />
+
                 <FrameLayout
                     android:id="@+id/frame_layout_of_genre"
                     android:layout_width="0dp"
@@ -46,7 +56,6 @@
                     app:layout_constraintBottom_toBottomOf="@id/movie_image"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent">
-
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
@@ -68,17 +77,17 @@
                             app:srb_isIndicator="false"
                             app:srb_minimumStars="1"
                             app:srb_numStars="10"
-                            tools:srb_rating="6.7"
                             app:srb_scrollable="false"
                             app:srb_starHeight="@dimen/_8sdp"
                             app:srb_starPadding="@dimen/_2sdp"
                             app:srb_starWidth="@dimen/_8sdp"
-                            app:srb_stepSize="0.1" />
+                            app:srb_stepSize="0.1"
+                            tools:srb_rating="6.7" />
 
 
                         <androidx.appcompat.widget.AppCompatTextView
-                            style="@style/GilroyLightTextStyle"
                             android:id="@+id/ratingTV"
+                            style="@style/GilroyLightTextStyle"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/_8sdp"
                             android:textSize="@dimen/_8ssp"

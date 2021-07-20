@@ -8,16 +8,10 @@ import androidx.room.TypeConverters
 import com.suret.moviesapp.util.GenreConverter
 import kotlinx.parcelize.Parcelize
 
-
-@Keep
-data class TrendingMoviesRoot(
-    val results: List<TrendingMoviesModel>? = null
-)
-
 @Keep
 @Parcelize
-@Entity(tableName = "movie_table")
-data class TrendingMoviesModel(
+@Entity(tableName = "favorite_table")
+data class FavoriteMovieModel(
     val backdrop_path: String? = null,
     val first_air_date: String? = null,
     @TypeConverters(GenreConverter::class)
@@ -35,5 +29,5 @@ data class TrendingMoviesModel(
     val title: String? = null,
     val vote_average: Double? = null,
     val vote_count: Int? = null,
-    var isFavorite: Boolean = false
+    val isFavorite: Boolean = false
 ) : Parcelable

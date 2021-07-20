@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.suret.moviesapp.BuildConfig
 import com.suret.moviesapp.data.api.IAPI
+import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.db.MovieDatabase
 import com.suret.moviesapp.data.domain.MovieRepository
 import com.suret.moviesapp.data.domain.MovieRepositoryImpl
@@ -65,8 +66,9 @@ object AppModule {
     @Singleton
     fun provideMovieRepository(
         api: IAPI,
+        movieDao: MovieDao
     ): MovieRepository {
-        return MovieRepositoryImpl(api)
+        return MovieRepositoryImpl(api,movieDao)
     }
 
 

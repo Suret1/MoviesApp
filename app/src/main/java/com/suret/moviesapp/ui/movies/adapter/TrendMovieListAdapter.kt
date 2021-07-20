@@ -1,11 +1,14 @@
 package com.suret.moviesapp.ui.movies.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.TrendingMoviesListBinding
@@ -33,39 +36,50 @@ class TrendMovieListAdapter :
     val differ = AsyncListDiffer(this, differCallBack)
 
 
-
     inner class TrendViewHolder(
         private val trendingMoviesListBinding: TrendingMoviesListBinding,
-        setOnItemClickListener: ((TrendingMoviesModel) -> Unit)?
+        setOnItemClickListener: ((TrendingMoviesModel) -> Unit)?,
+        setOnFavoriteClickListener: ((TrendingMoviesModel) -> Unit)?
     ) :
         RecyclerView.ViewHolder(trendingMoviesListBinding.root) {
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
+            trendingMoviesModel?.let { model ->
+                trendingMoviesListBinding.apply {
+                    if (model.title == null) {
+                        movieTitle.text = model.name
+                        if (model.name == null) {
+                            movieTitle.text = model.original_title
+                        }
+                    } else {
+                        movieTitle.text = model.title
+                    }
+                    if(model.isFavorite){
+                        iwFavorite.setImageResource(R.drawable.ic_favorite_movie)
+                    }else{
+                        iwFavorite.setImageResource(R.drawable.ic_disable_favorite)
+                    }
+                    movieImage.load(
+                        Constants.IMAGE_URL +
+                                differ.currentList.getOrNull(bindingAdapterPosition)?.poster_path
+                    ) {
+                        crossfade(true)
+                    }
+                    ratingBar.rating = model.vote_average?.toFloat() ?: 0f
+                    ratingTV.text = model.vote_average?.toString()
 
-            if (trendingMoviesModel?.title == null) {
-                trendingMoviesListBinding.movieTitle.text = trendingMoviesModel?.name
-                if (trendingMoviesModel?.name == null) {
-                    trendingMoviesListBinding.movieTitle.text = trendingMoviesModel?.original_title
+                    root.setOnClickListener {
+                        model.let { movies ->
+                            setOnItemClick?.invoke(movies)
+                        }
+                    }
+                    iwFavorite.setOnClickListener {
+                        model.let { movies ->
+                            setOnFavoriteClick?.invoke(movies)
+                        }
+                    }
                 }
-            } else {
-                trendingMoviesListBinding.movieTitle.text = trendingMoviesModel.title
             }
-            trendingMoviesListBinding.movieImage.load(
-                Constants.IMAGE_URL+
-                    differ.currentList.getOrNull(bindingAdapterPosition)?.poster_path
-            ){
-                crossfade(true)
-            }
-            trendingMoviesListBinding.ratingBar.rating =
-                trendingMoviesModel?.vote_average?.toFloat() ?: 0f
-            trendingMoviesListBinding.ratingTV.text = trendingMoviesModel?.vote_average?.toString()
-
-            trendingMoviesListBinding.root.setOnClickListener {
-                trendingMoviesModel?.let { movies ->
-                    setOnItemClick?.invoke(movies)
-                }
-            }
-
         }
 
     }
@@ -74,7 +88,7 @@ class TrendMovieListAdapter :
         val layoutInflater = LayoutInflater.from(parent.context)
         val trendingMoviesListBinding =
             TrendingMoviesListBinding.inflate(layoutInflater, parent, false)
-        return TrendViewHolder(trendingMoviesListBinding, setOnItemClick)
+        return TrendViewHolder(trendingMoviesListBinding, setOnItemClick, setOnFavoriteClick)
 
     }
 
@@ -85,9 +99,15 @@ class TrendMovieListAdapter :
     override fun getItemCount(): Int = differ.currentList.size
 
     private var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
+    private var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
+
 
     fun setOnClickListener(listener: (TrendingMoviesModel) -> Unit) {
         setOnItemClick = listener
+    }
+
+    fun setOnFavoriteClickListener(listener: (TrendingMoviesModel) -> Unit) {
+        setOnFavoriteClick = listener
     }
 
 

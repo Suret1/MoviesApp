@@ -7,17 +7,22 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="#292647"
         tools:context=".ui.favourite.FavouritesFragment">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/roboto_slab_bold"
-            android:text="COMING SOON..."
-            android:textSize="@dimen/_32sdp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFavoriteMovies"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:clipToPadding="false"
+            android:layoutAnimation="@anim/recyclerview_animation"
+            android:orientation="vertical"
+            android:padding="@dimen/_4sdp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/favorite_list_layout" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,10 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.domain.MovieRepository
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
@@ -24,8 +24,7 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     @ApplicationContext val context: Context,
-    private val repository: MovieRepository,
-    private val movieDao: MovieDao
+    private val repository: MovieRepository
 ) : ViewModel() {
 
     sealed class Event {
@@ -51,13 +50,14 @@ class MovieViewModel @Inject constructor(
         ) : Event()
 
         class Failure(
-            val localData: List<TrendingMoviesModel>?,
+            val localData: LiveData<List<TrendingMoviesModel>>?,
             val errorText: String
         ) : Event()
 
         object Loading : Event()
 
     }
+
 
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
@@ -78,7 +78,7 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             trendingMoviesChannel.send(
                 Event.Failure(
-                    movieDao.getAllMovies(),
+                    repository.getAllMovies(),
                     ""
                 )
             )
@@ -91,12 +91,19 @@ class MovieViewModel @Inject constructor(
             when (val response = repository.getTrendingMovies()) {
                 is Resource.Success -> {
                     response.data?.let {
+                        it.map { model ->
+                            model.id?.let { id ->
+                                val favModel = repository.getFavoriteMovieById(id)
+                                model.isFavorite = favModel != null
+                            }
+                        }
+                        repository.deleteMovieTable()
                         trendingMoviesChannel.send(Event.TrendingSuccess(it))
-                        movieDao.insertMovie(it)
+                        repository.insertMovieList(it)
                     } ?: kotlin.run {
                         trendingMoviesChannel.send(
                             Event.Failure(
-                                movieDao.getAllMovies(),
+                                 repository.getAllMovies(),
                                 response.message ?: ""
                             )
                         )
@@ -105,7 +112,7 @@ class MovieViewModel @Inject constructor(
                 is Resource.Error -> {
                     trendingMoviesChannel.send(
                         Event.Failure(
-                            movieDao.getAllMovies(),
+                            repository.getAllMovies(),
                             response.message ?: ""
                         )
                     )
@@ -114,7 +121,7 @@ class MovieViewModel @Inject constructor(
         } else {
             trendingMoviesChannel.send(
                 Event.Failure(
-                    movieDao.getAllMovies(),
+                    repository.getAllMovies(),
                     "No Internet" ?: ""
                 )
             )
@@ -194,6 +201,23 @@ class MovieViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun updateMovieModel(movieModel: TrendingMoviesModel) =
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateFavoriteStatus(movieModel)
+        }
+
+    fun getMovieList(): LiveData<List<TrendingMoviesModel>> = repository.getAllMovies()
+
+    fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> = repository.getFavoriteMovies()
+
+    fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
+        repository.insertFavoriteMovie(favoriteMovieModel)
+    }
+
+    fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
+        repository.removeFavoriteMovie(favoriteMovieModel)
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {

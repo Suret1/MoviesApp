@@ -5,14 +5,21 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constrainLayout"
         android:layout_width="match_parent"
+        android:fitsSystemWindows="true"
         android:layout_height="match_parent"
         android:background="@color/background_color"
         tools:context=".ui.movies.MoviesFragment">
 
-
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipeRefresh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/trend_movies_RV"
             android:layout_width="0dp"
@@ -21,11 +28,8 @@
             android:padding="@dimen/_4sdp"
             android:layoutAnimation="@anim/recyclerview_animation"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:spanCount="2"
             tools:listitem="@layout/trending_movies_list" />
-
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
