@@ -5,11 +5,10 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.suret.moviesapp.data.domain.MovieRepository
 import com.suret.moviesapp.data.model.*
+import com.suret.moviesapp.domain.usecase.*
 import com.suret.moviesapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -24,7 +23,19 @@ import javax.inject.Inject
 @HiltViewModel
 class MovieViewModel @Inject constructor(
     @ApplicationContext val context: Context,
-    private val repository: MovieRepository
+    private val deleteMoviesUseCase: DeleteMoviesUseCase,
+    private val getAllMoviesUseCase: GetAllMoviesUseCase,
+    private val getCreditsUseCase: GetCreditsUseCase,
+    private val getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase,
+    private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
+    private val getGenreListUseCase: GetGenreListUseCase,
+    private val getMovieTrailerUseCase: GetMovieTrailerUseCase,
+    private val getPersonDataUseCase: GetPersonDataUseCase,
+    private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
+    private val insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase,
+    private val insertMoviesListUseCase: InsertMoviesListUseCase,
+    private val remoteFavoriteMovieUseCase: RemoteFavoriteMovieUseCase,
+    private val updateFavoriteStatusUseCase: UpdateFavoriteStatusUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -78,7 +89,7 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch {
             trendingMoviesChannel.send(
                 Event.Failure(
-                    repository.getAllMovies(),
+                    getAllMoviesUseCase.execute(),
                     ""
                 )
             )
@@ -88,22 +99,22 @@ class MovieViewModel @Inject constructor(
     fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         if (isNetworkAvailable(context = context)) {
             trendingMoviesChannel.send(Event.Loading)
-            when (val response = repository.getTrendingMovies()) {
+            when (val response = getTrendingMoviesUseCase.execute()) {
                 is Resource.Success -> {
                     response.data?.let {
                         it.map { model ->
                             model.id?.let { id ->
-                                val favModel = repository.getFavoriteMovieById(id)
+                                val favModel = getFavoriteMovieByIdUseCase.execute(id)
                                 model.isFavorite = favModel != null
                             }
                         }
-                        repository.deleteMovieTable()
+                        deleteMoviesUseCase.execute()
                         trendingMoviesChannel.send(Event.TrendingSuccess(it))
-                        repository.insertMovieList(it)
+                        insertMoviesListUseCase.execute(it)
                     } ?: kotlin.run {
                         trendingMoviesChannel.send(
                             Event.Failure(
-                                 repository.getAllMovies(),
+                                getAllMoviesUseCase.execute(),
                                 response.message ?: ""
                             )
                         )
@@ -112,7 +123,7 @@ class MovieViewModel @Inject constructor(
                 is Resource.Error -> {
                     trendingMoviesChannel.send(
                         Event.Failure(
-                            repository.getAllMovies(),
+                            getAllMoviesUseCase.execute(),
                             response.message ?: ""
                         )
                     )
@@ -121,7 +132,7 @@ class MovieViewModel @Inject constructor(
         } else {
             trendingMoviesChannel.send(
                 Event.Failure(
-                    repository.getAllMovies(),
+                    getAllMoviesUseCase.execute(),
                     "No Internet" ?: ""
                 )
             )
@@ -132,7 +143,7 @@ class MovieViewModel @Inject constructor(
     fun getGenreList() = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(context)) {
             genreChannel.send(Event.Loading)
-            when (val response = repository.getGenreList()) {
+            when (val response = getGenreListUseCase.execute()) {
                 is Resource.Success -> {
                     response.data?.let {
                         genreChannel.send(Event.GenreSuccess(it))
@@ -151,7 +162,7 @@ class MovieViewModel @Inject constructor(
     fun getCredits(idMovie: Int) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(context)) {
             castChannel.send(Event.Loading)
-            when (val response = repository.getCredits(idMovie)) {
+            when (val response = getCreditsUseCase.execute(idMovie)) {
                 is Resource.Success -> {
                     response.data?.let {
                         castChannel.send(Event.CastSuccess(it))
@@ -170,7 +181,7 @@ class MovieViewModel @Inject constructor(
     fun getPersonData(personId: Int) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(context)) {
             actorChannel.send(Event.Loading)
-            when (val response = repository.getPersonData(personId)) {
+            when (val response = getPersonDataUseCase.execute(personId)) {
                 is Resource.Success -> {
                     response.data?.let {
                         actorChannel.send(Event.ActorSuccess(it))
@@ -188,7 +199,7 @@ class MovieViewModel @Inject constructor(
     fun getMovieTrailer(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {
         if (isNetworkAvailable(context)) {
             trailerChannel.send(Event.Loading)
-            when (val response = repository.getMovieTrailer(movieId)) {
+            when (val response = getMovieTrailerUseCase.execute(movieId)) {
                 is Resource.Success -> {
                     response.data?.let {
                         trailerChannel.send(Event.TrailerSuccess(it))
@@ -205,19 +216,19 @@ class MovieViewModel @Inject constructor(
 
     fun updateMovieModel(movieModel: TrendingMoviesModel) =
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateFavoriteStatus(movieModel)
+            updateFavoriteStatusUseCase.execute(movieModel)
         }
 
-    fun getMovieList(): LiveData<List<TrendingMoviesModel>> = repository.getAllMovies()
+    fun getMovieList(): LiveData<List<TrendingMoviesModel>> = getAllMoviesUseCase.execute()
 
-    fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> = repository.getFavoriteMovies()
+    fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> = getFavoriteMoviesUseCase.execute()
 
     fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
-        repository.insertFavoriteMovie(favoriteMovieModel)
+        insertFavoriteMovieUseCase.execute(favoriteMovieModel)
     }
 
     fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
-        repository.removeFavoriteMovie(favoriteMovieModel)
+        remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
     }
 
     private fun isNetworkAvailable(context: Context): Boolean {

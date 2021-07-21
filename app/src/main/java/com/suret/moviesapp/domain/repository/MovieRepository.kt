@@ -1,4 +1,4 @@
-package com.suret.moviesapp.data.domain
+package com.suret.moviesapp.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.suret.moviesapp.data.model.*

@@ -1,19 +1,20 @@
-package com.suret.moviesapp.data.domain
+package com.suret.moviesapp.data.repository
 
 import androidx.lifecycle.LiveData
 import com.suret.moviesapp.BuildConfig
-import com.suret.moviesapp.data.api.IAPI
-import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.model.*
+import com.suret.moviesapp.data.repository.datasource.LocalDataSource
+import com.suret.moviesapp.data.repository.datasource.RemoteDataSource
+import com.suret.moviesapp.domain.repository.MovieRepository
 import com.suret.moviesapp.util.Resource
 
 class MovieRepositoryImpl(
-    private val api: IAPI,
-    private val movieDao: MovieDao
+    private val localDataSource: LocalDataSource,
+    private val remoteDataSource: RemoteDataSource
 ) : MovieRepository {
 
     override suspend fun getTrendingMovies(): Resource<List<TrendingMoviesModel>> {
-        val response = api.getTrendingMovies(BuildConfig.API_KEY)
+        val response = remoteDataSource.getTrendingMovies(BuildConfig.API_KEY)
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
@@ -26,27 +27,28 @@ class MovieRepositoryImpl(
 
     }
 
-    override fun getAllMovies(): LiveData<List<TrendingMoviesModel>> = movieDao.getAllMovies()
+    override fun getAllMovies(): LiveData<List<TrendingMoviesModel>> =
+        localDataSource.getAllMovies()
 
     override fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> =
-        movieDao.getFavoriteMovies()
+        localDataSource.getFavoriteMovies()
 
     override suspend fun deleteMovieTable() {
-        movieDao.deleteMovieTable()
+        localDataSource.deleteMovieTable()
     }
 
     override suspend fun updateFavoriteStatus(movieModel: TrendingMoviesModel) {
-        movieDao.updateFavoriteStatus(movieModel)
+        localDataSource.updateFavoriteStatus(movieModel)
     }
 
 
     override suspend fun insertMovieList(movieModel: List<TrendingMoviesModel>) {
-        movieDao.insertMovieList(movieModel)
+        localDataSource.insertMovieList(movieModel)
     }
 
     override suspend fun getGenreList(): Resource<List<GenreModel>> {
 
-        val response = api.getGenreList(BuildConfig.API_KEY)
+        val response = remoteDataSource.getGenreList(BuildConfig.API_KEY)
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
@@ -59,7 +61,7 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun getCredits(movieId: Int): Resource<List<Cast>> {
-        val response = api.getCredits(movieId, BuildConfig.API_KEY)
+        val response = remoteDataSource.getCredits(movieId, BuildConfig.API_KEY)
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
@@ -72,7 +74,7 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun getPersonData(personId: Int): Resource<ActorModel> {
-        val response = api.getPersonData(personId, BuildConfig.API_KEY)
+        val response = remoteDataSource.getPersonData(personId, BuildConfig.API_KEY)
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
@@ -85,7 +87,7 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun getMovieTrailer(movieId: Int): Resource<List<Result>> {
-        val response = api.getMovieTrailer(movieId, BuildConfig.API_KEY)
+        val response = remoteDataSource.getMovieTrailer(movieId, BuildConfig.API_KEY)
         val result = response.body()
         result?.let {
             return if (response.isSuccessful) {
@@ -98,14 +100,14 @@ class MovieRepositoryImpl(
     }
 
     override suspend fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) {
-        movieDao.insertFavoriteMovie(favoriteMovieModel)
+        localDataSource.insertFavoriteMovie(favoriteMovieModel)
     }
 
     override suspend fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) {
-        movieDao.removeFavoriteMovie(favoriteMovieModel)
+        localDataSource.removeFavoriteMovie(favoriteMovieModel)
     }
 
     override suspend fun getFavoriteMovieById(id: Int): FavoriteMovieModel {
-        return movieDao.getFavoriteMovieById(id)
+        return localDataSource.getFavoriteMovieById(id)
     }
 }

@@ -30,8 +30,6 @@ e
 5app/src/main/java/com/suret/moviesapp/MainActivity.kt,8\7\873d25495b96789d439639774775668ec40943b2
 
 Oapp/src/main/java/com/suret/moviesapp/ui/persondetails/PersonDetailsFragment.kt,0\0\00d5f7ab285348a238e912c4b0a7756045ce874e
-f
-6app/src/main/java/com/suret/moviesapp/data/api/IAPI.kt,a\5\a57ee4a702a9d390c44846b4a3929afbbaaa96c8
 l
 <app/src/main/java/com/suret/moviesapp/util/GenreConverter.kt,c\b\cbb47db7bd6dd2de20f77d2c052ab06d99be5ec9
 P
@@ -40,8 +38,6 @@ P
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 u
 Eapp/src/main/java/com/suret/moviesapp/ui/fullcast/FullCastFragment.kt,e\9\e9fe4b35ba2dbd23855d26e1609ff6813004b302
-j
-:app/src/main/java/com/suret/moviesapp/data/di/AppModule.kt,1\9\196242a89f45c83990a460be4e321f0e40e0f037
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/TrailerModelRoot.kt,b\e\beb628d2af8ccf735854c3341bcea661ff62b9a3
 v
@@ -50,3 +46,21 @@ n
 >app/src/main/java/com/suret/moviesapp/data/db/MovieDatabase.kt,c\2\c2a1f72fa3f928c292716cf911403a8326a57252
 v
 Fapp/src/main/java/com/suret/moviesapp/data/model/FavoriteMovieModel.kt,f\b\fb1c24749d1741ffe82230f7dbfb2a94b31edcea
+Å
+Qapp/src/main/java/com/suret/moviesapp/ui/moviedetails/adapters/FullCastAdapter.kt,1\1\1188879e607faacc2aa93a7a2a1dba9e2b583c65
+m
+=app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
+t
+Dapp/src/main/java/com/suret/moviesapp/data/domain/MovieRepository.kt,e\c\ec4b026a261bb012e1b71f90d936be4f0e6b0a82
+u
+Eapp/src/main/java/com/suret/moviesapp/ui/favourite/FavoriteAdapter.kt,a\9\a943afa80f71abc8b8f92ec43de0829aab1e01f2
+x
+Happ/src/main/java/com/suret/moviesapp/ui/favourite/FavouritesFragment.kt,8\1\810af5158a5a9844f69004d0f19465e8ece8b92e
+d
+4app/src/main/java/com/suret/moviesapp/util/PopUps.kt,a\6\a6a8dd4fd5c1979fda80da1db2616c7bde14e617
+}
+Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
+q
+Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
