@@ -17,7 +17,6 @@
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/cast_appbar"
                 style="@style/Style.AppBarLayout"
-                android:layout_marginTop="@dimen/_20sdp"
                 android:background="@color/background_color"
                 android:theme="@style/Style.AppBarLayout"
                 app:layout_constraintEnd_toEndOf="parent"

@@ -110,6 +110,16 @@
                     app:layout_constraintTop_toTopOf="@id/tvRating"
                     app:srcCompat="@drawable/star_full" />
 
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/iwArrow"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_marginEnd="@dimen/_10sdp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/iwStar"
+                    app:srcCompat="@drawable/ic_baseline_arrow_forward" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.cardview.widget.CardView>

@@ -223,11 +223,11 @@ class MovieViewModel @Inject constructor(
 
     fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> = getFavoriteMoviesUseCase.execute()
 
-    fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
+    fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch(Dispatchers.IO) {
         insertFavoriteMovieUseCase.execute(favoriteMovieModel)
     }
 
-    fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch {
+    fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch(Dispatchers.IO) {
         remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
     }
 

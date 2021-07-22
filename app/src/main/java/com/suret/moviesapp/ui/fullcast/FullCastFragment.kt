@@ -4,10 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.other.Constants.CAST_LIST
@@ -19,9 +18,8 @@ import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 
 class FullCastFragment : Fragment() {
     private lateinit var fullCastBinding: FragmentFullCastBinding
-    private var castString: String? = null
+    private var castList: List<Cast>? = null
     private lateinit var castAdapter: FullCastAdapter
-    private var bundle = Bundle()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -34,10 +32,7 @@ class FullCastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        castString = arguments?.getString(CAST_LIST)
-
-        val turnsType = object : TypeToken<List<Cast>>() {}.type
-        val turns = Gson().fromJson<List<Cast>>(castString, turnsType)
+        castList = arguments?.getParcelableArrayList(CAST_LIST)
 
         castAdapter = FullCastAdapter()
         castAdapter.sendTypeCast(FULL_CAST_TYPE)
@@ -50,13 +45,14 @@ class FullCastFragment : Fragment() {
             }
             rvFullCast.adapter = castAdapter
 
-            castAdapter.differ.submitList(turns)
+            castAdapter.differ.submitList(castList)
 
             castAdapter.setOnItemClickListener {
-                bundle.apply {
-                    putParcelable(CAST_MODEL, it)
-                }
-                findNavController().navigate(R.id.action_to_personDetailsFragment, bundle)
+                findNavController().navigate(
+                    R.id.action_to_personDetailsFragment,
+                    bundleOf().apply {
+                        putParcelable(CAST_MODEL, it)
+                    })
             }
         }
 

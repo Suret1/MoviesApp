@@ -82,12 +82,12 @@ class MovieDetailsFragment : Fragment() {
         setToolBar()
     }
 
-    private fun sendData(it: TrendingMoviesModel) {
+    private fun sendData(model: TrendingMoviesModel) {
         movieDetailsBinding.apply {
             rvCast.adapter = castListAdapter
-            movieSetData(it)
+            movieSetData(model)
             viewLifecycleOwner.lifecycleScope.launch {
-                it.id?.let {
+                model.id?.let {
                     movieViewModel.getCredits(it)
                     movieViewModel.castFlow.collect { event ->
                         when (event) {
@@ -110,7 +110,7 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             viewLifecycleOwner.lifecycleScope.launch {
-                it.id?.let { id -> movieViewModel.getMovieTrailer(id) }
+                model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
                 movieViewModel.trailerFlow.collect { event ->
                     when (event) {
                         is MovieViewModel.Event.Loading -> {
@@ -164,10 +164,9 @@ class MovieDetailsFragment : Fragment() {
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
         tvSeeAll.setOnClickListener {
             if (castList != null) {
-                val castList = Gson().toJson(castList)
                 findNavController().navigate(
                     R.id.action_to_fullFragment,
-                    bundleOf().apply { putString(CAST_LIST, castList) })
+                    bundleOf().apply { putParcelableArrayList(CAST_LIST, ArrayList(castList)) })
             }
         }
     }
