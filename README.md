@@ -1,5 +1,6 @@
 # Movies App
-This app is simple android movie app that shows new movies weekly
+<p><strong>This app is simple android movie app that shows new movies weekly</strong></p>
+<p><strong>I used <a href=https://www.themoviedb.org/>The Movie Database(TMDb) as API </strong></p>
 <h4><strong>Features:</strong></h4>
 <ul>
   <li>New movies weekly
