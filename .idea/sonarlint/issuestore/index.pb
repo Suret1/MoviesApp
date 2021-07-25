@@ -50,10 +50,6 @@ x
 Happ/src/main/java/com/suret/moviesapp/ui/favourite/FavouritesFragment.kt,8\1\810af5158a5a9844f69004d0f19465e8ece8b92e
 d
 4app/src/main/java/com/suret/moviesapp/util/PopUps.kt,a\6\a6a8dd4fd5c1979fda80da1db2616c7bde14e617
-q
-Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 i
 9app/src/main/java/com/suret/moviesapp/data/db/MovieDao.kt,b\2\b2f6700cb88a36f1e7f2d43e1223b3d739398829
 ‹
@@ -118,3 +114,15 @@ q
 Aapp/src/main/java/com/suret/moviesapp/data/di/DataSourceModule.kt,9\6\9653e3559a6d18573ad92fcdcf30b264cf4a1e29
 a
 1app/src/main/java/com/suret/moviesapp/MovieApp.kt,1\4\14d1b6d6e0c88009ad2312db055448e95eeb57f7
+t
+Dapp/src/main/java/com/suret/moviesapp/data/model/CreditsModelRoot.kt,5\2\52480f15b60b425de7b3caf2011b487775001746
+}
+Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
+u
+Eapp/src/main/java/com/suret/moviesapp/ui/fullcast/FullCastFragment.kt,e\9\e9fe4b35ba2dbd23855d26e1609ff6813004b302
+{
+Kapp/src/main/java/com/suret/moviesapp/ui/movies/viewmodel/MovieViewModel.kt,5\a\5aa4c0b06bcc84eea695c1d37f9e3dc308dafa3b
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+q
+Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9

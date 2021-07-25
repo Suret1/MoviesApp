@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
 import androidx.core.os.bundleOf
+import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -140,7 +141,7 @@ class MoviesFragment : Fragment() {
         val snack = Snackbar.make(view, getString(id), Snackbar.LENGTH_SHORT)
         val layoutParams = FrameLayout.LayoutParams(snack.view.layoutParams)
         layoutParams.gravity = Gravity.TOP
-        snack.view.setPadding(0, 0, 0, 0)
+        snack.view.setPadding(0, 10, 0, 0)
         snack.view.layoutParams = layoutParams
         snack.view.startAnimation(
             AnimationUtils.loadAnimation(
