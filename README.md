@@ -23,15 +23,15 @@ You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/m
 <ul>
   <li>Clean Architecture
 </li>
-  <li>Dagger Hilt
+  <li><a href=https://github.com/google/dagger>Dagger Hilt</a>
 </li>
-  <li>Navigation Component
+  <li><a href=https://developer.android.com/guide/navigation>Navigation Component</a>
 </li>
-    <li>Retrofit
+    <li><a href=https://github.com/google/dagger>Retrofit</a>
 </li>
-      <li>Room
+      <li><a href=https://developer.android.com/jetpack/androidx/releases/room>Room</a>
 </li>
-      <li>Coroutines
+      <li><a href=https://developer.android.com/kotlin/coroutines>Coroutines</a>
 </li>
 </ul>
   
