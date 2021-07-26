@@ -1,7 +1,6 @@
 package com.suret.moviesapp.ui.movies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -9,18 +8,15 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
-import androidx.core.view.marginStart
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
 import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
@@ -69,9 +65,9 @@ class MoviesFragment : Fragment() {
 
         movieAdapter.setOnClickListener { movie ->
             movie.let {
-                view.findNavController().navigate(
-                    R.id.action_to_movieDetailsFragment,
-                    bundleOf().apply { putParcelable(MOVIE_MODEL, movie) })
+                findNavController().navigate(
+                    MoviesFragmentDirections.actionMoviesToMovieDetailsFragment(movie, null)
+                )
             }
         }
         movieAdapter.setOnFavoriteClickListener { movie ->

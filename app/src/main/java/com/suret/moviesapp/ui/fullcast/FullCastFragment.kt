@@ -4,13 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.Cast
-import com.suret.moviesapp.data.other.Constants.CAST_LIST
-import com.suret.moviesapp.data.other.Constants.CAST_MODEL
 import com.suret.moviesapp.data.other.Constants.FULL_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentFullCastBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
@@ -18,8 +16,8 @@ import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 
 class FullCastFragment : Fragment() {
     private lateinit var fullCastBinding: FragmentFullCastBinding
-    private var castList: List<Cast>? = null
     private lateinit var castAdapter: FullCastAdapter
+    private val args: FullCastFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -32,7 +30,8 @@ class FullCastFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        castList = arguments?.getParcelableArrayList(CAST_LIST)
+
+        val castList = args.castList
 
         castAdapter = FullCastAdapter()
         castAdapter.sendTypeCast(FULL_CAST_TYPE)
@@ -45,14 +44,14 @@ class FullCastFragment : Fragment() {
             }
             rvFullCast.adapter = castAdapter
 
-            castAdapter.differ.submitList(castList)
+            castList?.let {
+                castAdapter.differ.submitList(it as List<Cast>)
+            }
 
             castAdapter.setOnItemClickListener {
                 findNavController().navigate(
-                    R.id.action_to_personDetailsFragment,
-                    bundleOf().apply {
-                        putParcelable(CAST_MODEL, it)
-                    })
+                    FullCastFragmentDirections.actionFullCastFragmentToPersonDetailsFragment(it)
+                )
             }
         }
 

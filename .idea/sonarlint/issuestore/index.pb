@@ -24,8 +24,6 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 e
 5app/src/main/java/com/suret/moviesapp/MainActivity.kt,8\7\873d25495b96789d439639774775668ec40943b2
-
-Oapp/src/main/java/com/suret/moviesapp/ui/persondetails/PersonDetailsFragment.kt,0\0\00d5f7ab285348a238e912c4b0a7756045ce874e
 l
 <app/src/main/java/com/suret/moviesapp/util/GenreConverter.kt,c\b\cbb47db7bd6dd2de20f77d2c052ab06d99be5ec9
 P
@@ -40,12 +38,6 @@ v
 Fapp/src/main/java/com/suret/moviesapp/data/model/FavoriteMovieModel.kt,f\b\fb1c24749d1741ffe82230f7dbfb2a94b31edcea
 
 Qapp/src/main/java/com/suret/moviesapp/ui/moviedetails/adapters/FullCastAdapter.kt,1\1\1188879e607faacc2aa93a7a2a1dba9e2b583c65
-m
-=app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
-u
-Eapp/src/main/java/com/suret/moviesapp/ui/favourite/FavoriteAdapter.kt,a\9\a943afa80f71abc8b8f92ec43de0829aab1e01f2
-x
-Happ/src/main/java/com/suret/moviesapp/ui/favourite/FavouritesFragment.kt,8\1\810af5158a5a9844f69004d0f19465e8ece8b92e
 d
 4app/src/main/java/com/suret/moviesapp/util/PopUps.kt,a\6\a6a8dd4fd5c1979fda80da1db2616c7bde14e617
 i
@@ -114,11 +106,5 @@ a
 1app/src/main/java/com/suret/moviesapp/MovieApp.kt,1\4\14d1b6d6e0c88009ad2312db055448e95eeb57f7
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/CreditsModelRoot.kt,5\2\52480f15b60b425de7b3caf2011b487775001746
-}
-Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
-u
-Eapp/src/main/java/com/suret/moviesapp/ui/fullcast/FullCastFragment.kt,e\9\e9fe4b35ba2dbd23855d26e1609ff6813004b302
 {
 Kapp/src/main/java/com/suret/moviesapp/ui/movies/viewmodel/MovieViewModel.kt,5\a\5aa4c0b06bcc84eea695c1d37f9e3dc308dafa3b
-q
-Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9

@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
@@ -13,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.data.other.Constants.FAVORITE_MODEL
 import com.suret.moviesapp.databinding.FragmentFavouritesBinding
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.util.PopUps
@@ -48,8 +46,8 @@ class FavouritesFragment : Fragment() {
         })
         favoriteAdapter.setOnItemClickListener { favModel ->
             view.findNavController().navigate(
-                R.id.action_to_movieDetailsFragment,
-                bundleOf().apply { putParcelable(FAVORITE_MODEL, favModel) })
+                FavouritesFragmentDirections.actionFavouriteToMovieDetailsFragment(null, favModel)
+            )
         }
         favoriteAdapter.setOnFavoriteClickListener {
             initRemoveDialog(it)

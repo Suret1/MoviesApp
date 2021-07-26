@@ -5,53 +5,86 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/movies">
 
-    <action
-        android:id="@+id/action_to_movieDetailsFragment"
-        app:destination="@id/movieDetailsFragment"
-        app:enterAnim="@anim/slide_left"
-        app:exitAnim="@anim/wait_anim"
-        app:popEnterAnim="@anim/wait_anim"
-        app:popExitAnim="@anim/slide_right" />
-
-    <action
-        android:id="@+id/action_to_fullFragment"
-        app:destination="@id/fullCastFragment"
-        app:enterAnim="@anim/slide_left"
-        app:exitAnim="@anim/wait_anim"
-        app:popEnterAnim="@anim/wait_anim"
-        app:popExitAnim="@anim/slide_right" />
-    <action
-        android:id="@+id/action_to_personDetailsFragment"
-        app:destination="@id/personDetailsFragment"
-        app:enterAnim="@anim/slide_left"
-        app:exitAnim="@anim/wait_anim"
-        app:popEnterAnim="@anim/wait_anim"
-        app:popExitAnim="@anim/slide_right" />
     <fragment
         android:id="@+id/movies"
         tools:layout="@layout/fragment_movies"
         android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
         android:label="MoviesFragment">
 
+        <action
+            android:id="@+id/action_movies_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right"/>
     </fragment>
     <fragment
         android:id="@+id/favourite"
         tools:layout="@layout/fragment_favourites"
         android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
-        android:label="FavouritesFragment" />
+        android:label="FavouritesFragment" >
+        <action
+            android:id="@+id/action_favourite_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right"/>
+    </fragment>
     <fragment
         android:id="@+id/movieDetailsFragment"
         tools:layout="@layout/fragment_movie_details"
         android:name="com.suret.moviesapp.ui.moviedetails.MovieDetailsFragment"
-        android:label="MovieDetailsFragment" />
+        android:label="MovieDetailsFragment" >
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_fullCastFragment"
+            app:destination="@id/fullCastFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
+            app:destination="@id/personDetailsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
+        <argument
+            android:name="movieModel"
+            app:argType="com.suret.moviesapp.data.model.TrendingMoviesModel"
+            app:nullable="true" />
+        <argument
+            android:name="favModel"
+            app:argType="com.suret.moviesapp.data.model.FavoriteMovieModel"
+            app:nullable="true" />
+    </fragment>
     <fragment
         android:id="@+id/fullCastFragment"
         tools:layout="@layout/fragment_full_cast"
         android:name="com.suret.moviesapp.ui.fullcast.FullCastFragment"
-        android:label="FullCastFragment" />
+        android:label="FullCastFragment" >
+        <argument
+            android:name="castList"
+            app:argType="java.util.ArrayList"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_fullCastFragment_to_personDetailsFragment"
+            app:destination="@id/personDetailsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right"  />
+    </fragment>
     <fragment
         android:id="@+id/personDetailsFragment"
         tools:layout="@layout/fragment_person_details"
         android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsFragment"
-        android:label="PersonDetailsFragment" />
+        android:label="PersonDetailsFragment" >
+        <argument
+            android:name="castModel"
+            app:argType="com.suret.moviesapp.data.model.Cast"
+            app:nullable="true" />
+    </fragment>
 </navigation>

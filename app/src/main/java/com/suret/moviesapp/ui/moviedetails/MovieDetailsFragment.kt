@@ -9,15 +9,14 @@ import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.annotation.StringRes
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.google.gson.Gson
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.suret.moviesapp.R
@@ -25,10 +24,6 @@ import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.data.other.Constants.CAST_LIST
-import com.suret.moviesapp.data.other.Constants.CAST_MODEL
-import com.suret.moviesapp.data.other.Constants.FAVORITE_MODEL
-import com.suret.moviesapp.data.other.Constants.MOVIE_MODEL
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
@@ -50,7 +45,7 @@ class MovieDetailsFragment : Fragment() {
     private var castList: List<Cast>? = null
     private lateinit var castListAdapter: FullCastAdapter
     private var youtubeKey = ""
-
+    private val args: MovieDetailsFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -64,8 +59,8 @@ class MovieDetailsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        movieModel = arguments?.getParcelable(MOVIE_MODEL)
-        favoriteMovieModel = arguments?.getParcelable(FAVORITE_MODEL)
+        movieModel = args.movieModel
+        favoriteMovieModel = args.favModel
 
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
@@ -162,20 +157,26 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
+
         tvSeeAll.setOnClickListener {
-            if (castList != null) {
+            castList?.let {
+                val array = arrayListOf<Cast>()
+                array.addAll(it)
                 findNavController().navigate(
-                    R.id.action_to_fullFragment,
-                    bundleOf().apply { putParcelableArrayList(CAST_LIST, ArrayList(castList)) })
+                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentToFullCastFragment(
+                        array
+                    )
+                )
             }
+
         }
     }
 
     private fun goToPersonDetailFragment() {
         castListAdapter.setOnItemClickListener {
             findNavController().navigate(
-                R.id.action_to_personDetailsFragment,
-                bundleOf().apply { putParcelable(CAST_MODEL, it) })
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(it)
+            )
         }
     }
 
