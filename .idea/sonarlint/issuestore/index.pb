@@ -30,8 +30,6 @@ l
 <app/src/main/java/com/suret/moviesapp/util/GenreConverter.kt,c\b\cbb47db7bd6dd2de20f77d2c052ab06d99be5ec9
 P
  app/src/main/AndroidManifest.xml,8\c\8c55c3ccc257e5907959013f99656e4c8ec3903e
-<
-build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/TrailerModelRoot.kt,b\e\beb628d2af8ccf735854c3341bcea661ff62b9a3
 v
@@ -122,7 +120,5 @@ u
 Eapp/src/main/java/com/suret/moviesapp/ui/fullcast/FullCastFragment.kt,e\9\e9fe4b35ba2dbd23855d26e1609ff6813004b302
 {
 Kapp/src/main/java/com/suret/moviesapp/ui/movies/viewmodel/MovieViewModel.kt,5\a\5aa4c0b06bcc84eea695c1d37f9e3dc308dafa3b
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 q
 Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
