@@ -14,7 +14,7 @@
 </ul>
 
 <h4><strong>Download APK:</strong></h4>
-You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/movies_app.apk">on releases page</a>
+You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/movies_app.apk>on releases page</a>
                                                                          
 # Screen
 <img src=https://github.com/Suret1/MoviesApp/blob/main/gif/movies_app.gif width="500" height="700" />
