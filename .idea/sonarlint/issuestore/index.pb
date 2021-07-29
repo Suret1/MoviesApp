@@ -20,8 +20,6 @@ f
 6app/src/main/java/com/suret/moviesapp/util/Resource.kt,1\b\1b2765e6ac043de2cccbbd1199eb97feb46af1aa
 p
 @app/src/main/java/com/suret/moviesapp/util/MyGradientTextView.kt,0\9\098648e5f595762728f867616e3883c68da327b5
-X
-(gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 e
 5app/src/main/java/com/suret/moviesapp/MainActivity.kt,8\7\873d25495b96789d439639774775668ec40943b2
 l
@@ -102,9 +100,19 @@ o
 ?app/src/main/java/com/suret/moviesapp/data/di/DatabaseModule.kt,9\2\92a86d3bf1b3d3a4a3d744ec4c0a5ec45dd4baa3
 q
 Aapp/src/main/java/com/suret/moviesapp/data/di/DataSourceModule.kt,9\6\9653e3559a6d18573ad92fcdcf30b264cf4a1e29
-a
-1app/src/main/java/com/suret/moviesapp/MovieApp.kt,1\4\14d1b6d6e0c88009ad2312db055448e95eeb57f7
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/CreditsModelRoot.kt,5\2\52480f15b60b425de7b3caf2011b487775001746
-{
-Kapp/src/main/java/com/suret/moviesapp/ui/movies/viewmodel/MovieViewModel.kt,5\a\5aa4c0b06bcc84eea695c1d37f9e3dc308dafa3b
+u
+Eapp/src/main/java/com/suret/moviesapp/ui/favourite/FavoriteAdapter.kt,a\9\a943afa80f71abc8b8f92ec43de0829aab1e01f2
+m
+=app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
+u
+Eapp/src/main/java/com/suret/moviesapp/ui/fullcast/FullCastFragment.kt,e\9\e9fe4b35ba2dbd23855d26e1609ff6813004b302
+
+Oapp/src/main/java/com/suret/moviesapp/ui/persondetails/PersonDetailsFragment.kt,0\0\00d5f7ab285348a238e912c4b0a7756045ce874e
+x
+Happ/src/main/java/com/suret/moviesapp/ui/favourite/FavouritesFragment.kt,8\1\810af5158a5a9844f69004d0f19465e8ece8b92e
+<
+build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
+9
+	README.md,8\e\8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d

@@ -56,6 +56,7 @@ class MoviesFragment : Fragment() {
             PREVENT_WHEN_EMPTY
 
 
+
         moviesBinding.apply {
             trendMoviesRV.adapter = movieAdapter
             swipeRefresh.setOnRefreshListener {
