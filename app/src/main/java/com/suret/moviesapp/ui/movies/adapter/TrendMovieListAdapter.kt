@@ -1,9 +1,7 @@
 package com.suret.moviesapp.ui.movies.adapter
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -54,9 +52,9 @@ class TrendMovieListAdapter :
                     } else {
                         movieTitle.text = model.title
                     }
-                    if(model.isFavorite){
+                    if (model.isFavorite) {
                         iwFavorite.setImageResource(R.drawable.ic_favorite_movie)
-                    }else{
+                    } else {
                         iwFavorite.setImageResource(R.drawable.ic_disable_favorite)
                     }
                     movieImage.load(
@@ -78,8 +76,10 @@ class TrendMovieListAdapter :
                             setOnFavoriteClick?.invoke(movies)
                         }
                     }
+
                 }
             }
+
         }
 
     }
@@ -88,7 +88,11 @@ class TrendMovieListAdapter :
         val layoutInflater = LayoutInflater.from(parent.context)
         val trendingMoviesListBinding =
             TrendingMoviesListBinding.inflate(layoutInflater, parent, false)
-        return TrendViewHolder(trendingMoviesListBinding, setOnItemClick, setOnFavoriteClick)
+        return TrendViewHolder(
+            trendingMoviesListBinding,
+            setOnItemClick,
+            setOnFavoriteClick
+        )
 
     }
 
@@ -100,7 +104,6 @@ class TrendMovieListAdapter :
 
     private var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
     private var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
-
 
     fun setOnClickListener(listener: (TrendingMoviesModel) -> Unit) {
         setOnItemClick = listener

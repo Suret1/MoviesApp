@@ -50,8 +50,6 @@ v
 Fapp/src/main/java/com/suret/moviesapp/data/api/GetTrendingMoviesAPI.kt,1\9\1967ab255566f1a54ce77ec9efa65ffd8dc658f2
 r
 Bapp/src/main/java/com/suret/moviesapp/data/api/GetPersonDataAPI.kt,f\d\fd876adcbfa60107768c64bb2c00bb7a873558a1
-€
-Papp/src/main/java/com/suret/moviesapp/ui/movies/adapter/TrendMovieListAdapter.kt,6\c\6c775a5f0b58a7ec36b70f372d5065d19e62eb27
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/CreditsModelRoot.kt,5\2\52480f15b60b425de7b3caf2011b487775001746
 u
@@ -74,8 +72,6 @@ X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
 m
 =app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
-q
-Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
 t
 Dapp/src/main/java/com/suret/moviesapp/data/model/TrailerModelRoot.kt,b\e\beb628d2af8ccf735854c3341bcea661ff62b9a3
 j
@@ -118,3 +114,11 @@ n
 >app/src/main/java/com/suret/moviesapp/data/di/UseCaseModule.kt,d\a\da23964bf59c3ffd790ebea263d4192d63dc13f9
 q
 Aapp/src/main/java/com/suret/moviesapp/data/di/RepositoryModule.kt,6\2\6281078463be07e1690b2c4b44bd238ff01eea53
+q
+Aapp/src/main/java/com/suret/moviesapp/data/di/DataSourceModule.kt,9\6\9653e3559a6d18573ad92fcdcf30b264cf4a1e29
+n
+>app/src/main/java/com/suret/moviesapp/data/db/MovieDatabase.kt,c\2\c2a1f72fa3f928c292716cf911403a8326a57252
+v
+Fapp/src/main/java/com/suret/moviesapp/data/model/TrendingMoviesRoot.kt,d\a\dae54a277b0962c4857a3f55a40f7bc61dfce0af
+o
+?app/src/main/java/com/suret/moviesapp/data/di/DatabaseModule.kt,9\2\92a86d3bf1b3d3a4a3d744ec4c0a5ec45dd4baa3
