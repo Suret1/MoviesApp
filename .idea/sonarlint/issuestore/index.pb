@@ -72,8 +72,6 @@ a
 Mapp/src/main/java/com/suret/moviesapp/ui/moviedetails/MovieDetailsFragment.kt,a\6\a6257dc3b542b960fcae9433bde592a0bb180992
 X
 (gradle/wrapper/gradle-wrapper.properties,f\b\fbe448ebfc3eb2d4e308f6b8b043666f5b57235e
-@
-app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
 m
 =app/src/main/java/com/suret/moviesapp/data/other/Constants.kt,4\7\47d9d654f6950bb335d64ad20ab797fe109731c3
 q
