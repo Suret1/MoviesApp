@@ -9,7 +9,7 @@ import com.suret.moviesapp.util.GenreConverter
 
 @Database(
     entities = [TrendingMoviesModel::class, FavoriteMovieModel::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(GenreConverter::class)

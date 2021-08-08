@@ -3,6 +3,7 @@ package com.suret.moviesapp.data.model
 import android.os.Parcelable
 import androidx.annotation.Keep
 import androidx.room.Entity
+import androidx.room.OnConflictStrategy
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverters
 import com.suret.moviesapp.util.GenreConverter

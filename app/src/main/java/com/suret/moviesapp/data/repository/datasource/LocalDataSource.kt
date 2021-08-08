@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 
-interface LocalDataSource {
+interface  LocalDataSource {
 
     fun getAllMovies(): LiveData<List<TrendingMoviesModel>>
     fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>>
