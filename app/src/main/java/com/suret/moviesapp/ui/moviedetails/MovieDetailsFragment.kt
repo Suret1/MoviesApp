@@ -15,6 +15,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
+import androidx.transition.TransitionManager
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
@@ -24,6 +25,8 @@ import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.GenreModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.other.Constants.INITIAL_IS_COLLAPSED
+import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
@@ -36,7 +39,6 @@ import kotlin.math.abs
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
-
     private val movieViewModel: MovieViewModel by viewModels()
     private lateinit var movieDetailsBinding: FragmentMovieDetailsBinding
     private var genreModelList: List<GenreModel>? = null
@@ -46,6 +48,7 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var castListAdapter: FullCastAdapter
     private var youtubeKey = ""
     private val args: MovieDetailsFragmentArgs by navArgs()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -371,9 +374,19 @@ class MovieDetailsFragment : Fragment() {
         )
     }
 
-
     private fun FragmentMovieDetailsBinding.setStoryline(moviesModel: TrendingMoviesModel) {
+        var isCollapsed = INITIAL_IS_COLLAPSED
         storyLineTV.text = moviesModel.overview
+        storyLineTV.setOnClickListener {
+            if (isCollapsed) {
+                storyLineTV.maxLines = Int.MAX_VALUE
+            } else {
+                storyLineTV.maxLines = MAX_LINES_COLLAPSED
+            }
+            isCollapsed = !isCollapsed
+            TransitionManager.beginDelayedTransition(parentLayout)
+        }
+
     }
 
     private fun FragmentMovieDetailsBinding.setTrailer(youtubeKey: String?) {

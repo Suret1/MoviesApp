@@ -5,8 +5,10 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:animateLayoutChanges="true"
         android:background="@color/background_color"
         tools:context=".ui.moviedetails.MovieDetailsFragment">
 
@@ -41,6 +43,7 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:showFullScreenButton="false"
                     app:useWebUi="true" />
+
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/toolbar"
                     android:layout_width="match_parent"
@@ -55,14 +58,14 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabFav"
-            app:tint="@null"
-            tools:srcCompat="@drawable/ic_favorite_movie"
             android:layout_width="wrap_content"
-            app:backgroundTint="@color/white"
-            android:layout_marginEnd="@dimen/_16sdp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            app:backgroundTint="@color/white"
             app:layout_anchor="@id/appbarLayout"
-            app:layout_anchorGravity="bottom|end" />
+            app:layout_anchorGravity="bottom|end"
+            app:tint="@null"
+            tools:srcCompat="@drawable/ic_favorite_movie" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -74,17 +77,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
-                    <com.suret.moviesapp.util.MyGradientTextView
-                        android:id="@+id/movie_title"
-                        style="@style/GilroyBoldTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_24sdp"
-                        android:layout_marginHorizontal="@dimen/_16sdp"
-                        android:ellipsize="end"
-                        android:maxLines="2"
-                        android:textSize="@dimen/_28ssp"
-                        tools:text="Avengers: End Game" />
+
+                <com.suret.moviesapp.util.MyGradientTextView
+                    android:id="@+id/movie_title"
+                    style="@style/GilroyBoldTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_24sdp"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textSize="@dimen/_28ssp"
+                    tools:text="Avengers: End Game" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/genre_TV"
@@ -129,6 +133,8 @@
                     style="@style/GilroyLightTextStyle"
                     android:layout_marginHorizontal="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_4sdp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
                     tools:text="After the devastating events of Avengers: Infinity War, the universe is in ruins. With the help of remaining allies, the Avengers assemble once more in order to reverse Thanos' actions and restore balance to the universe." />
 
                 <LinearLayout

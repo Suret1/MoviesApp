@@ -122,3 +122,9 @@ v
 Fapp/src/main/java/com/suret/moviesapp/data/model/TrendingMoviesRoot.kt,d\a\dae54a277b0962c4857a3f55a40f7bc61dfce0af
 o
 ?app/src/main/java/com/suret/moviesapp/data/di/DatabaseModule.kt,9\2\92a86d3bf1b3d3a4a3d744ec4c0a5ec45dd4baa3
+@
+app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
+€
+Papp/src/main/java/com/suret/moviesapp/ui/movies/adapter/TrendMovieListAdapter.kt,6\c\6c775a5f0b58a7ec36b70f372d5065d19e62eb27
+q
+Aapp/src/main/java/com/suret/moviesapp/ui/movies/MoviesFragment.kt,a\8\a8663755c0f54bc95ad720500580e54f5bd8dda9
