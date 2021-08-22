@@ -52,7 +52,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
                     }
                     iwMovie.load(
                         Constants.IMAGE_URL +
-                                differ.currentList.getOrNull(bindingAdapterPosition)?.poster_path
+                                differ.currentList.getOrNull(bindingAdapterPosition)?.backdrop_path
                     ) {
                         crossfade(true)
                     }

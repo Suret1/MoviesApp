@@ -25,17 +25,20 @@
             android:id="@+id/imageCardView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_16sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="@dimen/_5sdp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/bottomCard"
-            app:layout_constraintStart_toStartOf="@id/bottomCard">
+            app:layout_constraintStart_toStartOf="@id/bottomCard"
+            app:layout_constraintTop_toTopOf="parent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iwMovie"
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_150sdp"
+                android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -93,9 +96,9 @@
                     android:textColor="#ffc107"
                     android:textSize="@dimen/_22ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/iwStar"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
-                    app:layout_constraintEnd_toStartOf="@id/iwStar"
                     app:layout_constraintVertical_bias="0.539"
                     tools:text="9.5" />
 
@@ -112,10 +115,10 @@
 
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iwArrow"
-                    android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
-                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/iwStar"

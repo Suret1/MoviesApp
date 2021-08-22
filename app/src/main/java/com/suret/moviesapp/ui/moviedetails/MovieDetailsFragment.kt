@@ -30,7 +30,11 @@ import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
+import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
+import com.suret.moviesapp.util.AppUtil.convertHourAndMinutes
+import com.suret.moviesapp.util.AppUtil.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -45,6 +49,7 @@ class MovieDetailsFragment : Fragment() {
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
+    private lateinit var productionsAdapter: ProductionsAdapter
     private lateinit var castListAdapter: FullCastAdapter
     private var youtubeKey = ""
     private val args: MovieDetailsFragmentArgs by navArgs()
@@ -65,6 +70,7 @@ class MovieDetailsFragment : Fragment() {
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
+        productionsAdapter = ProductionsAdapter()
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
 
@@ -86,21 +92,58 @@ class MovieDetailsFragment : Fragment() {
             movieSetData(model)
             viewLifecycleOwner.lifecycleScope.launch {
                 model.id?.let {
-                    movieViewModel.getCredits(it)
-                    movieViewModel.castFlow.collect { event ->
+                    movieViewModel.getMovieDetails(it)
+                    movieViewModel.detailsFlow.collect { event ->
                         when (event) {
-                            is MovieViewModel.Event.CastSuccess -> {
-                                castList = event.cast
-                                castListAdapter.differ.submitList(event.cast)
-                            }
-                            is MovieViewModel.Event.Failure -> {
+                            is Event.Failure -> {
                                 Toast.makeText(
                                     requireContext(),
                                     event.errorText,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                            is MovieViewModel.Event.Loading -> {
+                            is Event.DetailsSuccess -> {
+                                movieDetailsBinding.apply {
+                                    event.details?.let { model ->
+                                        if (model.budget != null) {
+                                            tvBudget.text =
+                                                splitNumber(model.budget) + getString(R.string.dollar)
+                                        }
+                                        if (model.revenue != null) {
+                                            tvRevenue.text =
+                                                splitNumber(model.revenue) + getString(R.string.dollar)
+                                        }
+                                        if (model.runtime != null) {
+                                            tvRuntime.text =
+                                                convertHourAndMinutes(model.runtime)
+                                        }
+                                        rvProductions.adapter = productionsAdapter
+                                        productionsAdapter.differ.submitList(model.production_companies)
+                                    }
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                model.id?.let {
+                    movieViewModel.getCredits(it)
+                    movieViewModel.castFlow.collect { event ->
+                        when (event) {
+                            is Event.CastSuccess -> {
+                                castList = event.cast
+                                castListAdapter.differ.submitList(event.cast)
+                            }
+                            is Event.Failure -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    event.errorText,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            is Event.Loading -> {
                                 //
                             }
                         }
@@ -111,17 +154,17 @@ class MovieDetailsFragment : Fragment() {
                 model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
                 movieViewModel.trailerFlow.collect { event ->
                     when (event) {
-                        is MovieViewModel.Event.Loading -> {
+                        is Event.Loading -> {
                             //
                         }
-                        is MovieViewModel.Event.Failure -> {
+                        is Event.Failure -> {
                             Snackbar.make(
                                 requireView(),
                                 event.errorText,
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
-                        is MovieViewModel.Event.TrailerSuccess -> {
+                        is Event.TrailerSuccess -> {
                             event.trailerList?.let { trailerList ->
                                 if (!trailerList.isNullOrEmpty()) {
                                     youtubeKey = trailerList[0].key.toString()
@@ -136,17 +179,17 @@ class MovieDetailsFragment : Fragment() {
                 movieViewModel.getGenreList()
                 movieViewModel.genreFlow.collect { event ->
                     when (event) {
-                        is MovieViewModel.Event.Loading -> {
+                        is Event.Loading -> {
                             //
                         }
-                        is MovieViewModel.Event.Failure -> {
+                        is Event.Failure -> {
                             Snackbar.make(
                                 requireView(),
                                 event.errorText,
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
-                        is MovieViewModel.Event.GenreSuccess -> {
+                        is Event.GenreSuccess -> {
                             genreModelList = event.genreModel
                             if (genreModelList != null) {
                                 setMovieGenre(genreModelList!!)
@@ -158,6 +201,7 @@ class MovieDetailsFragment : Fragment() {
             goToFullCastFragment()
         }
     }
+
 
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
 
@@ -246,9 +290,16 @@ class MovieDetailsFragment : Fragment() {
             setMovieTitle(moviesModel)
             setRatingData(moviesModel)
             setStoryline(moviesModel)
+            setReleaseDate(moviesModel)
             setFAB(moviesModel)
             setFabListener(moviesModel)
             appBarListener()
+        }
+    }
+
+    private fun FragmentMovieDetailsBinding.setReleaseDate(moviesModel: TrendingMoviesModel) {
+        if (!moviesModel.release_date.isNullOrEmpty()) {
+            tvReleaseDate.text = moviesModel.release_date
         }
     }
 

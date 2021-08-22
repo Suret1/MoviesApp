@@ -89,4 +89,9 @@ object UseCaseModule {
         return UpdateFavoriteStatusUseCase(movieRepository)
     }
 
+    @Singleton
+    @Provides
+    fun provideGetMovieDetailsUseCase(movieRepository: MovieRepository): GetMovieDetailsUseCase {
+        return GetMovieDetailsUseCase(movieRepository)
+    }
 }

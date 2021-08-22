@@ -10,5 +10,6 @@
     <color name="background_color">#191926</color>
     <color name="main_red">#FF3365</color>
     <color name="main_grey">#6D6D80</color>
+    <color name="charade">#20202D</color>
     <color name="silver">#C4C4C4</color>
 </resources>

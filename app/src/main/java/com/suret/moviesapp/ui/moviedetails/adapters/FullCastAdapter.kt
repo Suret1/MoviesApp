@@ -50,14 +50,20 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         if (holder is CastViewHolder) {
-            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path)
+            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path) {
+                crossfade(true)
+                error(R.drawable.ic_round_person_24)
+            }
             holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
             if (!differ.currentList.getOrNull(position)?.character.isNullOrEmpty()) {
                 holder.tvCharacterName.text =
                     "(" + differ.currentList.getOrNull(position)?.character + ")"
             }
         } else if (holder is FullCastViewHolder) {
-            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path)
+            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path) {
+                crossfade(true)
+                error(R.drawable.ic_round_person_24)
+            }
             holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
             holder.tvCharacterName.text = differ.currentList.getOrNull(position)?.character
             holder.tvDepartment.text = differ.currentList.getOrNull(position)?.known_for_department

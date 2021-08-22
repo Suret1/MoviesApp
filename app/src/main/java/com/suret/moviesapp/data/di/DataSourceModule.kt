@@ -27,9 +27,17 @@ object DataSourceModule {
     fun providesRemoteDataSource(
         getTrendingMoviesAPI: GetTrendingMoviesAPI, getCreditsAPI: GetCreditsAPI,
         getGenreListAPI: GetGenreListAPI, getMovieTrailerAPI: GetMovieTrailerAPI,
-        getPersonDataAPI: GetPersonDataAPI
+        getPersonDataAPI: GetPersonDataAPI,
+        getMovieDetailsAPI: GetMovieDetailsAPI
     ): RemoteDataSource {
-        return RemoteDataSourceImpl(getTrendingMoviesAPI,getCreditsAPI,getGenreListAPI, getMovieTrailerAPI, getPersonDataAPI)
+        return RemoteDataSourceImpl(
+            getTrendingMoviesAPI,
+            getCreditsAPI,
+            getGenreListAPI,
+            getMovieTrailerAPI,
+            getPersonDataAPI,
+            getMovieDetailsAPI
+        )
     }
 
 }

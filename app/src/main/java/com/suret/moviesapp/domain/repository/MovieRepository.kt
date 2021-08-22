@@ -8,6 +8,8 @@ interface MovieRepository {
 
     suspend fun getTrendingMovies(): Resource<List<TrendingMoviesModel>>
 
+    suspend fun getMovieDetails(movieId: Int): Resource<MovieDetailsModel>
+
     fun getAllMovies(): LiveData<List<TrendingMoviesModel>>
 
     fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>>

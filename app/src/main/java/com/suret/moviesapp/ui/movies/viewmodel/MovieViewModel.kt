@@ -1,14 +1,12 @@
 package com.suret.moviesapp.ui.movies.viewmodel
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.Build
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.domain.usecase.*
+import com.suret.moviesapp.util.AppUtil.isNetworkAvailable
 import com.suret.moviesapp.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -35,7 +33,8 @@ class MovieViewModel @Inject constructor(
     private val insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase,
     private val insertMoviesListUseCase: InsertMoviesListUseCase,
     private val remoteFavoriteMovieUseCase: RemoteFavoriteMovieUseCase,
-    private val updateFavoriteStatusUseCase: UpdateFavoriteStatusUseCase
+    private val updateFavoriteStatusUseCase: UpdateFavoriteStatusUseCase,
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -58,6 +57,10 @@ class MovieViewModel @Inject constructor(
 
         class TrailerSuccess(
             val trailerList: List<Result>?
+        ) : Event()
+
+        class DetailsSuccess(
+            val details: MovieDetailsModel?
         ) : Event()
 
         class Failure(
@@ -85,6 +88,9 @@ class MovieViewModel @Inject constructor(
     private val trailerChannel = Channel<Event>()
     val trailerFlow = trailerChannel.receiveAsFlow()
 
+    private val detailsChannel = Channel<Event>()
+    val detailsFlow = detailsChannel.receiveAsFlow()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
             trendingMoviesChannel.send(
@@ -97,7 +103,7 @@ class MovieViewModel @Inject constructor(
     }
 
     fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-        if (isNetworkAvailable(context = context)) {
+        if (isNetworkAvailable(context)) {
             trendingMoviesChannel.send(Event.Loading)
             when (val response = getTrendingMoviesUseCase.execute()) {
                 is Resource.Success -> {
@@ -140,7 +146,7 @@ class MovieViewModel @Inject constructor(
 
     }
 
-    fun getGenreList() = viewModelScope.launch(Dispatchers.IO) {
+    fun getGenreList() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         if (isNetworkAvailable(context)) {
             genreChannel.send(Event.Loading)
             when (val response = getGenreListUseCase.execute()) {
@@ -208,7 +214,24 @@ class MovieViewModel @Inject constructor(
                     }
                 }
                 is Resource.Error -> {
-                    actorChannel.send(Event.Failure(null, response.message ?: ""))
+                    trailerChannel.send(Event.Failure(null, response.message ?: ""))
+                }
+            }
+        }
+    }
+
+    fun getMovieDetails(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {
+        if (isNetworkAvailable(context)) {
+            when (val response = getMovieDetailsUseCase.execute(movieId)) {
+                is Resource.Success -> {
+                    response.data?.let {
+                        detailsChannel.send(Event.DetailsSuccess(it))
+                    } ?: kotlin.run {
+                        detailsChannel.send(Event.Failure(null, response.message ?: ""))
+                    }
+                }
+                is Resource.Error -> {
+                    detailsChannel.send(Event.Failure(null, response.message ?: ""))
                 }
             }
         }
@@ -223,38 +246,15 @@ class MovieViewModel @Inject constructor(
 
     fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> = getFavoriteMoviesUseCase.execute()
 
-    fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch(Dispatchers.IO) {
-        insertFavoriteMovieUseCase.execute(favoriteMovieModel)
-    }
-
-    fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) = viewModelScope.launch(Dispatchers.IO) {
-        remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
-    }
-
-    private fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager =
-            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-
-        // For 29 api or above
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val capabilities =
-                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                    ?: return false
-            return when {
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-                else -> false
-            }
+    fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) =
+        viewModelScope.launch(Dispatchers.IO) {
+            insertFavoriteMovieUseCase.execute(favoriteMovieModel)
         }
-        // For below 29 api
-        else {
-            if (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting) {
-                return true
-            }
+
+    fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) =
+        viewModelScope.launch(Dispatchers.IO) {
+            remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
         }
-        return false
-    }
 
 
 }

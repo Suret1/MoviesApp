@@ -69,5 +69,10 @@ object NetModule {
     fun provideGetMovieTrailerAPI(retrofit: Retrofit): GetMovieTrailerAPI {
         return retrofit.create(GetMovieTrailerAPI::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideGetMovieDetailsAPI(retrofit: Retrofit): GetMovieDetailsAPI {
+        return retrofit.create(GetMovieDetailsAPI::class.java)
+    }
 
 }
