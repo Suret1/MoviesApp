@@ -2,7 +2,6 @@ package com.suret.moviesapp.data.repository.datasource
 
 import com.suret.moviesapp.data.model.*
 import retrofit2.Response
-import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -27,7 +26,6 @@ interface RemoteDataSource {
         @Query("api_key") apiKey: String
     ): Response<TrailerModelRoot>
 
-    @GET("/3/movie/{id}")
     suspend fun getMovieDetails(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String
