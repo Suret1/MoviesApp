@@ -21,7 +21,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.suret.moviesapp.R
-import com.suret.moviesapp.data.model.*
+import com.suret.moviesapp.data.model.Cast
+import com.suret.moviesapp.data.model.FavoriteMovieModel
+import com.suret.moviesapp.data.model.MovieDetailsModel
+import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants.INITIAL_IS_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
@@ -108,56 +111,56 @@ class MovieDetailsFragment : Fragment() {
                         }
                     }
                 }
-                viewLifecycleOwner.lifecycleScope.launch {
-                    model.id?.let {
-                        movieViewModel.getCredits(it)
-                        movieViewModel.castFlow.collect { event ->
-                            when (event) {
-                                is Event.CastSuccess -> {
-                                    castList = event.cast
-                                    castListAdapter.differ.submitList(event.cast)
-                                }
-                                is Event.Failure -> {
-                                    Toast.makeText(
-                                        requireContext(),
-                                        event.errorText,
-                                        Toast.LENGTH_SHORT
-                                    ).show()
-                                }
-                                is Event.Loading -> {
-                                    //
-                                }
-                            }
-                        }
-                    }
-                }
-                viewLifecycleOwner.lifecycleScope.launch {
-                    model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
-                    movieViewModel.trailerFlow.collect { event ->
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                model.id?.let {
+                    movieViewModel.getCredits(it)
+                    movieViewModel.castFlow.collect { event ->
                         when (event) {
+                            is Event.CastSuccess -> {
+                                castList = event.cast
+                                castListAdapter.differ.submitList(event.cast)
+                            }
+                            is Event.Failure -> {
+                                Toast.makeText(
+                                    requireContext(),
+                                    event.errorText,
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                             is Event.Loading -> {
                                 //
                             }
-                            is Event.Failure -> {
-                                Snackbar.make(
-                                    requireView(),
-                                    event.errorText,
-                                    Snackbar.LENGTH_SHORT
-                                ).show()
-                            }
-                            is Event.TrailerSuccess -> {
-                                event.trailerList?.let { trailerList ->
-                                    if (!trailerList.isNullOrEmpty()) {
-                                        youtubeKey = trailerList[0].key.toString()
-                                        setTrailer(youtubeKey)
-                                    }
+                        }
+                    }
+                }
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
+                movieViewModel.trailerFlow.collect { event ->
+                    when (event) {
+                        is Event.Loading -> {
+                            //
+                        }
+                        is Event.Failure -> {
+                            Snackbar.make(
+                                requireView(),
+                                event.errorText,
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                        is Event.TrailerSuccess -> {
+                            event.trailerList?.let { trailerList ->
+                                if (!trailerList.isNullOrEmpty()) {
+                                    youtubeKey = trailerList[0].key.toString()
+                                    setTrailer(youtubeKey)
                                 }
                             }
                         }
                     }
                 }
-                goToFullCastFragment()
             }
+            goToFullCastFragment()
         }
     }
 

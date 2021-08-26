@@ -138,77 +138,81 @@ class MovieViewModel @Inject constructor(
 
     }
 
-    fun getCredits(idMovie: Int) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(context)) {
-            castChannel.send(Event.Loading)
-            when (val response = getCreditsUseCase.execute(idMovie)) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        castChannel.send(Event.CastSuccess(it))
-                    } ?: kotlin.run {
+    fun getCredits(idMovie: Int) =
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                castChannel.send(Event.Loading)
+                when (val response = getCreditsUseCase.execute(idMovie)) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            castChannel.send(Event.CastSuccess(it))
+                        } ?: kotlin.run {
+                            castChannel.send(Event.Failure(null, response.message ?: ""))
+                        }
+                    }
+                    is Resource.Error -> {
                         castChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
-                is Resource.Error -> {
-                    castChannel.send(Event.Failure(null, response.message ?: ""))
-                }
             }
+
         }
 
-    }
-
-    fun getPersonData(personId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(context)) {
-            actorChannel.send(Event.Loading)
-            when (val response = getPersonDataUseCase.execute(personId)) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        actorChannel.send(Event.ActorSuccess(it))
-                    } ?: kotlin.run {
+    fun getPersonData(personId: Int) =
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                actorChannel.send(Event.Loading)
+                when (val response = getPersonDataUseCase.execute(personId)) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            actorChannel.send(Event.ActorSuccess(it))
+                        } ?: kotlin.run {
+                            actorChannel.send(Event.Failure(null, response.message ?: ""))
+                        }
+                    }
+                    is Resource.Error -> {
                         actorChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
-                is Resource.Error -> {
-                    actorChannel.send(Event.Failure(null, response.message ?: ""))
-                }
             }
         }
-    }
 
-    fun getMovieTrailer(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(context)) {
-            trailerChannel.send(Event.Loading)
-            when (val response = getMovieTrailerUseCase.execute(movieId)) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        trailerChannel.send(Event.TrailerSuccess(it))
-                    } ?: kotlin.run {
+    fun getMovieTrailer(movieId: Int) =
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                trailerChannel.send(Event.Loading)
+                when (val response = getMovieTrailerUseCase.execute(movieId)) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            trailerChannel.send(Event.TrailerSuccess(it))
+                        } ?: kotlin.run {
+                            trailerChannel.send(Event.Failure(null, response.message ?: ""))
+                        }
+                    }
+                    is Resource.Error -> {
                         trailerChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
-                is Resource.Error -> {
-                    trailerChannel.send(Event.Failure(null, response.message ?: ""))
-                }
             }
         }
-    }
 
-    fun getMovieDetails(movieId: Int) = viewModelScope.launch(Dispatchers.IO) {
-        if (isNetworkAvailable(context)) {
-            when (val response = getMovieDetailsUseCase.execute(movieId)) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        detailsChannel.send(Event.DetailsSuccess(it))
-                    } ?: kotlin.run {
+    fun getMovieDetails(movieId: Int) =
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                when (val response = getMovieDetailsUseCase.execute(movieId)) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            detailsChannel.send(Event.DetailsSuccess(it))
+                        } ?: kotlin.run {
+                            detailsChannel.send(Event.Failure(null, response.message ?: ""))
+                        }
+                    }
+                    is Resource.Error -> {
                         detailsChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
-                is Resource.Error -> {
-                    detailsChannel.send(Event.Failure(null, response.message ?: ""))
-                }
             }
         }
-    }
 
     fun updateMovieModel(movieModel: TrendingMoviesModel) =
         viewModelScope.launch(Dispatchers.IO) {
