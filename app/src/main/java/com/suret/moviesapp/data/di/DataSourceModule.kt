@@ -25,15 +25,15 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun providesRemoteDataSource(
-        getTrendingMoviesAPI: GetTrendingMoviesAPI, getCreditsAPI: GetCreditsAPI,
-        getGenreListAPI: GetGenreListAPI, getMovieTrailerAPI: GetMovieTrailerAPI,
+        getTrendingMoviesAPI: GetTrendingMoviesAPI,
+        getCreditsAPI: GetCreditsAPI,
+        getMovieTrailerAPI: GetMovieTrailerAPI,
         getPersonDataAPI: GetPersonDataAPI,
         getMovieDetailsAPI: GetMovieDetailsAPI
     ): RemoteDataSource {
         return RemoteDataSourceImpl(
             getTrendingMoviesAPI,
             getCreditsAPI,
-            getGenreListAPI,
             getMovieTrailerAPI,
             getPersonDataAPI,
             getMovieDetailsAPI

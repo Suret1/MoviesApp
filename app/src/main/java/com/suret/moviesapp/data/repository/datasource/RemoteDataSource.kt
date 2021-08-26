@@ -9,8 +9,6 @@ interface RemoteDataSource {
 
     suspend fun getTrendingMovies(@Query("api_key") apiKey: String): Response<TrendingMoviesRoot>
 
-    suspend fun getGenreList(@Query("api_key") apiKey: String): Response<GenreModelRoot>
-
     suspend fun getCredits(
         @Path("id") id: Int,
         @Query("api_key") apiKey: String

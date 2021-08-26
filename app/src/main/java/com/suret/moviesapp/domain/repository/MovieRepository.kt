@@ -20,8 +20,6 @@ interface MovieRepository {
 
     suspend fun insertMovieList(movieModel: List<TrendingMoviesModel>)
 
-    suspend fun getGenreList(): Resource<List<GenreModel>>
-
     suspend fun getCredits(movieId: Int): Resource<List<Cast>>
 
     suspend fun getPersonData(personId: Int): Resource<ActorModel>

@@ -26,7 +26,6 @@ class MovieViewModel @Inject constructor(
     private val getCreditsUseCase: GetCreditsUseCase,
     private val getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase,
     private val getFavoriteMoviesUseCase: GetFavoriteMoviesUseCase,
-    private val getGenreListUseCase: GetGenreListUseCase,
     private val getMovieTrailerUseCase: GetMovieTrailerUseCase,
     private val getPersonDataUseCase: GetPersonDataUseCase,
     private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
@@ -42,10 +41,6 @@ class MovieViewModel @Inject constructor(
             val trendingMoviesModel: List<TrendingMoviesModel>?,
 
             ) : Event()
-
-        class GenreSuccess(
-            val genreModel: List<GenreModel>?,
-        ) : Event()
 
         class CastSuccess(
             val cast: List<Cast>?
@@ -75,9 +70,6 @@ class MovieViewModel @Inject constructor(
 
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
-
-    private val genreChannel = Channel<Event>()
-    val genreFlow = genreChannel.receiveAsFlow()
 
     private val castChannel = Channel<Event>()
     val castFlow = castChannel.receiveAsFlow()
@@ -142,25 +134,6 @@ class MovieViewModel @Inject constructor(
                     "No Internet" ?: ""
                 )
             )
-        }
-
-    }
-
-    fun getGenreList() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-        if (isNetworkAvailable(context)) {
-            genreChannel.send(Event.Loading)
-            when (val response = getGenreListUseCase.execute()) {
-                is Resource.Success -> {
-                    response.data?.let {
-                        genreChannel.send(Event.GenreSuccess(it))
-                    } ?: kotlin.run {
-                        genreChannel.send(Event.Failure(null, response.message ?: ""))
-                    }
-                }
-                is Resource.Error -> {
-                    genreChannel.send(Event.Failure(null, response.message ?: ""))
-                }
-            }
         }
 
     }

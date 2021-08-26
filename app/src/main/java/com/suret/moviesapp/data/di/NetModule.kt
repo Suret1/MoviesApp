@@ -48,12 +48,6 @@ object NetModule {
 
     @Provides
     @Singleton
-    fun provideGetGenreListAPI(retrofit: Retrofit): GetGenreListAPI {
-        return retrofit.create(GetGenreListAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
     fun provideGetCreditsAPI(retrofit: Retrofit): GetCreditsAPI {
         return retrofit.create(GetCreditsAPI::class.java)
     }

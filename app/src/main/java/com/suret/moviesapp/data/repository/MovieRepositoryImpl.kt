@@ -59,20 +59,6 @@ class MovieRepositoryImpl(
         localDataSource.insertMovieList(movieModel)
     }
 
-    override suspend fun getGenreList(): Resource<List<GenreModel>> {
-
-        val response = remoteDataSource.getGenreList(BuildConfig.API_KEY)
-        val result = response.body()
-        result?.let {
-            return if (response.isSuccessful) {
-                Resource.Success(it.genres!!)
-            } else {
-                Resource.Error(response.message())
-            }
-        }
-        return Resource.Error(response.message())
-    }
-
     override suspend fun getCredits(movieId: Int): Resource<List<Cast>> {
         val response = remoteDataSource.getCredits(movieId, BuildConfig.API_KEY)
         val result = response.body()

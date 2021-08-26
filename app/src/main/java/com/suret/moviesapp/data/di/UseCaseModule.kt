@@ -43,12 +43,6 @@ object UseCaseModule {
 
     @Singleton
     @Provides
-    fun provideGetGenreListUseCase(movieRepository: MovieRepository): GetGenreListUseCase {
-        return GetGenreListUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
     fun provideGetMovieTrailerUseCase(movieRepository: MovieRepository): GetMovieTrailerUseCase {
         return GetMovieTrailerUseCase(movieRepository)
     }

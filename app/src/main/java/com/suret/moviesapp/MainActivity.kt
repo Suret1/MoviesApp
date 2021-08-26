@@ -28,7 +28,7 @@ class MainActivity : AppCompatActivity() {
         activityMainBinding.apply {
 
             NavigationUI.setupWithNavController(bottomNav, navController)
-            bottomNav.setOnNavigationItemReselectedListener { }
+            bottomNav.setOnNavigationItemReselectedListener {}
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -51,4 +51,5 @@ class MainActivity : AppCompatActivity() {
             bottomNav.visibility = View.VISIBLE
         }
     }
+
 }

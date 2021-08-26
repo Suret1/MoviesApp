@@ -21,10 +21,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import com.suret.moviesapp.R
-import com.suret.moviesapp.data.model.Cast
-import com.suret.moviesapp.data.model.FavoriteMovieModel
-import com.suret.moviesapp.data.model.GenreModel
-import com.suret.moviesapp.data.model.TrendingMoviesModel
+import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.data.other.Constants.INITIAL_IS_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
@@ -45,7 +42,6 @@ import kotlin.math.abs
 class MovieDetailsFragment : Fragment() {
     private val movieViewModel: MovieViewModel by viewModels()
     private lateinit var movieDetailsBinding: FragmentMovieDetailsBinding
-    private var genreModelList: List<GenreModel>? = null
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
@@ -105,101 +101,90 @@ class MovieDetailsFragment : Fragment() {
                             is Event.DetailsSuccess -> {
                                 movieDetailsBinding.apply {
                                     event.details?.let { model ->
-                                        if (model.budget != null) {
-                                            tvBudget.text =
-                                                splitNumber(model.budget) + getString(R.string.dollar)
-                                        }
-                                        if (model.revenue != null) {
-                                            tvRevenue.text =
-                                                splitNumber(model.revenue) + getString(R.string.dollar)
-                                        }
-                                        if (model.runtime != null) {
-                                            tvRuntime.text =
-                                                convertHourAndMinutes(model.runtime)
-                                        }
-                                        rvProductions.adapter = productionsAdapter
-                                        productionsAdapter.differ.submitList(model.production_companies)
+                                        setMovieDetails(model)
                                     }
-
                                 }
                             }
                         }
                     }
                 }
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
-                model.id?.let {
-                    movieViewModel.getCredits(it)
-                    movieViewModel.castFlow.collect { event ->
+                viewLifecycleOwner.lifecycleScope.launch {
+                    model.id?.let {
+                        movieViewModel.getCredits(it)
+                        movieViewModel.castFlow.collect { event ->
+                            when (event) {
+                                is Event.CastSuccess -> {
+                                    castList = event.cast
+                                    castListAdapter.differ.submitList(event.cast)
+                                }
+                                is Event.Failure -> {
+                                    Toast.makeText(
+                                        requireContext(),
+                                        event.errorText,
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                                is Event.Loading -> {
+                                    //
+                                }
+                            }
+                        }
+                    }
+                }
+                viewLifecycleOwner.lifecycleScope.launch {
+                    model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
+                    movieViewModel.trailerFlow.collect { event ->
                         when (event) {
-                            is Event.CastSuccess -> {
-                                castList = event.cast
-                                castListAdapter.differ.submitList(event.cast)
-                            }
-                            is Event.Failure -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    event.errorText,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
                             is Event.Loading -> {
                                 //
                             }
-                        }
-                    }
-                }
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
-                model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
-                movieViewModel.trailerFlow.collect { event ->
-                    when (event) {
-                        is Event.Loading -> {
-                            //
-                        }
-                        is Event.Failure -> {
-                            Snackbar.make(
-                                requireView(),
-                                event.errorText,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                        is Event.TrailerSuccess -> {
-                            event.trailerList?.let { trailerList ->
-                                if (!trailerList.isNullOrEmpty()) {
-                                    youtubeKey = trailerList[0].key.toString()
-                                    setTrailer(youtubeKey)
+                            is Event.Failure -> {
+                                Snackbar.make(
+                                    requireView(),
+                                    event.errorText,
+                                    Snackbar.LENGTH_SHORT
+                                ).show()
+                            }
+                            is Event.TrailerSuccess -> {
+                                event.trailerList?.let { trailerList ->
+                                    if (!trailerList.isNullOrEmpty()) {
+                                        youtubeKey = trailerList[0].key.toString()
+                                        setTrailer(youtubeKey)
+                                    }
                                 }
                             }
                         }
                     }
                 }
+                goToFullCastFragment()
             }
-            viewLifecycleOwner.lifecycleScope.launch {
-                movieViewModel.getGenreList()
-                movieViewModel.genreFlow.collect { event ->
-                    when (event) {
-                        is Event.Loading -> {
-                            //
-                        }
-                        is Event.Failure -> {
-                            Snackbar.make(
-                                requireView(),
-                                event.errorText,
-                                Snackbar.LENGTH_SHORT
-                            ).show()
-                        }
-                        is Event.GenreSuccess -> {
-                            genreModelList = event.genreModel
-                            if (genreModelList != null) {
-                                setMovieGenre(genreModelList!!)
-                            }
-                        }
-                    }
-                }
-            }
-            goToFullCastFragment()
         }
+    }
+
+    private fun FragmentMovieDetailsBinding.setMovieDetails(model: MovieDetailsModel) {
+        if (model.budget != null) {
+            tvBudget.text =
+                splitNumber(model.budget) + getString(R.string.dollar)
+        }
+        if (model.revenue != null) {
+            tvRevenue.text =
+                splitNumber(model.revenue) + getString(R.string.dollar)
+        }
+        if (model.runtime != null) {
+            tvRuntime.text =
+                convertHourAndMinutes(model.runtime)
+        }
+        val list = model.genres
+        val genresString = StringBuilder()
+        list?.forEach { g ->
+            genresString.append(g.name + ", ")
+        }
+        if (genresString.isNotEmpty()) {
+            genresString.deleteCharAt(genresString.length - 2)
+            genreTV.text = genresString
+        }
+        rvProductions.adapter = productionsAdapter
+        productionsAdapter.differ.submitList(model.production_companies)
     }
 
 
@@ -222,7 +207,9 @@ class MovieDetailsFragment : Fragment() {
     private fun goToPersonDetailFragment() {
         castListAdapter.setOnItemClickListener {
             findNavController().navigate(
-                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(it)
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(
+                    it
+                )
             )
         }
     }
@@ -232,34 +219,6 @@ class MovieDetailsFragment : Fragment() {
             toolbar.setNavigationIcon(R.drawable.back_btn)
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
-            }
-        }
-    }
-
-    private fun setMovieGenre(genresModel: List<GenreModel>) {
-        val genresString = StringBuilder()
-        var movieGenresList: List<Int>? = null
-        movieGenresList = when {
-            movieModel != null -> {
-                movieModel?.genre_ids
-            }
-            else -> {
-                favoriteMovieModel?.genre_ids
-            }
-        }
-        for (genre in genresModel) {
-            if (movieGenresList != null) {
-                for (g in movieGenresList) {
-                    if (genre.id == g) {
-                        genresString.append(genre.name + ", ")
-                    }
-                }
-            }
-        }
-        movieDetailsBinding.apply {
-            if (genresString.isNotEmpty()) {
-                genresString.deleteCharAt(genresString.length - 2)
-                genreTV.text = genresString
             }
         }
     }
@@ -308,7 +267,12 @@ class MovieDetailsFragment : Fragment() {
             fabFav.setOnClickListener {
                 viewLifecycleOwner.lifecycleScope.launch {
                     moviesModel.let { model ->
-                        movieViewModel.updateMovieModel(setFavoriteStatus(model, model.isFavorite))
+                        movieViewModel.updateMovieModel(
+                            setFavoriteStatus(
+                                model,
+                                model.isFavorite
+                            )
+                        )
                         if (!model.isFavorite) {
                             movieViewModel.insertFavoriteMovie(
                                 createFavoriteModel(
@@ -457,7 +421,6 @@ class MovieDetailsFragment : Fragment() {
     private fun FragmentMovieDetailsBinding.setRatingData(
         moviesModel: TrendingMoviesModel
     ) {
-//        ratingBar.rating = moviesModel.vote_average?.toFloat() ?: 0.0f
         ratingTV.text = moviesModel.vote_average.toString()
     }
 
@@ -487,5 +450,4 @@ class MovieDetailsFragment : Fragment() {
         }
         movieTitle.setColor(R.color.white, R.color.silver)
     }
-
 }
