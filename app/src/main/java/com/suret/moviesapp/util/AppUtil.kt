@@ -6,6 +6,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import java.math.BigInteger
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 object AppUtil {
@@ -53,6 +54,11 @@ object AppUtil {
             "$minutes min"
         }
         return result
+    }
+    fun toDate(dateString: String?): String? {
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return formatter.format(parser.parse(dateString))
     }
 
 }

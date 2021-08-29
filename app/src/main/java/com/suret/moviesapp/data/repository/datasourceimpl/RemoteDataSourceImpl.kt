@@ -10,7 +10,8 @@ class RemoteDataSourceImpl(
     private val getCreditsAPI: GetCreditsAPI,
     private val getMovieTrailerAPI: GetMovieTrailerAPI,
     private val getPersonDataAPI: GetPersonDataAPI,
-    private val getMovieDetailsAPI: GetMovieDetailsAPI
+    private val getMovieDetailsAPI: GetMovieDetailsAPI,
+    private val getReviewsAPI: GetReviewsAPI
 ) : RemoteDataSource {
 
     override suspend fun getTrendingMovies(apiKey: String): Response<TrendingMoviesRoot> =
@@ -27,6 +28,9 @@ class RemoteDataSourceImpl(
 
     override suspend fun getMovieDetails(id: Int, apiKey: String): Response<MovieDetailsModel> =
         getMovieDetailsAPI.getMovieDetails(id, apiKey)
+
+    override suspend fun getReviews(id: Int, apiKey: String): Response<ReviewModel> =
+        getReviewsAPI.getReviews(id, apiKey)
 
 
 }

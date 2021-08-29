@@ -29,14 +29,16 @@ object DataSourceModule {
         getCreditsAPI: GetCreditsAPI,
         getMovieTrailerAPI: GetMovieTrailerAPI,
         getPersonDataAPI: GetPersonDataAPI,
-        getMovieDetailsAPI: GetMovieDetailsAPI
+        getMovieDetailsAPI: GetMovieDetailsAPI,
+        getReviewsAPI: GetReviewsAPI
     ): RemoteDataSource {
         return RemoteDataSourceImpl(
             getTrendingMoviesAPI,
             getCreditsAPI,
             getMovieTrailerAPI,
             getPersonDataAPI,
-            getMovieDetailsAPI
+            getMovieDetailsAPI,
+            getReviewsAPI
         )
     }
 

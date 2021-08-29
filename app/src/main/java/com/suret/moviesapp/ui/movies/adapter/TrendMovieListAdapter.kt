@@ -10,9 +10,10 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.TrendingMoviesListBinding
+import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter.TrendViewHolder
 
 class TrendMovieListAdapter :
-    RecyclerView.Adapter<TrendMovieListAdapter.TrendViewHolder>() {
+    RecyclerView.Adapter<TrendViewHolder>() {
 
     private val differCallBack = object : DiffUtil.ItemCallback<TrendingMoviesModel>() {
         override fun areItemsTheSame(

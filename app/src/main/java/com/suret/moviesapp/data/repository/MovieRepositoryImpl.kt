@@ -98,6 +98,20 @@ class MovieRepositoryImpl(
         return Resource.Error(response.message())
     }
 
+    override suspend fun getReviews(movieId: Int): Resource<List<ReviewResult>> {
+        val response = remoteDataSource.getReviews(movieId, BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(it.results!!)
+            } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+
+    }
+
     override suspend fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) {
         localDataSource.insertFavoriteMovie(favoriteMovieModel)
     }
@@ -109,4 +123,5 @@ class MovieRepositoryImpl(
     override suspend fun getFavoriteMovieById(id: Int): FavoriteMovieModel {
         return localDataSource.getFavoriteMovieById(id)
     }
+
 }

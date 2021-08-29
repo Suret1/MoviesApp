@@ -33,7 +33,8 @@ class MovieViewModel @Inject constructor(
     private val insertMoviesListUseCase: InsertMoviesListUseCase,
     private val remoteFavoriteMovieUseCase: RemoteFavoriteMovieUseCase,
     private val updateFavoriteStatusUseCase: UpdateFavoriteStatusUseCase,
-    private val getMovieDetailsUseCase: GetMovieDetailsUseCase
+    private val getMovieDetailsUseCase: GetMovieDetailsUseCase,
+    private val getReviewsUseCase: GetReviewsUseCase
 ) : ViewModel() {
 
     sealed class Event {
@@ -56,6 +57,10 @@ class MovieViewModel @Inject constructor(
 
         class DetailsSuccess(
             val details: MovieDetailsModel?
+        ) : Event()
+
+        class ReviewsSuccess(
+            val reviews: List<ReviewResult>?
         ) : Event()
 
         class Failure(
@@ -83,12 +88,15 @@ class MovieViewModel @Inject constructor(
     private val detailsChannel = Channel<Event>()
     val detailsFlow = detailsChannel.receiveAsFlow()
 
+    private val reviewChannel = Channel<Event>()
+    val reviewFlow = reviewChannel.receiveAsFlow()
+
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
             trendingMoviesChannel.send(
                 Event.Failure(
                     getAllMoviesUseCase.execute(),
-                    ""
+                    "Unknown error occurred"
                 )
             )
         }
@@ -154,6 +162,13 @@ class MovieViewModel @Inject constructor(
                         castChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
+            } else {
+                castChannel.send(
+                    Event.Failure(
+                        getAllMoviesUseCase.execute(),
+                        "No Internet" ?: ""
+                    )
+                )
             }
 
         }
@@ -174,6 +189,13 @@ class MovieViewModel @Inject constructor(
                         actorChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
+            } else {
+                actorChannel.send(
+                    Event.Failure(
+                        getAllMoviesUseCase.execute(),
+                        "No Internet" ?: ""
+                    )
+                )
             }
         }
 
@@ -193,6 +215,13 @@ class MovieViewModel @Inject constructor(
                         trailerChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
+            } else {
+                trailerChannel.send(
+                    Event.Failure(
+                        getAllMoviesUseCase.execute(),
+                        "No Internet" ?: ""
+                    )
+                )
             }
         }
 
@@ -211,7 +240,39 @@ class MovieViewModel @Inject constructor(
                         detailsChannel.send(Event.Failure(null, response.message ?: ""))
                     }
                 }
+            } else {
+                detailsChannel.send(
+                    Event.Failure(
+                        getAllMoviesUseCase.execute(),
+                        "No Internet" ?: ""
+                    )
+                )
             }
+        }
+
+    fun getReviews(movieId: Int) =
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                when (val response = getReviewsUseCase.execute(movieId)) {
+                    is Resource.Success -> {
+                        response.data.let {
+                            reviewChannel.send(Event.ReviewsSuccess(it))
+                        }
+                    }
+                    is Resource.Error -> {
+                        reviewChannel.send(Event.Failure(null, response.message ?: ""))
+                    }
+
+                }
+            } else {
+                reviewChannel.send(
+                    Event.Failure(
+                        getAllMoviesUseCase.execute(),
+                        "No Internet" ?: ""
+                    )
+                )
+            }
+
         }
 
     fun updateMovieModel(movieModel: TrendingMoviesModel) =

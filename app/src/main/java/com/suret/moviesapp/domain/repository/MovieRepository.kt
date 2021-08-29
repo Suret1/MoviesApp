@@ -32,5 +32,7 @@ interface MovieRepository {
 
     suspend fun getFavoriteMovieById(id: Int): FavoriteMovieModel
 
+    suspend fun getReviews(movieId: Int): Resource<List<ReviewResult>>
+
 
 }

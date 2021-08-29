@@ -88,4 +88,10 @@ object UseCaseModule {
     fun provideGetMovieDetailsUseCase(movieRepository: MovieRepository): GetMovieDetailsUseCase {
         return GetMovieDetailsUseCase(movieRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetReviewsUseCase(movieRepository: MovieRepository): GetReviewsUseCase {
+        return GetReviewsUseCase(movieRepository)
+    }
 }

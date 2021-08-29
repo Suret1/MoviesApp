@@ -29,4 +29,10 @@ interface RemoteDataSource {
         @Query("api_key") apiKey: String
     ): Response<MovieDetailsModel>
 
+
+    suspend fun getReviews(
+        @Path("id") id: Int,
+        @Query("api_key") apiKey: String
+    ): Response<ReviewModel>
+
 }

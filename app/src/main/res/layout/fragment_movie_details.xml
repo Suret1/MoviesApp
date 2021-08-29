@@ -262,6 +262,24 @@
                     android:layout_marginHorizontal="@dimen/_16sdp"
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_weight="1"
+                    android:text="@string/reviews" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:clipToPadding="false"
+                    android:orientation="horizontal"
+                    android:padding="@dimen/_4sdp"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/review_list_layout" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/GilroyBoldTextStyle"
+                    android:layout_marginHorizontal="@dimen/_16sdp"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_weight="1"
                     android:text="@string/production_companies" />
 
                 <androidx.recyclerview.widget.RecyclerView

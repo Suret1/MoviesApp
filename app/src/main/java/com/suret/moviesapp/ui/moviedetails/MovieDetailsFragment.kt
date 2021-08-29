@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -31,6 +30,7 @@ import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
+import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
 import com.suret.moviesapp.util.AppUtil.convertHourAndMinutes
@@ -48,6 +48,7 @@ class MovieDetailsFragment : Fragment() {
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
+    private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var productionsAdapter: ProductionsAdapter
     private lateinit var castListAdapter: FullCastAdapter
     private var youtubeKey = ""
@@ -72,6 +73,7 @@ class MovieDetailsFragment : Fragment() {
         productionsAdapter = ProductionsAdapter()
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
+        reviewAdapter = ReviewAdapter()
 
         favoriteMovieModel?.let {
             sendData(castToTrendingMoviesModel(it))
@@ -95,11 +97,7 @@ class MovieDetailsFragment : Fragment() {
                     movieViewModel.detailsFlow.collect { event ->
                         when (event) {
                             is Event.Failure -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    event.errorText,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                //
                             }
                             is Event.DetailsSuccess -> {
                                 movieDetailsBinding.apply {
@@ -122,11 +120,7 @@ class MovieDetailsFragment : Fragment() {
                                 castListAdapter.differ.submitList(event.cast)
                             }
                             is Event.Failure -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    event.errorText,
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                                //
                             }
                             is Event.Loading -> {
                                 //
@@ -157,6 +151,26 @@ class MovieDetailsFragment : Fragment() {
                                 }
                             }
                         }
+                    }
+                }
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                model.id?.let { id -> movieViewModel.getReviews(id) }
+                movieViewModel.reviewFlow.collect { event ->
+                    when (event) {
+                        is Event.Loading -> {
+                            //
+                        }
+                        is Event.Failure -> {
+                            //
+                        }
+                        is Event.ReviewsSuccess -> {
+                            event.reviews.let {
+                                rvReview.adapter = reviewAdapter
+                                reviewAdapter.differ.submitList(it)
+                            }
+                        }
+
                     }
                 }
             }
