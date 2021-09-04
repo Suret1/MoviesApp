@@ -8,7 +8,6 @@
         android:id="@+id/parentLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:animateLayoutChanges="true"
         android:background="@color/background_color"
         tools:context=".ui.moviedetails.MovieDetailsFragment">
 
@@ -74,6 +73,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
+                android:id="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -294,5 +294,35 @@
                     tools:listitem="@layout/production_list_layout" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_25sdp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            app:fabSize="normal"
+            app:layout_anchor="@id/linearLayout"
+            app:layout_anchorGravity="bottom|end"
+            app:srcCompat="@drawable/ic_round_add_24"
+            app:tint="@null" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabSimilar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/_80sdp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:visibility="gone"
+            app:fabSize="mini"
+            app:layout_anchor="@id/fabSearch"
+            app:layout_anchorGravity="top|center"
+            app:srcCompat="@drawable/ic_opacity"
+            app:tint="@null" />
+
+
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

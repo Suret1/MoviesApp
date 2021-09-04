@@ -5,8 +5,10 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -53,6 +55,11 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var castListAdapter: FullCastAdapter
     private var youtubeKey = ""
     private val args: MovieDetailsFragmentArgs by navArgs()
+    private var isClicked = false
+    private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_open_anim) }
+    private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_close_anim) }
+    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.from_bottom_anim) }
+    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.to_bottom_anim) }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -66,6 +73,19 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+        movieDetailsBinding.apply {
+            fabSimilar.setOnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    "FabSimilar",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+            fabSearch.setOnClickListener {
+                onAddSearchClicked()
+            }
+        }
 
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
@@ -86,6 +106,28 @@ class MovieDetailsFragment : Fragment() {
             PREVENT_WHEN_EMPTY
         setToolBar()
     }
+
+    private fun onAddSearchClicked() {
+        setVisibility()
+    }
+
+    private fun setVisibility() {
+        movieDetailsBinding.apply {
+            if (!isClicked) {
+                fabSimilar.startAnimation(fromBottom)
+                fabSearch.startAnimation(rotateOpen)
+                fabSimilar.visibility = View.VISIBLE
+                isClicked = true
+            } else {
+                fabSimilar.visibility = View.GONE
+                fabSimilar.startAnimation(toBottom)
+                fabSearch.startAnimation(rotateClose)
+                isClicked = false
+            }
+        }
+    }
+
+
 
     private fun sendData(model: TrendingMoviesModel) {
         movieDetailsBinding.apply {
