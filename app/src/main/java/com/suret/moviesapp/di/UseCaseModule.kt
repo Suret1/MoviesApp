@@ -94,4 +94,10 @@ object UseCaseModule {
     fun provideGetReviewsUseCase(movieRepository: MovieRepository): GetReviewsUseCase {
         return GetReviewsUseCase(movieRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetSimilarUseCase(movieRepository: MovieRepository): GetSimilarMoviesUseCase {
+        return GetSimilarMoviesUseCase(movieRepository)
+    }
 }

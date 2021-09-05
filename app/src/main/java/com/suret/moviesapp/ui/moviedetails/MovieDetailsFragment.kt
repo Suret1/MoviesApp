@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
-import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -56,10 +55,31 @@ class MovieDetailsFragment : Fragment() {
     private var youtubeKey = ""
     private val args: MovieDetailsFragmentArgs by navArgs()
     private var isClicked = false
-    private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_open_anim) }
-    private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.rotate_close_anim) }
-    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.from_bottom_anim) }
-    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(requireContext(),R.anim.to_bottom_anim) }
+    private var movieId: Int = 0
+    private val rotateOpen: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_open_anim
+        )
+    }
+    private val rotateClose: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.rotate_close_anim
+        )
+    }
+    private val fromBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.from_bottom_anim
+        )
+    }
+    private val toBottom: Animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.to_bottom_anim
+        )
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -73,20 +93,6 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-        movieDetailsBinding.apply {
-            fabSimilar.setOnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    "FabSimilar",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-            fabSearch.setOnClickListener {
-                onAddSearchClicked()
-            }
-        }
-
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
@@ -97,17 +103,35 @@ class MovieDetailsFragment : Fragment() {
 
         favoriteMovieModel?.let {
             sendData(castToTrendingMoviesModel(it))
+            movieId = it.id!!
         }
         movieModel?.let {
             sendData(it)
+            movieId = it.id!!
         }
         goToPersonDetailFragment()
         castListAdapter.stateRestorationPolicy =
             PREVENT_WHEN_EMPTY
         setToolBar()
+        goToSimilarFragment()
     }
 
-    private fun onAddSearchClicked() {
+    private fun goToSimilarFragment() {
+        movieDetailsBinding.apply {
+            fabSimilar.setOnClickListener {
+                findNavController().navigate(
+                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentToSimilarFragment()
+                        .setMovieID(movieId)
+                )
+                isClicked = false
+            }
+            fabSearch.setOnClickListener {
+                searchFABClicked()
+            }
+        }
+    }
+
+    private fun searchFABClicked() {
         setVisibility()
     }
 
@@ -115,6 +139,7 @@ class MovieDetailsFragment : Fragment() {
         movieDetailsBinding.apply {
             if (!isClicked) {
                 fabSimilar.startAnimation(fromBottom)
+                fabSearch.setImageResource(R.drawable.ic_round_add_24)
                 fabSearch.startAnimation(rotateOpen)
                 fabSimilar.visibility = View.VISIBLE
                 isClicked = true
@@ -122,11 +147,11 @@ class MovieDetailsFragment : Fragment() {
                 fabSimilar.visibility = View.GONE
                 fabSimilar.startAnimation(toBottom)
                 fabSearch.startAnimation(rotateClose)
+                fabSearch.setImageResource(R.drawable.ic_round_search_24)
                 isClicked = false
             }
         }
     }
-
 
 
     private fun sendData(model: TrendingMoviesModel) {

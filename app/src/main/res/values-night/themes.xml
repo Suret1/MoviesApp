@@ -93,4 +93,9 @@
         <item name="strokeColor">@color/main_red</item>
         <item name="strokeWidth">@dimen/_2sdp</item>
     </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/_18ssp</item>
+        <item name="fontFamily">@font/gilroy_bold</item>
+    </style>
 </resources>

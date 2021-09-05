@@ -1,5 +1,6 @@
 package com.suret.moviesapp.data.repository.datasourceimpl
 
+import com.suret.moviesapp.BuildConfig
 import com.suret.moviesapp.data.api.*
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.data.repository.datasource.RemoteDataSource
@@ -11,7 +12,8 @@ class RemoteDataSourceImpl(
     private val getMovieTrailerAPI: GetMovieTrailerAPI,
     private val getPersonDataAPI: GetPersonDataAPI,
     private val getMovieDetailsAPI: GetMovieDetailsAPI,
-    private val getReviewsAPI: GetReviewsAPI
+    private val getReviewsAPI: GetReviewsAPI,
+    private val getSimilarAPI: GetSimilarAPI
 ) : RemoteDataSource {
 
     override suspend fun getTrendingMovies(apiKey: String): Response<TrendingMoviesRoot> =
@@ -32,5 +34,11 @@ class RemoteDataSourceImpl(
     override suspend fun getReviews(id: Int, apiKey: String): Response<ReviewModel> =
         getReviewsAPI.getReviews(id, apiKey)
 
+    override suspend fun getSimilarMovie(
+        id: Int,
+        page: Int,
+        apiKey: String
+    ): Response<TrendingMoviesRoot> =
+       getSimilarAPI.getSimilarMovie(id, page, apiKey)
 
 }

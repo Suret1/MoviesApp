@@ -20,4 +20,5 @@
     <string name="dollar">&#160;$</string>
     <string name="production_companies">Production Companies</string>
     <string name="reviews">Reviews</string>
+    <string name="similar">Similar Movies</string>
 </resources>

@@ -34,5 +34,5 @@ interface MovieRepository {
 
     suspend fun getReviews(movieId: Int): Resource<List<ReviewResult>>
 
-
+    suspend fun getSimilarMovie(movieId: Int, page: Int): Resource<List<TrendingMoviesModel>>
 }

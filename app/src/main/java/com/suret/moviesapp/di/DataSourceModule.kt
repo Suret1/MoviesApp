@@ -30,7 +30,8 @@ object DataSourceModule {
         getMovieTrailerAPI: GetMovieTrailerAPI,
         getPersonDataAPI: GetPersonDataAPI,
         getMovieDetailsAPI: GetMovieDetailsAPI,
-        getReviewsAPI: GetReviewsAPI
+        getReviewsAPI: GetReviewsAPI,
+        getSimilarAPI: GetSimilarAPI
     ): RemoteDataSource {
         return RemoteDataSourceImpl(
             getTrendingMoviesAPI,
@@ -38,7 +39,8 @@ object DataSourceModule {
             getMovieTrailerAPI,
             getPersonDataAPI,
             getMovieDetailsAPI,
-            getReviewsAPI
+            getReviewsAPI,
+            getSimilarAPI
         )
     }
 

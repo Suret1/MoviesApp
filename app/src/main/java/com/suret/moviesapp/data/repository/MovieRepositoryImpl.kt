@@ -112,6 +112,22 @@ class MovieRepositoryImpl(
 
     }
 
+    override suspend fun getSimilarMovie(
+        movieId: Int,
+        page: Int
+    ): Resource<List<TrendingMoviesModel>> {
+        val response = remoteDataSource.getSimilarMovie(movieId, page, BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(it.results!!)
+            } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
     override suspend fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) {
         localDataSource.insertFavoriteMovie(favoriteMovieModel)
     }

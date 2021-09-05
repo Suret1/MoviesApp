@@ -59,6 +59,13 @@
             android:name="favModel"
             app:argType="com.suret.moviesapp.data.model.FavoriteMovieModel"
             app:nullable="true" />
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_similarFragment"
+            app:destination="@id/similarFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right"/>
     </fragment>
     <fragment
         android:id="@+id/fullCastFragment"
@@ -86,5 +93,15 @@
             android:name="castModel"
             app:argType="com.suret.moviesapp.data.model.Cast"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/similarFragment"
+        tools:layout="@layout/fragment_similar"
+        android:name="com.suret.moviesapp.ui.similar.SimilarFragment"
+        android:label="SimilarFragment" >
+        <argument
+            android:name="movieID"
+            app:argType="integer"
+            android:defaultValue="385128" />
     </fragment>
 </navigation>

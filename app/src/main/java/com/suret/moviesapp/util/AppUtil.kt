@@ -5,9 +5,11 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import java.math.BigInteger
+import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.math.roundToInt
 
 object AppUtil {
 
@@ -55,10 +57,18 @@ object AppUtil {
         }
         return result
     }
+
     fun toDate(dateString: String?): String? {
         val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
         val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
         return formatter.format(parser.parse(dateString))
+    }
+
+    fun roundForDouble(value: Double): String {
+        val df = DecimalFormat("0.0")
+        var result = "0.0"
+        result = df.format(value)
+        return result
     }
 
 }

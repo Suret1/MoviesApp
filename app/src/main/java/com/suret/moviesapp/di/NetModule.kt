@@ -75,5 +75,9 @@ object NetModule {
     fun provideGetReviewsAPI(retrofit: Retrofit): GetReviewsAPI {
         return retrofit.create(GetReviewsAPI::class.java)
     }
-
+    @Provides
+    @Singleton
+    fun provideGetSimilarAPI(retrofit: Retrofit): GetSimilarAPI {
+        return retrofit.create(GetSimilarAPI::class.java)
+    }
 }
