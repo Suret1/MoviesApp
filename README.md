@@ -7,9 +7,13 @@
 </li>
   <li>Watching movie trailers
 </li>
-  <li>Choose your favorite movies
+   <li>Movie Details (Budget, Revenue, Runtime, Release Date etc)
 </li>
-    <li>Cast and Actor info
+    <li>Find Similar Movies
+</li>
+     <li>Cast and Actor info
+</li>
+  <li>Choose your favorite movies
 </li>
 </ul>
 
@@ -32,6 +36,8 @@ You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/m
       <li><a href=https://developer.android.com/jetpack/androidx/releases/room>Room</a>
 </li>
       <li><a href=https://developer.android.com/kotlin/coroutines>Coroutines</a>
+</li>
+        <li><a href=https://developer.android.com/jetpack/androidx/releases/paging>Paging</a>
 </li>
 </ul>
   
