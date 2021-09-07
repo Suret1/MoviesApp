@@ -45,9 +45,7 @@ class SimilarFragment : Fragment() {
             }
         }
 
-        val id = args.movieID
-
-        SimilarMoviesPagingDataSource.ID = id
+        SimilarMoviesPagingDataSource.ID = args.movieID
 
         lifecycleScope.launch {
             similarViewModel.listData.collect {
@@ -64,11 +62,7 @@ class SimilarFragment : Fragment() {
                     progressBar.show()
                 }
                 is LoadState.Error -> {
-//                    Toast.makeText(
-//                        requireContext(),
-//                        loadState.error.localizedMessage,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
+                    progressBar.dismiss()
                 }
             }
         }

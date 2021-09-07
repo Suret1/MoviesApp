@@ -3,11 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_anim.xml" value="0.5125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_fav.xml" value="0.5125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_home_24.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_star_rate_24.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/movies.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/star_full.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout-sw600dp/fragment_movies.xml" value="0.206640625" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_main.xml" value="0.66125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/activity_main.xml" value="0.5" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/cast_list_layout.xml" value="0.61625" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/favorite_list_layout.xml" value="0.72" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_favourites.xml" value="0.6" />
@@ -19,6 +22,7 @@
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/production_list_layout.xml" value="0.8800000000000001" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/review_list_layout.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/trending_movies_list.xml" value="0.67" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/menu/nav_menu.xml" value="0.66125" />
       </map>
     </option>
   </component>

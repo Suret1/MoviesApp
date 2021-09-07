@@ -16,7 +16,7 @@ android {
         minSdkVersion 27
         targetSdkVersion 31
         versionCode 1
-        versionName "1.3.4"
+        versionName "1.3.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -120,5 +120,8 @@ dependencies {
 
     //Paging
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
+
+    //CurvedBottomNavigation
+    implementation 'np.com.susanthapa:curved_bottom_navigation:0.6.5'
 
 }

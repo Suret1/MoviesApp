@@ -7,7 +7,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#292647"
+        android:background="@color/martinique"
         tools:context=".ui.favourite.FavouritesFragment">
 
         <androidx.recyclerview.widget.RecyclerView
