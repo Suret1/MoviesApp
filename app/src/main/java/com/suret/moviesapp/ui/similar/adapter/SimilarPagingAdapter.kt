@@ -3,6 +3,7 @@ package com.suret.moviesapp.ui.similar.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.paging.PagingDataAdapter
@@ -15,7 +16,6 @@ import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.ui.similar.adapter.SimilarPagingAdapter.TrendViewHolder
 import com.suret.moviesapp.util.AppUtil.roundForDouble
 import com.willy.ratingbar.ScaleRatingBar
-import java.text.DecimalFormat
 
 class SimilarPagingAdapter :
     PagingDataAdapter<TrendingMoviesModel, TrendViewHolder>(MovieDiffCallback) {
@@ -72,6 +72,7 @@ class SimilarPagingAdapter :
         getItem(position)?.let {
             holder.bind(it)
         }
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_animation)
     }
 
 

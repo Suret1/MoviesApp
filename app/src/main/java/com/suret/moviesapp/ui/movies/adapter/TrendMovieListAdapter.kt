@@ -2,6 +2,7 @@ package com.suret.moviesapp.ui.movies.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -99,6 +100,7 @@ class TrendMovieListAdapter :
 
     override fun onBindViewHolder(holder: TrendViewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_animation)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

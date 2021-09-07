@@ -2,6 +2,7 @@ package com.suret.moviesapp.ui.moviedetails.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -72,6 +73,8 @@ class ProductionsAdapter :
 
     override fun onBindViewHolder(holder: ProductionViewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_alpha_anim)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

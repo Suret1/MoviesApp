@@ -15,7 +15,6 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:clipToPadding="false"
-            android:layoutAnimation="@anim/recyclerview_animation"
             android:orientation="vertical"
             android:padding="@dimen/_4sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
@@ -105,6 +106,8 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewHolder>() {
 
     override fun onBindViewHolder(holder: ReviewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_alpha_anim)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

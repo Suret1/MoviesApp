@@ -2,10 +2,12 @@ package com.suret.moviesapp.ui.favourite
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
+import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FavoriteListLayoutBinding
@@ -86,6 +88,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
+        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
     }
 
     private var setOnItemClick: ((FavoriteMovieModel) -> Unit)? = null

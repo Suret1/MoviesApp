@@ -3,6 +3,7 @@ package com.suret.moviesapp.ui.moviedetails.adapters
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.AsyncListDiffer
@@ -59,6 +60,8 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 holder.tvCharacterName.text =
                     "(" + differ.currentList.getOrNull(position)?.character + ")"
             }
+            holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_alpha_anim)
+
         } else if (holder is FullCastViewHolder) {
             holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path) {
                 crossfade(true)
@@ -67,6 +70,7 @@ class FullCastAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
             holder.tvCharacterName.text = differ.currentList.getOrNull(position)?.character
             holder.tvDepartment.text = differ.currentList.getOrNull(position)?.known_for_department
+            holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_rotate_anim)
         }
         holder.itemView.setOnClickListener {
             differ.currentList.getOrNull(position)?.let {
