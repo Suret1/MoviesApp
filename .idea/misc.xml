@@ -3,10 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/alert_dialog_bg.xml" value="0.6395833333333333" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_anim.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_fav.xml" value="0.5125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.6395833333333333" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_add_24.xml" value="0.6395833333333333" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_home_24.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_star_rate_24.xml" value="0.7" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/line.xml" value="0.6395833333333333" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/movies.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/star_full.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout-sw600dp/fragment_movies.xml" value="0.206640625" />
@@ -15,8 +19,12 @@
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/favorite_list_layout.xml" value="0.72" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_favourites.xml" value="0.6" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_full_cast.xml" value="0.28541666666666665" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_item_list_dialog_list_dialog.xml" value="0.66125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_item_list_dialog_list_dialog_item.xml" value="0.66125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_movie_details.xml" value="0.5" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_movies.xml" value="0.4017857142857143" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_person_details.xml" value="0.66125" />
+        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_review_bottom_sheet.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_similar.xml" value="0.48115079365079366" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/full_cast_list.xml" value="0.28541666666666665" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/production_list_layout.xml" value="0.8800000000000001" />

@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
@@ -30,8 +31,8 @@ import kotlinx.coroutines.launch
 class MoviesFragment : Fragment() {
 
     private val movieViewModel: MovieViewModel by viewModels()
-
-    private lateinit var moviesBinding: FragmentMoviesBinding
+    private var _binding: FragmentMoviesBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var movieAdapter: TrendMovieListAdapter
 
@@ -40,10 +41,9 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        moviesBinding = FragmentMoviesBinding.inflate(inflater, container, false)
-        return moviesBinding.root
+        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        return binding.root
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,8 +56,7 @@ class MoviesFragment : Fragment() {
             PREVENT_WHEN_EMPTY
 
 
-
-        moviesBinding.apply {
+        binding.apply {
             trendMoviesRV.adapter = movieAdapter
             swipeRefresh.setOnRefreshListener {
                 movieViewModel.getTrendingMovies()
@@ -99,7 +98,7 @@ class MoviesFragment : Fragment() {
         }
         observeList()
 
-        moviesBinding.apply {
+        binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 movieViewModel.trendingMoviesFlow.collect { event ->
                     when (event) {
@@ -115,6 +114,7 @@ class MoviesFragment : Fragment() {
                         }
                         is MovieViewModel.Event.TrendingSuccess -> {
                             progressBar.dismiss()
+                            binding.trendMoviesRV.restoreState()
                             movieAdapter.differ.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
                         }
@@ -123,12 +123,17 @@ class MoviesFragment : Fragment() {
             }
         }
     }
-
+    private fun RecyclerView.restoreState(){
+        val recyclerViewState = this.layoutManager?.onSaveInstanceState()
+        this.layoutManager?.onRestoreInstanceState(recyclerViewState)
+        binding.trendMoviesRV.adapter = movieAdapter
+    }
     private fun observeList() {
         movieViewModel.getMovieList().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 movieViewModel.getTrendingMovies()
             } else {
+                binding.trendMoviesRV.restoreState()
                 movieAdapter.differ.submitList(it)
             }
         })
@@ -213,6 +218,11 @@ class MoviesFragment : Fragment() {
                 true
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 

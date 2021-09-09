@@ -36,10 +36,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
 
 
     inner class FavoriteViewHolder(
-        private val favoriteListLayoutBinding: FavoriteListLayoutBinding,
-        setOnItemClickListener: ((FavoriteMovieModel) -> Unit)?,
-        setOnFavoriteClickListener: ((FavoriteMovieModel) -> Unit)?
-    ) :
+        private val favoriteListLayoutBinding: FavoriteListLayoutBinding) :
         RecyclerView.ViewHolder(favoriteListLayoutBinding.root) {
         fun bind(favoriteMovieModel: FavoriteMovieModel?) {
             favoriteListLayoutBinding.apply {
@@ -81,9 +78,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
             FavoriteListLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false
-            ), setOnItemClick, setOnFavoriteClick
-        )
+                false))
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {

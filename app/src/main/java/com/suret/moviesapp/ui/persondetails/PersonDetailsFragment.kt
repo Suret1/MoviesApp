@@ -21,7 +21,8 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class PersonDetailsFragment : Fragment() {
-    private lateinit var personDetailsBinding: FragmentPersonDetailsBinding
+    private var _binding: FragmentPersonDetailsBinding? = null
+    private val binding get() = _binding!!
     private var castModel: Cast? = null
     private val movieViewModel: MovieViewModel by viewModels()
     private val args: PersonDetailsFragmentArgs by navArgs()
@@ -29,8 +30,8 @@ class PersonDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        personDetailsBinding = FragmentPersonDetailsBinding.inflate(inflater, container, false)
-        return personDetailsBinding.root
+        _binding = FragmentPersonDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -62,7 +63,7 @@ class PersonDetailsFragment : Fragment() {
                 }
             }
         }
-        personDetailsBinding.apply {
+        binding.apply {
             personToolbar.setNavigationIcon(R.drawable.back_btn)
             personToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
@@ -71,7 +72,7 @@ class PersonDetailsFragment : Fragment() {
     }
 
     private fun setPersonData(actor: ActorModel) {
-        personDetailsBinding.apply {
+        binding.apply {
             iwPersonPhoto.load(IMAGE_URL + actor.profile_path)
             tvTitleActorName.text = actor.name
             tvActorName.text = actor.name
@@ -90,6 +91,11 @@ class PersonDetailsFragment : Fragment() {
             tvPersonDepartment.text = actor.known_for_department
             tvBio.text = actor.biography
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

@@ -45,7 +45,7 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
     private val movieViewModel: MovieViewModel by viewModels()
-    private lateinit var movieDetailsBinding: FragmentMovieDetailsBinding
+    private var _binding: FragmentMovieDetailsBinding? = null
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
@@ -56,6 +56,9 @@ class MovieDetailsFragment : Fragment() {
     private val args: MovieDetailsFragmentArgs by navArgs()
     private var isClicked = false
     private var movieId: Int = 0
+
+    private val binding get() = _binding!!
+
     private val rotateOpen: Animation by lazy {
         AnimationUtils.loadAnimation(
             requireContext(),
@@ -86,8 +89,8 @@ class MovieDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        movieDetailsBinding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
-        return movieDetailsBinding.root
+        _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -96,10 +99,15 @@ class MovieDetailsFragment : Fragment() {
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
-        productionsAdapter = ProductionsAdapter()
-        castListAdapter = FullCastAdapter()
-        castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
-        reviewAdapter = ReviewAdapter()
+        initAdapters()
+
+        reviewAdapter.setOnItemClickListener { review ->
+            findNavController().navigate(
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
+                    review
+                )
+            )
+        }
 
         favoriteMovieModel?.let {
             sendData(castToTrendingMoviesModel(it))
@@ -116,8 +124,15 @@ class MovieDetailsFragment : Fragment() {
         goToSimilarFragment()
     }
 
+    private fun initAdapters() {
+        productionsAdapter = ProductionsAdapter()
+        castListAdapter = FullCastAdapter()
+        castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
+        reviewAdapter = ReviewAdapter()
+    }
+
     private fun goToSimilarFragment() {
-        movieDetailsBinding.apply {
+        binding.apply {
             fabSimilar.setOnClickListener {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentToSimilarFragment()
@@ -136,7 +151,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setVisibility() {
-        movieDetailsBinding.apply {
+        binding.apply {
             if (!isClicked) {
                 fabSimilar.startAnimation(fromBottom)
                 fabSearch.setImageResource(R.drawable.ic_round_add_24)
@@ -155,7 +170,7 @@ class MovieDetailsFragment : Fragment() {
 
 
     private fun sendData(model: TrendingMoviesModel) {
-        movieDetailsBinding.apply {
+        binding.apply {
             rvCast.adapter = castListAdapter
             movieSetData(model)
             viewLifecycleOwner.lifecycleScope.launch {
@@ -167,7 +182,7 @@ class MovieDetailsFragment : Fragment() {
                                 //
                             }
                             is Event.DetailsSuccess -> {
-                                movieDetailsBinding.apply {
+                                binding.apply {
                                     event.details?.let { model ->
                                         setMovieDetails(model)
                                     }
@@ -299,7 +314,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setToolBar() {
-        movieDetailsBinding.apply {
+        binding.apply {
             toolbar.setNavigationIcon(R.drawable.back_btn)
             toolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
@@ -329,7 +344,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun movieSetData(moviesModel: TrendingMoviesModel) {
-        movieDetailsBinding.apply {
+        binding.apply {
             setMovieTitle(moviesModel)
             setRatingData(moviesModel)
             setStoryline(moviesModel)
@@ -347,7 +362,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setFabListener(moviesModel: TrendingMoviesModel) {
-        movieDetailsBinding.apply {
+        binding.apply {
             fabFav.setOnClickListener {
                 viewLifecycleOwner.lifecycleScope.launch {
                     moviesModel.let { model ->
@@ -402,7 +417,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun setFAB(moviesModel: TrendingMoviesModel) {
-        movieDetailsBinding.apply {
+        binding.apply {
             if (moviesModel.isFavorite) {
                 fabFav.setImageResource(R.drawable.ic_favorite_movie)
             } else {
@@ -533,5 +548,10 @@ class MovieDetailsFragment : Fragment() {
             movieTitle.text = moviesModel.title
         }
         movieTitle.setColor(R.color.white, R.color.silver)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

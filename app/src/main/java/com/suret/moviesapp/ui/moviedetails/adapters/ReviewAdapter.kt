@@ -75,20 +75,26 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewHolder>() {
                     tvDate.text = toDate(review.created_at)
                     tvReview.text = review.content
 
-                    tvReview.movementMethod = object : ScrollingMovementMethod() {}
+//                    tvReview.movementMethod = object : ScrollingMovementMethod() {}
+//                    val listener = View.OnTouchListener { v, event ->
+//                        val isLarger: Boolean =
+//                            (v as AppCompatTextView).lineCount * v.lineHeight > v.getHeight()
+//                        if (event.action === MotionEvent.ACTION_MOVE && isLarger) {
+//                            v.getParent().requestDisallowInterceptTouchEvent(true)
+//                        } else {
+//                            v.getParent().requestDisallowInterceptTouchEvent(false)
+//                        }
+//                        false
+//                    }
+//                    this.tvReview.setOnTouchListener(listener)
 
-                    val listener = View.OnTouchListener { v, event ->
-                        val isLarger: Boolean =
-                            (v as AppCompatTextView).lineCount * v.lineHeight > v.getHeight()
-                        if (event.action === MotionEvent.ACTION_MOVE && isLarger) {
-                            v.getParent().requestDisallowInterceptTouchEvent(true)
-                        } else {
-                            v.getParent().requestDisallowInterceptTouchEvent(false)
+                    root.setOnClickListener {
+                        review.let { r ->
+                            onItemClickListener?.invoke(r)
                         }
-                        false
                     }
-                    this.tvReview.setOnTouchListener(listener)
                 }
+
 
             }
         }
@@ -102,6 +108,12 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewHolder>() {
                 false
             )
         )
+    }
+
+    private var onItemClickListener: ((ReviewResult) -> Unit)? = null
+
+    fun setOnItemClickListener(listener: (ReviewResult) -> Unit) {
+        onItemClickListener = listener
     }
 
     override fun onBindViewHolder(holder: ReviewHolder, position: Int) {

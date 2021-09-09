@@ -19,26 +19,27 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavouritesFragment : Fragment() {
-    private lateinit var favouritesBinding: FragmentFavouritesBinding
+    private var _binding: FragmentFavouritesBinding? = null
     private lateinit var favoriteAdapter: FavoriteAdapter
     private var removeAlertDialog: AlertDialog.Builder? = null
-
     private val movieViewModel: MovieViewModel by viewModels()
+
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        favouritesBinding = FragmentFavouritesBinding.inflate(inflater, container, false)
-        return favouritesBinding.root
+        _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         favoriteAdapter = FavoriteAdapter()
-        favouritesBinding.apply {
+        binding.apply {
             rvFavoriteMovies.adapter = favoriteAdapter
         }
         movieViewModel.getFavoriteMovies().observe(viewLifecycleOwner, {
@@ -93,6 +94,10 @@ class FavouritesFragment : Fragment() {
             movie.vote_count,
             false
         )
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 
 }

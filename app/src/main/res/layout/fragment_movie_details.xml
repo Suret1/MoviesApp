@@ -306,8 +306,7 @@
             app:fabSize="normal"
             app:layout_anchor="@id/linearLayout"
             app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@drawable/ic_round_search_24"
-            app:tint="@null" />
+            app:srcCompat="@drawable/ic_round_search_24"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSimilar"
@@ -320,8 +319,7 @@
             app:fabSize="mini"
             app:layout_anchor="@id/fabSearch"
             app:layout_anchorGravity="top|center"
-            app:srcCompat="@drawable/ic_opacity"
-            app:tint="@null" />
+            app:srcCompat="@drawable/ic_opacity" />
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -20,8 +20,9 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class SimilarFragment : Fragment() {
-    private lateinit var binding: FragmentSimilarBinding
+    private var _binding: FragmentSimilarBinding? = null
     private lateinit var similarPagingAdapter: SimilarPagingAdapter
+    private val binding get() = _binding!!
     private val args: SimilarFragmentArgs by navArgs()
     private val similarViewModel: SimilarViewModel by viewModels()
     override fun onCreateView(
@@ -29,9 +30,10 @@ class SimilarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentSimilarBinding.inflate(inflater, container, false)
+        _binding = FragmentSimilarBinding.inflate(inflater, container, false)
         return binding.root
     }
+
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -70,5 +72,8 @@ class SimilarFragment : Fragment() {
 
     }
 
-
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
 }

@@ -66,6 +66,9 @@
             app:exitAnim="@anim/wait_anim"
             app:popEnterAnim="@anim/wait_anim"
             app:popExitAnim="@anim/slide_right"/>
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_reviewBottomSheet"
+            app:destination="@id/reviewBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/fullCastFragment"
@@ -104,4 +107,14 @@
             app:argType="integer"
             android:defaultValue="385128" />
     </fragment>
+    <dialog
+        tools:layout="@layout/fragment_review_bottom_sheet"
+        android:id="@+id/reviewBottomSheet"
+        android:name="com.suret.moviesapp.ui.reviewbottomsheet.ReviewBottomSheet"
+        android:label="ReviewBottomSheet" >
+        <argument
+            android:name="reviewModel"
+            app:argType="com.suret.moviesapp.data.model.ReviewResult"
+            app:nullable="true" />
+    </dialog>
 </navigation>

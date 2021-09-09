@@ -37,10 +37,7 @@ class TrendMovieListAdapter :
 
 
     inner class TrendViewHolder(
-        private val trendingMoviesListBinding: TrendingMoviesListBinding,
-        setOnItemClickListener: ((TrendingMoviesModel) -> Unit)?,
-        setOnFavoriteClickListener: ((TrendingMoviesModel) -> Unit)?
-    ) :
+        private val trendingMoviesListBinding: TrendingMoviesListBinding) :
         RecyclerView.ViewHolder(trendingMoviesListBinding.root) {
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
@@ -91,9 +88,7 @@ class TrendMovieListAdapter :
         val trendingMoviesListBinding =
             TrendingMoviesListBinding.inflate(layoutInflater, parent, false)
         return TrendViewHolder(
-            trendingMoviesListBinding,
-            setOnItemClick,
-            setOnFavoriteClick
+            trendingMoviesListBinding
         )
 
     }
