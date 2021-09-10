@@ -1,5 +1,6 @@
 package com.suret.moviesapp.ui.moviedetails
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -9,6 +10,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
 import androidx.annotation.StringRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -99,8 +101,9 @@ class MovieDetailsFragment : Fragment() {
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
-        initAdapters()
-
+        binding.apply {
+            initAdapters()
+        }
         reviewAdapter.setOnItemClickListener { review ->
             findNavController().navigate(
                 MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
@@ -110,11 +113,11 @@ class MovieDetailsFragment : Fragment() {
         }
 
         favoriteMovieModel?.let {
-            sendData(castToTrendingMoviesModel(it))
+            getData(castToTrendingMoviesModel(it))
             movieId = it.id!!
         }
         movieModel?.let {
-            sendData(it)
+            getData(it)
             movieId = it.id!!
         }
         goToPersonDetailFragment()
@@ -124,11 +127,14 @@ class MovieDetailsFragment : Fragment() {
         goToSimilarFragment()
     }
 
-    private fun initAdapters() {
+    private fun FragmentMovieDetailsBinding.initAdapters() {
         productionsAdapter = ProductionsAdapter()
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
         reviewAdapter = ReviewAdapter()
+        rvCast.adapter = castListAdapter
+        rvProductions.adapter = productionsAdapter
+        rvReview.adapter = reviewAdapter
     }
 
     private fun goToSimilarFragment() {
@@ -168,10 +174,8 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-
-    private fun sendData(model: TrendingMoviesModel) {
+    private fun getData(model: TrendingMoviesModel) {
         binding.apply {
-            rvCast.adapter = castListAdapter
             movieSetData(model)
             viewLifecycleOwner.lifecycleScope.launch {
                 model.id?.let {
@@ -248,7 +252,6 @@ class MovieDetailsFragment : Fragment() {
                         }
                         is Event.ReviewsSuccess -> {
                             event.reviews.let {
-                                rvReview.adapter = reviewAdapter
                                 reviewAdapter.differ.submitList(it)
                             }
                         }
@@ -282,7 +285,6 @@ class MovieDetailsFragment : Fragment() {
             genresString.deleteCharAt(genresString.length - 2)
             genreTV.text = genresString
         }
-        rvProductions.adapter = productionsAdapter
         productionsAdapter.differ.submitList(model.production_companies)
     }
 
@@ -419,9 +421,9 @@ class MovieDetailsFragment : Fragment() {
     private fun setFAB(moviesModel: TrendingMoviesModel) {
         binding.apply {
             if (moviesModel.isFavorite) {
-                fabFav.setImageResource(R.drawable.ic_favorite_movie)
+                fabFav.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_favorite_movie))
             } else {
-                fabFav.setImageResource(R.drawable.favorite)
+                fabFav.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.favorite))
             }
         }
     }

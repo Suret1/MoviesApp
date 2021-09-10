@@ -61,10 +61,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             app:backgroundTint="@color/white"
+            app:borderWidth="0dp"
+            app:tint="@null"
             app:layout_anchor="@id/appbarLayout"
             app:layout_anchorGravity="bottom|end"
-            app:tint="@null"
-            tools:srcCompat="@drawable/ic_favorite_movie" />
+            tools:srcCompat="@drawable/ic_disable_favorite" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -303,10 +304,11 @@
             android:layout_marginBottom="@dimen/_25sdp"
             android:backgroundTint="@color/white"
             android:clickable="true"
+            app:borderWidth="0dp"
             app:fabSize="normal"
             app:layout_anchor="@id/linearLayout"
             app:layout_anchorGravity="bottom|end"
-            app:srcCompat="@drawable/ic_round_search_24"/>
+            app:srcCompat="@drawable/ic_round_search_24" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSimilar"
@@ -316,6 +318,7 @@
             android:backgroundTint="@color/white"
             android:clickable="true"
             android:visibility="gone"
+            app:borderWidth="0dp"
             app:fabSize="mini"
             app:layout_anchor="@id/fabSearch"
             app:layout_anchorGravity="top|center"

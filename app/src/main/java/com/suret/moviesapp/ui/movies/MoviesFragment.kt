@@ -70,6 +70,8 @@ class MoviesFragment : Fragment() {
                 )
             }
         }
+        observeList()
+
         movieAdapter.setOnFavoriteClickListener { movie ->
             viewLifecycleOwner.lifecycleScope.launch {
                 movieViewModel.updateMovieModel(setFavoriteStatus(movie, movie.isFavorite))
@@ -96,7 +98,6 @@ class MoviesFragment : Fragment() {
                 }
             }
         }
-        observeList()
 
         binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -114,27 +115,22 @@ class MoviesFragment : Fragment() {
                         }
                         is MovieViewModel.Event.TrendingSuccess -> {
                             progressBar.dismiss()
-                            binding.trendMoviesRV.restoreState()
                             movieAdapter.differ.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
+                            binding.trendMoviesRV.scrollToPosition(1)
                         }
                     }
                 }
             }
         }
     }
-    private fun RecyclerView.restoreState(){
-        val recyclerViewState = this.layoutManager?.onSaveInstanceState()
-        this.layoutManager?.onRestoreInstanceState(recyclerViewState)
-        binding.trendMoviesRV.adapter = movieAdapter
-    }
     private fun observeList() {
         movieViewModel.getMovieList().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 movieViewModel.getTrendingMovies()
             } else {
-                binding.trendMoviesRV.restoreState()
                 movieAdapter.differ.submitList(it)
+                binding.trendMoviesRV.scrollToPosition(1)
             }
         })
     }
