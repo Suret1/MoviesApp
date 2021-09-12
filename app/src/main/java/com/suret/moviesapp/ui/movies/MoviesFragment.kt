@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 import com.google.android.material.snackbar.Snackbar
 import com.suret.moviesapp.R
@@ -117,20 +116,19 @@ class MoviesFragment : Fragment() {
                             progressBar.dismiss()
                             movieAdapter.differ.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
-                            binding.trendMoviesRV.scrollToPosition(1)
                         }
                     }
                 }
             }
         }
     }
+
     private fun observeList() {
         movieViewModel.getMovieList().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 movieViewModel.getTrendingMovies()
             } else {
                 movieAdapter.differ.submitList(it)
-                binding.trendMoviesRV.scrollToPosition(1)
             }
         })
     }
