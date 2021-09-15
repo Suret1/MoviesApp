@@ -12,6 +12,7 @@ import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.TrendingMoviesListBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter.TrendViewHolder
+import com.suret.moviesapp.util.AppUtil.roundForDouble
 
 class TrendMovieListAdapter :
     RecyclerView.Adapter<TrendViewHolder>() {
@@ -37,7 +38,8 @@ class TrendMovieListAdapter :
 
 
     inner class TrendViewHolder(
-        private val trendingMoviesListBinding: TrendingMoviesListBinding) :
+        private val trendingMoviesListBinding: TrendingMoviesListBinding
+    ) :
         RecyclerView.ViewHolder(trendingMoviesListBinding.root) {
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
@@ -63,7 +65,7 @@ class TrendMovieListAdapter :
                         crossfade(true)
                     }
                     ratingBar.rating = model.vote_average?.toFloat() ?: 0f
-                    ratingTV.text = model.vote_average?.toString()
+                    ratingTV.text = model.vote_average?.let { roundForDouble(it) }
 
                     root.setOnClickListener {
                         model.let { movies ->
@@ -95,7 +97,8 @@ class TrendMovieListAdapter :
 
     override fun onBindViewHolder(holder: TrendViewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
-        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_animation)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }
 
     override fun getItemCount(): Int = differ.currentList.size

@@ -12,6 +12,8 @@ import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FavoriteListLayoutBinding
 import com.suret.moviesapp.ui.favourite.FavoriteAdapter.FavoriteViewHolder
+import com.suret.moviesapp.util.AppUtil
+import com.suret.moviesapp.util.AppUtil.roundForDouble
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
 
@@ -36,7 +38,8 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
 
 
     inner class FavoriteViewHolder(
-        private val favoriteListLayoutBinding: FavoriteListLayoutBinding) :
+        private val favoriteListLayoutBinding: FavoriteListLayoutBinding
+    ) :
         RecyclerView.ViewHolder(favoriteListLayoutBinding.root) {
         fun bind(favoriteMovieModel: FavoriteMovieModel?) {
             favoriteListLayoutBinding.apply {
@@ -55,7 +58,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
                     ) {
                         crossfade(true)
                     }
-                    tvRating.text = model.vote_average.toString()
+                    tvRating.text = model.vote_average?.let { roundForDouble(it) }
 
                     root.setOnClickListener {
                         model.let { fav ->
@@ -78,12 +81,15 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
             FavoriteListLayoutBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
-                false))
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         holder.bind(differ.currentList.getOrNull(position))
-        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
     }
 
     private var setOnItemClick: ((FavoriteMovieModel) -> Unit)? = null

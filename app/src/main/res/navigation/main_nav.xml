@@ -106,6 +106,13 @@
             android:name="movieID"
             app:argType="integer"
             android:defaultValue="385128" />
+        <action
+            android:id="@+id/action_similarFragment_to_movieDetailsFragment"
+            app:destination="@id/movieDetailsFragment"
+            app:enterAnim="@anim/slide_left"
+            app:exitAnim="@anim/wait_anim"
+            app:popEnterAnim="@anim/wait_anim"
+            app:popExitAnim="@anim/slide_right" />
     </fragment>
     <dialog
         tools:layout="@layout/fragment_review_bottom_sheet"

@@ -44,7 +44,7 @@
                     app:useWebUi="true" />
 
                 <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
+                    android:id="@+id/toolbarDetails"
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:contentInsetStart="0dp"
@@ -62,9 +62,9 @@
             android:layout_marginEnd="@dimen/_16sdp"
             app:backgroundTint="@color/white"
             app:borderWidth="0dp"
-            app:tint="@null"
             app:layout_anchor="@id/appbarLayout"
             app:layout_anchorGravity="bottom|end"
+            app:tint="@null"
             tools:srcCompat="@drawable/ic_disable_favorite" />
 
         <androidx.core.widget.NestedScrollView
@@ -293,6 +293,16 @@
                     android:padding="@dimen/_4sdp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/production_list_layout" />
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:contentInsetStart="0dp"
+                    app:contentInsetStartWithNavigation="0dp"
+                    app:layout_collapseMode="pin"
+                    app:navigationIcon="@drawable/back_btn"
+                    app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -319,11 +329,38 @@
             android:clickable="true"
             android:visibility="gone"
             app:borderWidth="0dp"
-            app:fabSize="mini"
+            app:fabSize="normal"
             app:layout_anchor="@id/fabSearch"
-            app:layout_anchorGravity="top|center"
-            app:srcCompat="@drawable/ic_opacity" />
+            app:layout_anchorGravity="top|center" />
 
+        <com.suret.moviesapp.util.CurvedText
+            android:id="@+id/tvSimilar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/_6sdp"
+            android:visibility="gone"
+            app:center_angle="-90"
+            app:font_family="@font/gilroy_bold"
+            app:layout_anchor="@id/fabSimilar"
+            app:layout_anchorGravity="center"
+            app:radius="@dimen/_12sdp"
+            app:text="similar"
+            app:text_color="@color/charade"
+            app:text_size="@dimen/_12ssp" />
+
+<!--                <androidx.appcompat.widget.AppCompatTextView-->
+<!--                    android:id="@+id/tvSimilar"-->
+<!--                    style="@style/GilroyLightTextStyle"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:elevation="@dimen/_6sdp"-->
+<!--                    android:padding="@dimen/_5sdp"-->
+<!--                    android:text="@string/similar"-->
+<!--                    android:textColor="@color/main_red"-->
+<!--                    android:textSize="@dimen/_12ssp"-->
+<!--                    android:visibility="visible"-->
+<!--                    app:layout_anchor="@id/fabSimilar"-->
+<!--                    app:layout_anchorGravity="center_vertical" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -21,7 +21,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:navigationIcon="@drawable/back_btn"
-            app:title="@string/similar"
+            app:title="@string/similar_movies"
             app:titleTextAppearance="@style/Toolbar.TitleText"
             app:titleTextColor="@color/white"/>
 

@@ -7,16 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
+import androidx.paging.map
 import com.suret.moviesapp.data.repository.datasourceimpl.SimilarMoviesPagingDataSource
 import com.suret.moviesapp.databinding.FragmentSimilarBinding
+import com.suret.moviesapp.domain.usecase.GetFavoriteMovieByIdUseCase
+import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.similar.adapter.SimilarPagingAdapter
 import com.suret.moviesapp.ui.similar.viewmodel.SimilarViewModel
 import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class SimilarFragment : Fragment() {
@@ -25,6 +30,7 @@ class SimilarFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: SimilarFragmentArgs by navArgs()
     private val similarViewModel: SimilarViewModel by viewModels()
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -45,6 +51,14 @@ class SimilarFragment : Fragment() {
             similarToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
+        }
+        similarPagingAdapter.setOnClickListener {
+            findNavController().navigate(
+                SimilarFragmentDirections.actionSimilarFragmentToMovieDetailsFragment(
+                    it,
+                    null
+                )
+            )
         }
 
         SimilarMoviesPagingDataSource.ID = args.movieID

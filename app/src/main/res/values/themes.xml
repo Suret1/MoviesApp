@@ -117,5 +117,14 @@
     <style name="BottomSheetDialog_Rounded">
         <item name="android:background">@drawable/bottom_sheet_bg</item>
     </style>
+    <declare-styleable name="CurvedTextStyle">
 
+        <attr format="dimension" name="radius"/>
+        <attr format="integer" name="center_angle"/>
+        <attr format="dimension" name="text_size"/>
+        <attr format="color" name="text_color"/>
+        <attr format="reference" name="font_family"/>
+        <attr format="string" name="text"/>
+
+    </declare-styleable>
 </resources>

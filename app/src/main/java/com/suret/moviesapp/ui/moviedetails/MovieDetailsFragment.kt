@@ -1,7 +1,7 @@
 package com.suret.moviesapp.ui.moviedetails
 
-import android.content.res.ColorStateList
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -37,6 +37,7 @@ import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
 import com.suret.moviesapp.util.AppUtil.convertHourAndMinutes
+import com.suret.moviesapp.util.AppUtil.roundForDouble
 import com.suret.moviesapp.util.AppUtil.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -97,6 +98,7 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
@@ -160,12 +162,16 @@ class MovieDetailsFragment : Fragment() {
         binding.apply {
             if (!isClicked) {
                 fabSimilar.startAnimation(fromBottom)
+                tvSimilar.startAnimation(fromBottom)
                 fabSearch.setImageResource(R.drawable.ic_round_add_24)
                 fabSearch.startAnimation(rotateOpen)
                 fabSimilar.visibility = View.VISIBLE
+                tvSimilar.visibility = View.VISIBLE
                 isClicked = true
             } else {
                 fabSimilar.visibility = View.GONE
+                tvSimilar.visibility = View.GONE
+                tvSimilar.startAnimation(toBottom)
                 fabSimilar.startAnimation(toBottom)
                 fabSearch.startAnimation(rotateClose)
                 fabSearch.setImageResource(R.drawable.ic_round_search_24)
@@ -317,8 +323,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setToolBar() {
         binding.apply {
-            toolbar.setNavigationIcon(R.drawable.back_btn)
-            toolbar.setNavigationOnClickListener {
+            toolbarDetails.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
         }
@@ -421,9 +426,19 @@ class MovieDetailsFragment : Fragment() {
     private fun setFAB(moviesModel: TrendingMoviesModel) {
         binding.apply {
             if (moviesModel.isFavorite) {
-                fabFav.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.ic_favorite_movie))
+                fabFav.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.ic_favorite_movie
+                    )
+                )
             } else {
-                fabFav.setImageDrawable(ContextCompat.getDrawable(requireContext(),R.drawable.favorite))
+                fabFav.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        requireContext(),
+                        R.drawable.favorite
+                    )
+                )
             }
         }
     }
@@ -522,7 +537,7 @@ class MovieDetailsFragment : Fragment() {
     private fun FragmentMovieDetailsBinding.setRatingData(
         moviesModel: TrendingMoviesModel
     ) {
-        ratingTV.text = moviesModel.vote_average.toString()
+        ratingTV.text = moviesModel.vote_average?.let { roundForDouble(it) }
     }
 
     private fun FragmentMovieDetailsBinding.appBarListener() {

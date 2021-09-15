@@ -4,9 +4,10 @@ import android.content.Context
 import android.graphics.LinearGradient
 import android.graphics.Shader
 import android.util.AttributeSet
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
 
-class MyGradientTextView : androidx.appcompat.widget.AppCompatTextView {
+class MyGradientTextView : AppCompatTextView {
 
     var firstColor: Int = 0
     var secondColor: Int = 0

@@ -16,7 +16,7 @@ android {
         minSdkVersion 27
         targetSdkVersion 31
         versionCode 1
-        versionName "1.4.1"
+        versionName "1.4.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -123,6 +123,5 @@ dependencies {
 
     //CurvedBottomNavigation
     implementation 'np.com.susanthapa:curved_bottom_navigation:0.6.5'
-
 
 }
