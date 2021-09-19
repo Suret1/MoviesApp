@@ -1,7 +1,6 @@
 package com.suret.moviesapp.ui.moviedetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -59,6 +58,10 @@ class MovieDetailsFragment : Fragment() {
     private val args: MovieDetailsFragmentArgs by navArgs()
     private var isClicked = false
     private var movieId: Int = 0
+
+    companion object {
+        private var isFavorite = false
+    }
 
     private val binding get() = _binding!!
 
@@ -121,6 +124,15 @@ class MovieDetailsFragment : Fragment() {
         movieModel?.let {
             getData(it)
             movieId = it.id!!
+        }
+        lifecycleScope.launchWhenCreated {
+            val check = movieViewModel.getFavoriteMovieByID(movieId)
+            isFavorite = if (check == null) {
+                false
+            } else {
+                true
+            }
+            setFAB(isFavorite)
         }
         goToPersonDetailFragment()
         castListAdapter.stateRestorationPolicy =
@@ -356,8 +368,8 @@ class MovieDetailsFragment : Fragment() {
             setRatingData(moviesModel)
             setStoryline(moviesModel)
             setReleaseDate(moviesModel)
-            setFAB(moviesModel)
-            setFabListener(moviesModel)
+            setFAB(isFavorite)
+            setFavoriteFabListener(moviesModel)
             appBarListener()
         }
     }
@@ -368,7 +380,7 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    private fun setFabListener(moviesModel: TrendingMoviesModel) {
+    private fun setFavoriteFabListener(moviesModel: TrendingMoviesModel) {
         binding.apply {
             fabFav.setOnClickListener {
                 viewLifecycleOwner.lifecycleScope.launch {
@@ -376,18 +388,19 @@ class MovieDetailsFragment : Fragment() {
                         movieViewModel.updateMovieModel(
                             setFavoriteStatus(
                                 model,
-                                model.isFavorite
+                                isFavorite
                             )
                         )
-                        if (!model.isFavorite) {
+                        if (!isFavorite) {
                             movieViewModel.insertFavoriteMovie(
                                 createFavoriteModel(
                                     setFavoriteStatus(
                                         model,
-                                        model.isFavorite
+                                        isFavorite
                                     )
                                 )
                             )
+                            isFavorite = true
                             movieSetData(newTrendModel(model, true))
                             showSnackBar(it, R.string.add_to_fav)
                         } else {
@@ -395,10 +408,11 @@ class MovieDetailsFragment : Fragment() {
                                 createFavoriteModel(
                                     setFavoriteStatus(
                                         model,
-                                        model.isFavorite
+                                        isFavorite
                                     )
                                 )
                             )
+                            isFavorite = false
                             movieSetData(newTrendModel(model, false))
                             showSnackBar(it, R.string.remove_favorites)
                         }
@@ -423,9 +437,9 @@ class MovieDetailsFragment : Fragment() {
         snack.show()
     }
 
-    private fun setFAB(moviesModel: TrendingMoviesModel) {
+    private fun setFAB(isFavorite: Boolean) {
         binding.apply {
-            if (moviesModel.isFavorite) {
+            if (isFavorite) {
                 fabFav.setImageDrawable(
                     ContextCompat.getDrawable(
                         requireContext(),

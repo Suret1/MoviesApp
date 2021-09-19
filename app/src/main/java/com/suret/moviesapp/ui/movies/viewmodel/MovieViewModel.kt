@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.map
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.domain.usecase.*
 import com.suret.moviesapp.util.AppUtil.isNetworkAvailable
@@ -103,6 +101,7 @@ class MovieViewModel @Inject constructor(
             )
         }
     }
+
     fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         if (isNetworkAvailable(context)) {
             trendingMoviesChannel.send(Event.Loading)
@@ -294,6 +293,9 @@ class MovieViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
         }
+
+    suspend fun getFavoriteMovieByID(movieId: Int): FavoriteMovieModel =
+        getFavoriteMovieByIdUseCase.execute(movieId)
 
 
 }
