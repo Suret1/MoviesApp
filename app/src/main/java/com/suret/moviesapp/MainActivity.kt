@@ -44,7 +44,7 @@ class MainActivity : AppCompatActivity() {
         }
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.movieDetailsFragment, R.id.fullCastFragment, R.id.personDetailsFragment, R.id.similarFragment -> hideBottomNav()
+                R.id.movieDetailsFragment, R.id.fullCastFragment, R.id.personDetailsFragment, R.id.similarFragment, R.id.reviewBottomSheet -> hideBottomNav()
 
                 R.id.movies -> {
                     activityMainBinding.constrainLayout.apply {

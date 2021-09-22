@@ -4,10 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.other.Constants.FULL_CAST_TYPE
@@ -39,7 +39,8 @@ class FullCastFragment : Fragment() {
 
         binding.apply {
             castToolbar.setNavigationIcon(R.drawable.back_btn)
-
+            tvTitle.animation =
+                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left_title)
             castToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
