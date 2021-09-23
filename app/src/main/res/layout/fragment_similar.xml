@@ -46,9 +46,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            app:fabSize="mini"
+            app:fabSize="normal"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_double_up_arrow" />
+            app:srcCompat="@drawable/ic_arrow_up" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

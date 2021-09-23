@@ -137,6 +137,7 @@
         <item name="android:clickable">true</item>
         <item name="android:textColor">@color/white</item>
         <item name="iconTint">@color/white</item>
+        <item name="tint">@color/white</item>
         <item name="android:fontFamily">@font/gilroy_bold</item>
     </style>
 </resources>

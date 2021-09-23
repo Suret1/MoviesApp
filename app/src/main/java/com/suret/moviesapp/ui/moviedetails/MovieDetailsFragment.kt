@@ -1,5 +1,6 @@
 package com.suret.moviesapp.ui.moviedetails
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
