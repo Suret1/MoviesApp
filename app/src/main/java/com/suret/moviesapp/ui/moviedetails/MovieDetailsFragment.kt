@@ -65,28 +65,16 @@ class MovieDetailsFragment : Fragment() {
 
     private val binding get() = _binding!!
 
-    private val rotateOpen: Animation by lazy {
+    private val bounce: Animation by lazy {
         AnimationUtils.loadAnimation(
             requireContext(),
-            R.anim.rotate_open_anim
+            R.anim.bounce
         )
     }
-    private val rotateClose: Animation by lazy {
+    private val bounce_gone: Animation by lazy {
         AnimationUtils.loadAnimation(
             requireContext(),
-            R.anim.rotate_close_anim
-        )
-    }
-    private val fromBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.from_bottom_anim
-        )
-    }
-    private val toBottom: Animation by lazy {
-        AnimationUtils.loadAnimation(
-            requireContext(),
-            R.anim.to_bottom_anim
+            R.anim.bounce_gone
         )
     }
 
@@ -108,6 +96,7 @@ class MovieDetailsFragment : Fragment() {
 
         binding.apply {
             initAdapters()
+            fabSearch.shrink()
         }
         reviewAdapter.setOnItemClickListener { review ->
             findNavController().navigate(
@@ -173,20 +162,18 @@ class MovieDetailsFragment : Fragment() {
     private fun setVisibility() {
         binding.apply {
             if (!isClicked) {
-                fabSimilar.startAnimation(fromBottom)
-                tvSimilar.startAnimation(fromBottom)
-                fabSearch.setImageResource(R.drawable.ic_round_add_24)
-                fabSearch.startAnimation(rotateOpen)
+            fabSearch.extend()
+                fabSimilar.startAnimation(bounce)
+                tvSimilar.startAnimation(bounce)
                 fabSimilar.visibility = View.VISIBLE
                 tvSimilar.visibility = View.VISIBLE
                 isClicked = true
             } else {
+                fabSearch.shrink()
                 fabSimilar.visibility = View.GONE
                 tvSimilar.visibility = View.GONE
-                tvSimilar.startAnimation(toBottom)
-                fabSimilar.startAnimation(toBottom)
-                fabSearch.startAnimation(rotateClose)
-                fabSearch.setImageResource(R.drawable.ic_round_search_24)
+                tvSimilar.startAnimation(bounce_gone)
+                fabSimilar.startAnimation(bounce_gone)
                 isClicked = false
             }
         }

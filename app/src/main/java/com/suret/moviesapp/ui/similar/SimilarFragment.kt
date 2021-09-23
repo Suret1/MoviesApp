@@ -10,18 +10,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.paging.LoadState
-import androidx.paging.map
+import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.data.repository.datasourceimpl.SimilarMoviesPagingDataSource
 import com.suret.moviesapp.databinding.FragmentSimilarBinding
-import com.suret.moviesapp.domain.usecase.GetFavoriteMovieByIdUseCase
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.similar.adapter.SimilarPagingAdapter
 import com.suret.moviesapp.ui.similar.viewmodel.SimilarViewModel
 import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class SimilarFragment : Fragment() {
@@ -30,6 +27,7 @@ class SimilarFragment : Fragment() {
     private val binding get() = _binding!!
     private val args: SimilarFragmentArgs by navArgs()
     private val similarViewModel: SimilarViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,6 +49,11 @@ class SimilarFragment : Fragment() {
             similarToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
+            hideAndShowFloatingActionButton()
+            fabArrow.setOnClickListener {
+               rvSimilar.smoothScrollToPosition(0)
+            }
+
         }
         similarPagingAdapter.setOnClickListener {
             findNavController().navigate(
@@ -83,6 +86,27 @@ class SimilarFragment : Fragment() {
             }
         }
 
+
+    }
+
+    private fun FragmentSimilarBinding.hideAndShowFloatingActionButton() {
+        rvSimilar.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy > 0 || dy < 0 && fabArrow.isShown) {
+                    fabArrow.hide()
+                }
+            }
+
+            override fun onScrollStateChanged(
+                recyclerView: RecyclerView,
+                newState: Int
+            ) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    fabArrow.show()
+                }
+                super.onScrollStateChanged(recyclerView, newState)
+            }
+        })
 
     }
 

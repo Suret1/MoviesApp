@@ -23,7 +23,7 @@
             app:navigationIcon="@drawable/back_btn"
             app:title="@string/similar_movies"
             app:titleTextAppearance="@style/Toolbar.TitleText"
-            app:titleTextColor="@color/white"/>
+            app:titleTextColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rvSimilar"
@@ -38,5 +38,20 @@
             app:layout_constraintTop_toBottomOf="@id/similarToolbar"
             app:spanCount="2"
             tools:listitem="@layout/trending_movies_list" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabArrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_16sdp"
+            android:backgroundTint="@color/white"
+            android:clickable="true"
+            android:visibility="visible"
+            app:borderWidth="0dp"
+            app:fabSize="mini"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_double_up_arrow" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

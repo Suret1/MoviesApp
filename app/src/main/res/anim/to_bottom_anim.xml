@@ -17,4 +17,5 @@
         android:duration="150"
         android:fromAlpha="0"
         android:toAlpha="1" />
+
 </set>
