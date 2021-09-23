@@ -105,7 +105,6 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:textAlignment="textStart"
-                    android:textColor="@color/white"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

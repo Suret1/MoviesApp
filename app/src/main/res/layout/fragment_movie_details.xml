@@ -308,37 +308,29 @@
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
             android:id="@+id/fabSearch"
+            style="@style/FABStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_25sdp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            app:borderWidth="0dp"
-            app:fabSize="normal"
-            android:text="Find"
-            android:fontFamily="@font/gilroy_bold"
+            android:text="@string/find"
+            app:icon="@drawable/ic_round_search_24"
             app:layout_anchor="@id/linearLayout"
-            app:layout_anchorGravity="bottom|end"
-            app:icon="@drawable/ic_round_search_24" />
+            app:layout_anchorGravity="bottom|end" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabSimilar"
+            style="@style/FABStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_80sdp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
             android:visibility="gone"
-            app:borderWidth="0dp"
-            app:fabSize="normal"
             app:layout_anchor="@id/fabSearch"
             app:layout_anchorGravity="top|center" />
 
         <com.suret.moviesapp.util.CurvedText
             android:id="@+id/tvSimilar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            style="@style/CurvedTextStyle"
             android:elevation="@dimen/_6sdp"
             android:visibility="gone"
             app:center_angle="-90"
@@ -347,22 +339,7 @@
             app:layout_anchorGravity="center"
             app:radius="@dimen/_12sdp"
             app:text="similar"
-            app:text_color="@color/charade"
             app:text_size="@dimen/_12ssp" />
-
-<!--                <androidx.appcompat.widget.AppCompatTextView-->
-<!--                    android:id="@+id/tvSimilar"-->
-<!--                    style="@style/GilroyLightTextStyle"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:elevation="@dimen/_6sdp"-->
-<!--                    android:padding="@dimen/_5sdp"-->
-<!--                    android:text="@string/similar"-->
-<!--                    android:textColor="@color/main_red"-->
-<!--                    android:textSize="@dimen/_12ssp"-->
-<!--                    android:visibility="visible"-->
-<!--                    app:layout_anchor="@id/fabSimilar"-->
-<!--                    app:layout_anchorGravity="center_vertical" />-->
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>

@@ -41,14 +41,11 @@
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/fabArrow"
+            style="@style/FABStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            android:backgroundTint="@color/white"
-            android:clickable="true"
-            android:visibility="visible"
-            app:borderWidth="0dp"
             app:fabSize="mini"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
