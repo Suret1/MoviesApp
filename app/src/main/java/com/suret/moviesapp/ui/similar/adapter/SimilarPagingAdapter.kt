@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.widget.AppCompatImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -16,7 +15,7 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.ui.similar.adapter.SimilarPagingAdapter.TrendViewHolder
-import com.suret.moviesapp.util.AppUtil.roundForDouble
+import com.suret.moviesapp.util.roundForDouble
 import com.willy.ratingbar.ScaleRatingBar
 
 class SimilarPagingAdapter :
@@ -27,7 +26,7 @@ class SimilarPagingAdapter :
         private val movieTitle: TextView = itemView.findViewById(R.id.movie_title)
         private val ratingTV: TextView = itemView.findViewById(R.id.ratingTV)
         private val ratingBar: ScaleRatingBar = itemView.findViewById(R.id.ratingBar)
-        private val rootLayout : ConstraintLayout = itemView.findViewById(R.id.rootLayout)
+        private val rootLayout: ConstraintLayout = itemView.findViewById(R.id.rootLayout)
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
             trendingMoviesModel?.let { model ->
@@ -43,7 +42,7 @@ class SimilarPagingAdapter :
                 ratingBar.rating = model.vote_average?.toFloat() ?: 0f
                 ratingTV.text = model.vote_average?.let { roundForDouble(it) }
                 rootLayout.setOnClickListener {
-                    model.let {movie->
+                    model.let { movie ->
                         setOnItemClick?.invoke(movie)
                     }
                 }
@@ -80,7 +79,8 @@ class SimilarPagingAdapter :
         getItem(position)?.let {
             holder.bind(it)
         }
-        holder.itemView.animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.recycler_animation)
+        holder.itemView.animation =
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }
 
     private var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null

@@ -1,7 +1,6 @@
 package com.suret.moviesapp.ui.reviewbottomsheet
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FragmentReviewBottomSheetBinding
-import com.suret.moviesapp.util.AppUtil.toDate
+import com.suret.moviesapp.util.toDate
 
 class ReviewBottomSheet : BottomSheetDialogFragment() {
     private var _binding: FragmentReviewBottomSheetBinding? = null

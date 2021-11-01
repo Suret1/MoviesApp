@@ -27,6 +27,7 @@
                     android:id="@+id/cast_toolbar"
                     style="@style/Style.AppBarLayout"
                     app:contentInsetStart="0dp"
+                    app:navigationIcon="@drawable/back_btn"
                     app:contentInsetStartWithNavigation="0dp"
                     app:layout_scrollFlags="scroll|enterAlways|snap">
 

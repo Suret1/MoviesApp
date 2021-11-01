@@ -12,8 +12,8 @@ import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FavoriteListLayoutBinding
 import com.suret.moviesapp.ui.favourite.FavoriteAdapter.FavoriteViewHolder
-import com.suret.moviesapp.util.AppUtil
-import com.suret.moviesapp.util.AppUtil.roundForDouble
+import com.suret.moviesapp.util.roundForDouble
+
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
 

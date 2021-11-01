@@ -52,6 +52,7 @@
                     app:layout_collapseMode="pin"
                     app:navigationIcon="@drawable/back_btn"
                     app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+
             </com.google.android.material.appbar.CollapsingToolbarLayout>
         </com.google.android.material.appbar.AppBarLayout>
 
@@ -60,6 +61,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/_16sdp"
+            android:contentDescription="@string/favorite_fab"
             app:backgroundTint="@color/white"
             app:borderWidth="0dp"
             app:layout_anchor="@id/appbarLayout"
@@ -126,7 +128,7 @@
                         android:layout_marginHorizontal="@dimen/_16sdp"
                         android:layout_weight="1"
                         android:ellipsize="end"
-                        android:maxLines="3"
+                        android:maxLines="1"
                         android:textAlignment="textEnd"
                         tools:text="2h 23min" />
                 </LinearLayout>
@@ -294,15 +296,6 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/production_list_layout" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:contentInsetStart="0dp"
-                    app:contentInsetStartWithNavigation="0dp"
-                    app:layout_collapseMode="pin"
-                    app:navigationIcon="@drawable/back_btn"
-                    app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
@@ -324,6 +317,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/_80sdp"
+            android:contentDescription="@string/similar_fab"
             android:visibility="gone"
             app:layout_anchor="@id/fabSearch"
             app:layout_anchorGravity="top|center" />

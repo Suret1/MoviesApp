@@ -23,5 +23,7 @@
     <string name="similar_movies">Similar Movies</string>
     <string name="similar">Similar</string>
     <string name="find">Find</string>
+    <string name="similar_fab">Similar FAB</string>
+    <string name="favorite_fab">Favorite FAB</string>
 
 </resources>

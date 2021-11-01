@@ -28,11 +28,8 @@ import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
-
+    private val binding by lazy { FragmentMoviesBinding.inflate(layoutInflater) }
     private val movieViewModel: MovieViewModel by viewModels()
-    private var _binding: FragmentMoviesBinding? = null
-    private val binding get() = _binding!!
-
     private lateinit var movieAdapter: TrendMovieListAdapter
 
     override fun onCreateView(
@@ -40,7 +37,7 @@ class MoviesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMoviesBinding.inflate(inflater, container, false)
+        initAdapter()
         return binding.root
     }
 
@@ -49,17 +46,8 @@ class MoviesFragment : Fragment() {
 
         val progressBar = PopUps.progressDialog(requireActivity())
 
-        movieAdapter = TrendMovieListAdapter()
-
-        movieAdapter.stateRestorationPolicy =
-            PREVENT_WHEN_EMPTY
-
-
-        binding.apply {
-            trendMoviesRV.adapter = movieAdapter
-            swipeRefresh.setOnRefreshListener {
-                movieViewModel.getTrendingMovies()
-            }
+        binding.swipeRefresh.setOnRefreshListener {
+            movieViewModel.getTrendingMovies()
         }
 
         movieAdapter.setOnClickListener { movie ->
@@ -114,7 +102,7 @@ class MoviesFragment : Fragment() {
                         }
                         is MovieViewModel.Event.TrendingSuccess -> {
                             progressBar.dismiss()
-                            movieAdapter.differ.submitList(event.trendingMoviesModel)
+                            movieAdapter.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
                         }
                     }
@@ -123,12 +111,19 @@ class MoviesFragment : Fragment() {
         }
     }
 
+    private fun initAdapter() {
+        movieAdapter = TrendMovieListAdapter()
+        movieAdapter.stateRestorationPolicy =
+            PREVENT_WHEN_EMPTY
+        binding.rvMovies.adapter = movieAdapter
+    }
+
     private fun observeList() {
         movieViewModel.getMovieList().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
                 movieViewModel.getTrendingMovies()
             } else {
-                movieAdapter.differ.submitList(it)
+                movieAdapter.submitList(it)
             }
         })
     }
@@ -212,11 +207,6 @@ class MoviesFragment : Fragment() {
                 true
             )
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 

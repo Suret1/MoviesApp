@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="cast"
+            type="com.suret.moviesapp.data.model.Cast" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_220sdp"
@@ -24,6 +30,7 @@
                     android:id="@+id/iwPersonPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_180sdp"
+                    android:downloadImage="@{cast.profile_path}"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -39,6 +46,7 @@
                     android:layout_marginTop="@dimen/_10sdp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{cast.name}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp"
@@ -58,6 +66,7 @@
                     android:ellipsize="end"
                     android:maxLines="2"
                     android:paddingBottom="@dimen/_5sdp"
+                    android:text="@{cast.character}"
                     android:textAlignment="center"
                     android:textSize="@dimen/_10ssp"
                     app:layout_constraintBottom_toBottomOf="parent"

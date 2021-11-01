@@ -1,12 +1,8 @@
 package com.suret.moviesapp.ui.moviedetails.adapters
 
-import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +12,7 @@ import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.ReviewListLayoutBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter.ReviewHolder
-import com.suret.moviesapp.util.AppUtil.toDate
+import com.suret.moviesapp.util.toDate
 
 
 class ReviewAdapter : RecyclerView.Adapter<ReviewHolder>() {

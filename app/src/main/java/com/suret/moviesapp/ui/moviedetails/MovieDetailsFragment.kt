@@ -1,6 +1,5 @@
 package com.suret.moviesapp.ui.moviedetails
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -36,9 +35,9 @@ import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
-import com.suret.moviesapp.util.AppUtil.convertHourAndMinutes
-import com.suret.moviesapp.util.AppUtil.roundForDouble
-import com.suret.moviesapp.util.AppUtil.splitNumber
+import com.suret.moviesapp.util.convertHourAndMinutes
+import com.suret.moviesapp.util.roundForDouble
+import com.suret.moviesapp.util.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -47,8 +46,8 @@ import kotlin.math.abs
 
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
+    private val binding by lazy { FragmentMovieDetailsBinding.inflate(layoutInflater) }
     private val movieViewModel: MovieViewModel by viewModels()
-    private var _binding: FragmentMovieDetailsBinding? = null
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
@@ -63,8 +62,6 @@ class MovieDetailsFragment : Fragment() {
     companion object {
         private var isFavorite = false
     }
-
-    private val binding get() = _binding!!
 
     private val bounce: Animation by lazy {
         AnimationUtils.loadAnimation(
@@ -84,29 +81,19 @@ class MovieDetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentMovieDetailsBinding.inflate(inflater, container, false)
+        initAdapters()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
-        binding.apply {
-            initAdapters()
-            fabSearch.shrink()
-        }
-        reviewAdapter.setOnItemClickListener { review ->
-            findNavController().navigate(
-                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
-                    review
-                )
-            )
-        }
+        binding.fabSearch.shrink()
 
+        reviewOnClick()
         favoriteMovieModel?.let {
             getData(castToTrendingMoviesModel(it))
             movieId = it.id!!
@@ -115,6 +102,24 @@ class MovieDetailsFragment : Fragment() {
             getData(it)
             movieId = it.id!!
         }
+        checkFavorite()
+        goToPersonDetailFragment()
+
+        setToolBar()
+        goToSimilarFragment()
+    }
+
+    private fun reviewOnClick() {
+        reviewAdapter.setOnItemClickListener { review ->
+            findNavController().navigate(
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
+                    review
+                )
+            )
+        }
+    }
+
+    private fun checkFavorite() {
         lifecycleScope.launchWhenCreated {
             val check = movieViewModel.getFavoriteMovieByID(movieId)
             isFavorite = if (check == null) {
@@ -124,21 +129,18 @@ class MovieDetailsFragment : Fragment() {
             }
             setFAB(isFavorite)
         }
-        goToPersonDetailFragment()
-        castListAdapter.stateRestorationPolicy =
-            PREVENT_WHEN_EMPTY
-        setToolBar()
-        goToSimilarFragment()
     }
 
-    private fun FragmentMovieDetailsBinding.initAdapters() {
+    private fun initAdapters() {
         productionsAdapter = ProductionsAdapter()
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
         reviewAdapter = ReviewAdapter()
-        rvCast.adapter = castListAdapter
-        rvProductions.adapter = productionsAdapter
-        rvReview.adapter = reviewAdapter
+        binding.rvCast.adapter = castListAdapter
+        binding.rvProductions.adapter = productionsAdapter
+        binding.rvReview.adapter = reviewAdapter
+        castListAdapter.stateRestorationPolicy =
+            PREVENT_WHEN_EMPTY
     }
 
     private fun goToSimilarFragment() {
@@ -163,7 +165,7 @@ class MovieDetailsFragment : Fragment() {
     private fun setVisibility() {
         binding.apply {
             if (!isClicked) {
-            fabSearch.extend()
+                fabSearch.extend()
                 fabSimilar.startAnimation(bounce)
                 tvSimilar.startAnimation(bounce)
                 fabSimilar.visibility = View.VISIBLE
@@ -209,7 +211,7 @@ class MovieDetailsFragment : Fragment() {
                         when (event) {
                             is Event.CastSuccess -> {
                                 castList = event.cast
-                                castListAdapter.differ.submitList(event.cast)
+                                castListAdapter.submitList(event.cast)
                             }
                             is Event.Failure -> {
                                 //
@@ -296,7 +298,6 @@ class MovieDetailsFragment : Fragment() {
 
 
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
-
         tvSeeAll.setOnClickListener {
             castList?.let {
                 val array = arrayListOf<Cast>()
@@ -569,8 +570,4 @@ class MovieDetailsFragment : Fragment() {
         movieTitle.setColor(R.color.white, R.color.silver)
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

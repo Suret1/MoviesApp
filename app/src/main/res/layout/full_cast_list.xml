@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="cast"
+            type="com.suret.moviesapp.data.model.Cast" />
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -19,7 +25,8 @@
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iwPersonPhoto"
                 android:layout_width="@dimen/_80sdp"
-                android:layout_height="@dimen/_130sdp" />
+                android:layout_height="@dimen/_130sdp"
+                android:downloadImage="@{cast.profile_path}" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -32,6 +39,7 @@
                     style="@style/GilroyBoldTextStyle"
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
+                    android:text="@{cast.name}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_16ssp"
@@ -48,6 +56,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{cast.character}"
                     android:textAlignment="center"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -63,6 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_10sdp"
+                    android:text="@{cast.known_for_department}"
                     android:textAlignment="center"
                     android:textSize="@dimen/_14ssp"
                     app:layout_constraintBottom_toBottomOf="parent"

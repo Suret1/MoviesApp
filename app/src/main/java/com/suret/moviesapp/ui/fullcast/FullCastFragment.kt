@@ -38,16 +38,16 @@ class FullCastFragment : Fragment() {
         castAdapter.sendTypeCast(FULL_CAST_TYPE)
 
         binding.apply {
-            castToolbar.setNavigationIcon(R.drawable.back_btn)
             tvTitle.animation =
                 AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left_title)
+
             castToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
             rvFullCast.adapter = castAdapter
 
             castList?.let {
-                castAdapter.differ.submitList(it as List<Cast>)
+                castAdapter.submitList(it as List<Cast>)
             }
 
             castAdapter.setOnItemClickListener {
