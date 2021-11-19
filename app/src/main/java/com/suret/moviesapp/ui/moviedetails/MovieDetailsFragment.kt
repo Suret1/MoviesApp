@@ -1,10 +1,10 @@
 package com.suret.moviesapp.ui.moviedetails
 
+import android.app.Activity
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
@@ -88,6 +88,7 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
@@ -120,7 +121,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun checkFavorite() {
-        lifecycleScope.launchWhenCreated {
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             val check = movieViewModel.getFavoriteMovieByID(movieId)
             isFavorite = if (check == null) {
                 false

@@ -14,6 +14,9 @@ import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter.TrendViewHold
 class TrendMovieListAdapter :
     ListAdapter<TrendingMoviesModel, TrendViewHolder>(DifferCallBack) {
 
+    var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
+    var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
+
     inner class TrendViewHolder(
         val binding: TrendingMoviesListBinding
     ) :
@@ -23,7 +26,7 @@ class TrendMovieListAdapter :
             trendingMoviesModel?.let { model ->
                 binding.apply {
 
-                    binding.movie = currentList[bindingAdapterPosition]
+                    binding.movie = model
 
                     root.setOnClickListener {
                         model.let { movies ->
@@ -54,17 +57,6 @@ class TrendMovieListAdapter :
         holder.bind(getItem(position))
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
-    }
-
-    private var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
-    private var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
-
-    fun setOnClickListener(listener: (TrendingMoviesModel) -> Unit) {
-        setOnItemClick = listener
-    }
-
-    fun setOnFavoriteClickListener(listener: (TrendingMoviesModel) -> Unit) {
-        setOnFavoriteClick = listener
     }
 }
 

@@ -19,38 +19,34 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class FavouritesFragment : Fragment() {
-    private var _binding: FragmentFavouritesBinding? = null
-    private lateinit var favoriteAdapter: FavoriteAdapter
+    private val binding by lazy { FragmentFavouritesBinding.inflate(layoutInflater) }
     private var removeAlertDialog: AlertDialog.Builder? = null
     private val movieViewModel: MovieViewModel by viewModels()
-
-    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        favoriteAdapter = FavoriteAdapter()
-        binding.apply {
-            rvFavoriteMovies.adapter = favoriteAdapter
-        }
+        val favoriteAdapter = FavoriteAdapter()
+
+        binding.rvFavoriteMovies.adapter = favoriteAdapter
+
         movieViewModel.getFavoriteMovies().observe(viewLifecycleOwner, {
-            favoriteAdapter.differ.submitList(it)
+            favoriteAdapter.submitList(it)
         })
-        favoriteAdapter.setOnItemClickListener { favModel ->
+        favoriteAdapter.setOnItemClick = { favModel ->
             view.findNavController().navigate(
                 FavouritesFragmentDirections.actionFavouriteToMovieDetailsFragment(null, favModel)
             )
         }
-        favoriteAdapter.setOnFavoriteClickListener {
+        favoriteAdapter.setOnFavoriteClick = {
             initRemoveDialog(it)
         }
         favoriteAdapter.stateRestorationPolicy =
@@ -95,9 +91,4 @@ class FavouritesFragment : Fragment() {
             false
         )
     }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

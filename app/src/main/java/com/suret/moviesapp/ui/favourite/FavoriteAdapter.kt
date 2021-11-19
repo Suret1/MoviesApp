@@ -3,62 +3,29 @@ package com.suret.moviesapp.ui.favourite
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import coil.load
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
-import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FavoriteListLayoutBinding
 import com.suret.moviesapp.ui.favourite.FavoriteAdapter.FavoriteViewHolder
-import com.suret.moviesapp.util.roundForDouble
 
 
-class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
+class FavoriteAdapter : ListAdapter<FavoriteMovieModel, FavoriteViewHolder>(DifferCallBack) {
 
-    private val differCallBack = object : DiffUtil.ItemCallback<FavoriteMovieModel>() {
-        override fun areItemsTheSame(
-            oldItem: FavoriteMovieModel,
-            newItem: FavoriteMovieModel
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
-
-        override fun areContentsTheSame(
-            oldItem: FavoriteMovieModel,
-            newItem: FavoriteMovieModel
-        ): Boolean {
-            return oldItem == newItem
-        }
-
-    }
-
-    val differ = AsyncListDiffer(this, differCallBack)
-
+    var setOnItemClick: ((FavoriteMovieModel) -> Unit)? = null
+    var setOnFavoriteClick: ((FavoriteMovieModel) -> Unit)? = null
 
     inner class FavoriteViewHolder(
-        private val favoriteListLayoutBinding: FavoriteListLayoutBinding
+        private val binding: FavoriteListLayoutBinding
     ) :
-        RecyclerView.ViewHolder(favoriteListLayoutBinding.root) {
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(favoriteMovieModel: FavoriteMovieModel?) {
-            favoriteListLayoutBinding.apply {
-                favoriteMovieModel?.let { model ->
-                    if (model.title == null) {
-                        tvMovieTitle.text = model.name
-                        if (model.name == null) {
-                            tvMovieTitle.text = model.original_title
-                        }
-                    } else {
-                        tvMovieTitle.text = model.title
-                    }
-                    iwMovie.load(
-                        Constants.IMAGE_URL +
-                                differ.currentList.getOrNull(bindingAdapterPosition)?.backdrop_path
-                    ) {
-                        crossfade(true)
-                    }
-                    tvRating.text = model.vote_average?.let { roundForDouble(it) }
+            favoriteMovieModel?.let { model ->
+                binding.apply {
+
+                    binding.model = model
 
                     root.setOnClickListener {
                         model.let { fav ->
@@ -87,21 +54,26 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
-        holder.bind(differ.currentList.getOrNull(position))
+        holder.bind(getItem(position))
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
     }
 
-    private var setOnItemClick: ((FavoriteMovieModel) -> Unit)? = null
-    private var setOnFavoriteClick: ((FavoriteMovieModel) -> Unit)? = null
+    private object DifferCallBack : DiffUtil.ItemCallback<FavoriteMovieModel>() {
+        override fun areItemsTheSame(
+            oldItem: FavoriteMovieModel,
+            newItem: FavoriteMovieModel
+        ): Boolean {
+            return oldItem.id == newItem.id
+        }
 
-    fun setOnItemClickListener(listener: (FavoriteMovieModel) -> Unit) {
-        setOnItemClick = listener
+        override fun areContentsTheSame(
+            oldItem: FavoriteMovieModel,
+            newItem: FavoriteMovieModel
+        ): Boolean {
+            return oldItem == newItem
+        }
+
     }
 
-    fun setOnFavoriteClickListener(listener: (FavoriteMovieModel) -> Unit) {
-        setOnFavoriteClick = listener
-    }
-
-    override fun getItemCount(): Int = differ.currentList.size
 }

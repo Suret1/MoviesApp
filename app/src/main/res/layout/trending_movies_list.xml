@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="movie"
             type="com.suret.moviesapp.data.model.TrendingMoviesModel" />
@@ -11,7 +13,6 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/rootLayout"
         android:layout_width="@dimen/_140sdp"
         android:layout_height="@dimen/_245sdp"
         android:layout_margin="@dimen/_4sdp"
@@ -32,12 +33,12 @@
                     android:id="@+id/movie_image"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_200sdp"
-                    android:downloadImage="@{movie.poster_path}"
                     android:scaleType="centerCrop"
                     app:layout_constraintBottom_toBottomOf="@id/frame_layout_of_genre"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:downloadImage="@{movie.poster_path}"
                     tools:srcCompat="@drawable/movie_poster" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -45,10 +46,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/_10sdp"
-                    android:checkFavorite="@{movie.favorite}"
                     android:padding="@dimen/_5sdp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:checkFavorite="@{movie.favorite}"
                     tools:srcCompat="@drawable/ic_favorite_movie" />
 
                 <FrameLayout
@@ -93,11 +94,11 @@
                             style="@style/GilroyLightTextStyle"
                             android:layout_gravity="center"
                             android:layout_marginHorizontal="@dimen/_8sdp"
-                            android:movieRating="@{movie.vote_average}"
                             android:textSize="@dimen/_8ssp"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
+                            bind:movieRating="@{movie.vote_average}"
                             tools:text="6.7" />
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -113,13 +114,13 @@
                     android:layout_marginBottom="@dimen/_20sdp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:setTextMovie="@{movie}"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/frame_layout_of_genre"
+                    bind:setTextMovie="@{movie}"
                     tools:text="Avengers: End Game" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>

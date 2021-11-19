@@ -46,20 +46,21 @@ class MoviesFragment : Fragment() {
 
         val progressBar = PopUps.progressDialog(requireActivity())
 
+        observeList()
+
         binding.swipeRefresh.setOnRefreshListener {
             movieViewModel.getTrendingMovies()
         }
 
-        movieAdapter.setOnClickListener { movie ->
+        movieAdapter.setOnItemClick = { movie ->
             movie.let {
                 findNavController().navigate(
                     MoviesFragmentDirections.actionMoviesToMovieDetailsFragment(movie, null)
                 )
             }
         }
-        observeList()
 
-        movieAdapter.setOnFavoriteClickListener { movie ->
+        movieAdapter.setOnFavoriteClick = { movie ->
             viewLifecycleOwner.lifecycleScope.launch {
                 movieViewModel.updateMovieModel(setFavoriteStatus(movie, movie.isFavorite))
                 if (!movie.isFavorite) {
@@ -208,8 +209,6 @@ class MoviesFragment : Fragment() {
             )
         }
     }
-
-
 }
 
 

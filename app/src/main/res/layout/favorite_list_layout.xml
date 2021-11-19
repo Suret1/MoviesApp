@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.suret.moviesapp.data.model.FavoriteMovieModel" />
+
+    </data>
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,6 +52,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
+                bind:downloadImage="@{model.poster_path}"
                 tools:background="@drawable/movie_poster" />
         </androidx.cardview.widget.CardView>
 
@@ -76,6 +86,7 @@
                     app:layout_constraintEnd_toStartOf="@id/iwFavorite"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:setTextFavMovie="@{model}"
                     tools:text="Avengers: End Game" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -93,6 +104,7 @@
                     style="@style/GilroyBoldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
+                    android:text="@{model.vote_average.toString()}"
                     android:textColor="#ffc107"
                     android:textSize="@dimen/_22ssp"
                     app:layout_constraintBottom_toBottomOf="parent"

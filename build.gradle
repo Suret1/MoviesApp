@@ -1,12 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 buildscript {
-    ext{
-        kotlin_version = "1.5.31"
-        hilt_version = '2.38.1'
-        nav_version = "2.3.5"
+    ext {
+        kotlin_version = "1.6.0"
+        hilt_version = "2.40"
+        retrofit_version = "2.9.0"
+        nav_version = "2.4.0-beta02"
         room_version = "2.3.0"
-        paging_version = "3.0.1"
-        lifecycle_version = "2.3.1"
+        paging_version = "3.1.0"
+        lifecycle_version = "2.4.0"
     }
 
     repositories {

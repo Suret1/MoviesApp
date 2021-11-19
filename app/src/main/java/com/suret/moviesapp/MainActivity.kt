@@ -13,19 +13,19 @@ import np.com.susanthapa.curved_bottom_navigation.CbnMenuItem
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private lateinit var activityMainBinding: ActivityMainBinding
+    private val binding by lazy {ActivityMainBinding.inflate(layoutInflater)}
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        setContentView(binding.root)
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container) as NavHostFragment
 
         navController = navHostFragment.navController
 
-        activityMainBinding.apply {
+        binding.apply {
 
             val menuItems = arrayOf(
                 CbnMenuItem(
@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.movieDetailsFragment, R.id.fullCastFragment, R.id.personDetailsFragment, R.id.similarFragment, R.id.reviewBottomSheet -> hideBottomNav()
 
                 R.id.movies -> {
-                    activityMainBinding.constrainLayout.apply {
+                    binding.constrainLayout.apply {
                         setBackgroundColor(
                             ContextCompat.getColor(
                                 this@MainActivity,
@@ -58,7 +58,7 @@ class MainActivity : AppCompatActivity() {
                     showBottomNav()
                 }
                 R.id.favourite -> {
-                    activityMainBinding.constrainLayout.apply {
+                    binding.constrainLayout.apply {
                         setBackgroundColor(
                             ContextCompat.getColor(
                                 this@MainActivity,
@@ -76,15 +76,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideBottomNav() {
-        activityMainBinding.apply {
-            bottomNav.visibility = View.GONE
-        }
+        binding.bottomNav.visibility = View.GONE
     }
 
     private fun showBottomNav() {
-        activityMainBinding.apply {
-            bottomNav.visibility = View.VISIBLE
-        }
+        binding.bottomNav.visibility = View.VISIBLE
     }
 
 }

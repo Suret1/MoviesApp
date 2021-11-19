@@ -4,22 +4,11 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.util.Log
-import androidx.appcompat.widget.AppCompatImageView
-import androidx.appcompat.widget.AppCompatTextView
-import androidx.databinding.BindingAdapter
-import androidx.swiperefreshlayout.widget.CircularProgressDrawable
-import coil.load
-import com.suret.moviesapp.R
-import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.data.other.Constants
-import com.willy.ratingbar.ScaleRatingBar
 import java.math.BigInteger
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
-
 
 fun isNetworkAvailable(context: Context): Boolean {
     val connectivityManager =
@@ -79,49 +68,3 @@ fun roundForDouble(value: Double): String {
     return result
 }
 
-@BindingAdapter("android:setTextMovie")
-fun AppCompatTextView.setTitle(movie: TrendingMoviesModel) {
-    if (movie.title == null) {
-        text = movie.name
-        if (movie.name == null) {
-            text = movie.original_title
-        }
-    } else {
-        text = movie.title
-    }
-}
-
-@BindingAdapter("android:movieRating")
-fun AppCompatTextView.bindMovieRatingForTv(voteAverage: Double) {
-    text = roundForDouble(voteAverage)
-}
-
-@BindingAdapter("app:movieRating")
-fun ScaleRatingBar.bindMovieRatingForRB(ratingValue: Float) {
-    rating = ratingValue
-}
-
-@BindingAdapter("android:checkFavorite")
-fun AppCompatImageView.setImage(isFavorite: Boolean) {
-    when (isFavorite) {
-        true -> setImageResource(R.drawable.ic_favorite_movie)
-        false -> setImageResource(R.drawable.ic_disable_favorite)
-    }
-}
-
-@BindingAdapter("android:downloadImage")
-fun AppCompatImageView.downloadImage(url: String?) {
-        load(Constants.IMAGE_URL + url) {
-            placeholder(placeholderProgressbar(this@downloadImage.context))
-            crossfade(true)
-            error(R.drawable.no_photo)
-        }
-}
-
-private fun placeholderProgressbar(context: Context): CircularProgressDrawable {
-    return CircularProgressDrawable(context).apply {
-        strokeWidth = 4f
-        centerRadius = 40f
-        start()
-    }
-}
