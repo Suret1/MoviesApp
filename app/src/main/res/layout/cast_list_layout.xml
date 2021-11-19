@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="cast"
             type="com.suret.moviesapp.data.model.Cast" />
@@ -31,13 +32,23 @@
                     android:id="@+id/iwPersonPhoto"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_180sdp"
-                    bind:downloadImage="@{cast.profile_path}"
                     android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:progress="@{progressBar}"
+                    bind:setImage="@{cast.profile_path}"
                     tools:srcCompat="@drawable/movie_poster" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:indeterminateTint="@color/white"
+                    app:layout_constraintBottom_toBottomOf="@id/iwPersonPhoto"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/iwPersonPhoto" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvPersonName"

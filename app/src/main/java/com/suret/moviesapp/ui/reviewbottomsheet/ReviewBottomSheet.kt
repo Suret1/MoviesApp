@@ -14,16 +14,13 @@ import com.suret.moviesapp.databinding.FragmentReviewBottomSheetBinding
 import com.suret.moviesapp.util.toDate
 
 class ReviewBottomSheet : BottomSheetDialogFragment() {
-    private var _binding: FragmentReviewBottomSheetBinding? = null
-    private val binding get() = _binding!!
+    private val binding by lazy { FragmentReviewBottomSheetBinding.inflate(layoutInflater) }
     private val args: ReviewBottomSheetArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
-        _binding = FragmentReviewBottomSheetBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -69,10 +66,5 @@ class ReviewBottomSheet : BottomSheetDialogFragment() {
             tvReview.text = r.content
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

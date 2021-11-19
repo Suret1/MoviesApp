@@ -22,8 +22,8 @@ import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class PersonDetailsFragment : Fragment() {
-    private var _binding: FragmentPersonDetailsBinding? = null
-    private val binding get() = _binding!!
+    private val binding by lazy { FragmentPersonDetailsBinding.inflate(layoutInflater) }
+
     private var castModel: Cast? = null
     private val movieViewModel: MovieViewModel by viewModels()
     private val args: PersonDetailsFragmentArgs by navArgs()
@@ -31,7 +31,6 @@ class PersonDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentPersonDetailsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -65,7 +64,8 @@ class PersonDetailsFragment : Fragment() {
             }
         }
         binding.apply {
-            tvTitleActorName.animation = AnimationUtils.loadAnimation(requireContext(),R.anim.slide_left_title)
+            tvTitleActorName.animation =
+                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left_title)
             personToolbar.setNavigationIcon(R.drawable.back_btn)
             personToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
@@ -94,10 +94,4 @@ class PersonDetailsFragment : Fragment() {
             tvBio.text = actor.biography
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
 }

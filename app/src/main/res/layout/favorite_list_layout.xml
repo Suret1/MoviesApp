@@ -12,7 +12,6 @@
 
     </data>
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -52,8 +51,16 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:downloadImage="@{model.poster_path}"
+                bind:progress="@{progressBar}"
+                bind:setImage="@{model.poster_path}"
                 tools:background="@drawable/movie_poster" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:indeterminateTint="@color/white" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

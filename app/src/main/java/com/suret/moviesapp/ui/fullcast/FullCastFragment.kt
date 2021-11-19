@@ -16,16 +16,14 @@ import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 
 
 class FullCastFragment : Fragment() {
-    private var _binding: FragmentFullCastBinding? = null
+    private val binding by lazy { FragmentFullCastBinding.inflate(layoutInflater) }
     private lateinit var castAdapter: FullCastAdapter
-    private val binding get() = _binding!!
     private val args: FullCastFragmentArgs by navArgs()
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFullCastBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -56,11 +54,6 @@ class FullCastFragment : Fragment() {
                 )
             }
         }
-
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
