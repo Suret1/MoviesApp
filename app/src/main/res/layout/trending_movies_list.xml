@@ -85,7 +85,6 @@
                             app:layout_constraintEnd_toStartOf="@id/ratingTV"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent"
-                            app:movieRating="@{movie.vote_average.floatValue()}"
                             app:srb_clearRatingEnabled="false"
                             app:srb_clickable="false"
                             app:srb_drawableEmpty="@drawable/star_empty"
@@ -98,6 +97,7 @@
                             app:srb_starPadding="@dimen/_2sdp"
                             app:srb_starWidth="@dimen/_8sdp"
                             app:srb_stepSize="0.1"
+                            bind:ratingForRatingBar="@{movie.vote_average.floatValue()}"
                             tools:srb_rating="6.7" />
 
                         <androidx.appcompat.widget.AppCompatTextView

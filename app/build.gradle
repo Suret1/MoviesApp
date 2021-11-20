@@ -16,7 +16,7 @@ android {
         minSdkVersion 27
         targetSdkVersion 31
         versionCode 1
-        versionName "1.4.4"
+        versionName "1.4.5"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -88,9 +88,6 @@ dependencies {
     implementation "com.squareup.okhttp3:okhttp:4.9.1"
     implementation "com.squareup.okhttp3:logging-interceptor:4.9.1"
 
-    //Coil
-    implementation('io.coil-kt:coil:1.4.0')
-
     //RatingBar
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
 
@@ -122,4 +119,7 @@ dependencies {
     //Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    //Timber
+    implementation 'com.jakewharton.timber:timber:5.0.1'
 }

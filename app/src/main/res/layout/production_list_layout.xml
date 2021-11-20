@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="model"
+            type="com.suret.moviesapp.data.model.ProductionCompany" />
+
+    </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_90sdp"
@@ -29,8 +38,18 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
+                    bind:progress="@{progressBar}"
+                    bind:setImage="@{model.logo_path}"
                     tools:srcCompat="@drawable/movie_poster" />
 
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    app:layout_constraintBottom_toBottomOf="@id/iwProductionLogo"
+                    app:layout_constraintEnd_toEndOf="@id/iwProductionLogo"
+                    app:layout_constraintStart_toStartOf="@id/iwProductionLogo"
+                    app:layout_constraintTop_toTopOf="@id/iwProductionLogo" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvProductionName"
@@ -41,6 +60,7 @@
                     android:layout_marginBottom="@dimen/_6sdp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{model.name}"
                     android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/_10ssp"

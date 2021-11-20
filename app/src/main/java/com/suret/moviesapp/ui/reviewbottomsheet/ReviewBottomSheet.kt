@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FragmentReviewBottomSheetBinding
+import com.suret.moviesapp.util.downloadImage
 import com.suret.moviesapp.util.toDate
 
 class ReviewBottomSheet : BottomSheetDialogFragment() {
@@ -39,25 +40,15 @@ class ReviewBottomSheet : BottomSheetDialogFragment() {
         review?.let { r ->
             tvProfileName.text = r.author
             val path = r.author_details?.avatar_path
-            if (path != null) {
+            if (!path.isNullOrEmpty()) {
                 if (path.startsWith("/https:", true)) {
-                    iwProfile.load(
-                        path.removePrefix("/")
-                    ) {
-                        crossfade(true)
-                        error(R.drawable.ic_round_person_24)
-                    }
+                    downloadImage(iwProfile, path.removePrefix("/"), progressBar)
                 } else {
-                    iwProfile.load(
-                        Constants.IMAGE_URL + path
-                    ) {
-                        crossfade(true)
-                        error(R.drawable.ic_round_person_24)
-                    }
+                    downloadImage(iwProfile, Constants.IMAGE_URL + path, progressBar)
                 }
-
             } else {
-                iwProfile.load(R.drawable.ic_round_person_24)
+                progressBar.isVisible = false
+                iwProfile.setImageResource(R.drawable.ic_round_person_24)
             }
             if (r.author_details?.rating != null) {
                 tvRate.text = r.author_details.rating.toString()

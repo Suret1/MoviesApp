@@ -48,7 +48,7 @@ class FullCastFragment : Fragment() {
                 castAdapter.submitList(it as List<Cast>)
             }
 
-            castAdapter.setOnItemClickListener {
+            castAdapter.onItemClick = {
                 findNavController().navigate(
                     FullCastFragmentDirections.actionFullCastFragmentToPersonDetailsFragment(it)
                 )

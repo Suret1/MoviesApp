@@ -18,27 +18,26 @@ class TrendMovieListAdapter :
     var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
 
     inner class TrendViewHolder(
-        val binding: TrendingMoviesListBinding
+        private val binding: TrendingMoviesListBinding
     ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
             trendingMoviesModel?.let { model ->
-                binding.apply {
 
-                    binding.movie = model
+                binding.movie = model
 
-                    root.setOnClickListener {
-                        model.let { movies ->
-                            setOnItemClick?.invoke(movies)
-                        }
-                    }
-                    iwFavorite.setOnClickListener {
-                        model.let { movies ->
-                            setOnFavoriteClick?.invoke(movies)
-                        }
+                binding.root.setOnClickListener {
+                    model.let { movies ->
+                        setOnItemClick?.invoke(movies)
                     }
                 }
+                binding.iwFavorite.setOnClickListener {
+                    model.let { movies ->
+                        setOnFavoriteClick?.invoke(movies)
+                    }
+                }
+
             }
         }
     }

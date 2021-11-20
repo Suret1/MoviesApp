@@ -1,6 +1,5 @@
 package com.suret.moviesapp.data.model
 
-import android.os.Parcel
 import android.os.Parcelable
 import androidx.annotation.Keep
 import kotlinx.parcelize.Parcelize
@@ -26,5 +25,5 @@ data class Cast(
     val original_name: String? = null,
     val popularity: Double? = null,
     val profile_path: String? = null,
-    val isFullCast : Boolean? = false
-):Parcelable
+    val isFullCast: Boolean? = false
+) : Parcelable

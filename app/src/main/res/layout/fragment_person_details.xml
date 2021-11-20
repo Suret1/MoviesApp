@@ -7,8 +7,8 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fitsSystemWindows="true"
-        android:background="@color/background_color">
+        android:background="@color/background_color"
+        android:fitsSystemWindows="true">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -52,8 +52,17 @@
                 app:layout_constraintBottom_toTopOf="@id/tvActorName"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/person_appbar"
-                tools:srcCompat="@drawable/actor" />
+                app:layout_constraintTop_toBottomOf="@id/person_appbar" />
+
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:indeterminateTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/iwPersonPhoto"
+                app:layout_constraintEnd_toEndOf="@id/iwPersonPhoto"
+                app:layout_constraintStart_toStartOf="@id/iwPersonPhoto"
+                app:layout_constraintTop_toTopOf="@id/iwPersonPhoto" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tvActorName"

@@ -1,10 +1,10 @@
 package com.suret.moviesapp.ui.moviedetails
 
-import android.app.Activity
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
@@ -111,7 +111,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun reviewOnClick() {
-        reviewAdapter.setOnItemClickListener { review ->
+        reviewAdapter.onItemClick = { review ->
             findNavController().navigate(
                 MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
                     review
@@ -261,7 +261,7 @@ class MovieDetailsFragment : Fragment() {
                         }
                         is Event.ReviewsSuccess -> {
                             event.reviews.let {
-                                reviewAdapter.differ.submitList(it)
+                                reviewAdapter.submitList(it)
                             }
                         }
 
@@ -294,7 +294,7 @@ class MovieDetailsFragment : Fragment() {
             genresString.deleteCharAt(genresString.length - 2)
             genreTV.text = genresString
         }
-        productionsAdapter.differ.submitList(model.production_companies)
+        productionsAdapter.submitList(model.production_companies)
     }
 
 
@@ -314,7 +314,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun goToPersonDetailFragment() {
-        castListAdapter.setOnItemClickListener {
+        castListAdapter.onItemClick = {
             findNavController().navigate(
                 MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(
                     it

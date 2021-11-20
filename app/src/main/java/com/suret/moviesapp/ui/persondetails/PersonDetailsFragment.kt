@@ -6,17 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import coil.load
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsBinding
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.util.downloadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
@@ -75,7 +76,12 @@ class PersonDetailsFragment : Fragment() {
 
     private fun setPersonData(actor: ActorModel) {
         binding.apply {
-            iwPersonPhoto.load(IMAGE_URL + actor.profile_path)
+            if (!actor.profile_path.isNullOrEmpty()) {
+                downloadImage(iwPersonPhoto, IMAGE_URL + actor.profile_path, progressBar)
+            } else {
+                progressBar.isVisible = false
+                iwPersonPhoto.setImageResource(R.drawable.ic_round_person_24)
+            }
             tvTitleActorName.text = actor.name
             tvActorName.text = actor.name
             when {

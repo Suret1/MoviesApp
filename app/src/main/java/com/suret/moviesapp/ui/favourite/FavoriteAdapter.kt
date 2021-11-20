@@ -23,24 +23,21 @@ class FavoriteAdapter : ListAdapter<FavoriteMovieModel, FavoriteViewHolder>(Diff
         RecyclerView.ViewHolder(binding.root) {
         fun bind(favoriteMovieModel: FavoriteMovieModel?) {
             favoriteMovieModel?.let { model ->
-                binding.apply {
 
-                    binding.model = model
+                binding.model = model
 
-                    root.setOnClickListener {
-                        model.let { fav ->
-                            setOnItemClick?.invoke(fav)
-                        }
+                binding.root.setOnClickListener {
+                    model.let { fav ->
+                        setOnItemClick?.invoke(fav)
                     }
-                    iwFavorite.setOnClickListener {
-                        model.let { fav ->
-                            setOnFavoriteClick?.invoke(fav)
-                        }
+                }
+                binding.iwFavorite.setOnClickListener {
+                    model.let { fav ->
+                        setOnFavoriteClick?.invoke(fav)
                     }
                 }
             }
         }
-
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder {
@@ -73,7 +70,5 @@ class FavoriteAdapter : ListAdapter<FavoriteMovieModel, FavoriteViewHolder>(Diff
         ): Boolean {
             return oldItem == newItem
         }
-
     }
-
 }

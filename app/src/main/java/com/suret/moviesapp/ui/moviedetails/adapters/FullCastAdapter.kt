@@ -13,6 +13,8 @@ import com.suret.moviesapp.databinding.FullCastListBinding
 
 class FullCastAdapter : ListAdapter<Cast, RecyclerView.ViewHolder>(DifferCallBack) {
 
+    var onItemClick: ((Cast) -> Unit)? = null
+
     var castType: Int? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -37,82 +39,49 @@ class FullCastAdapter : ListAdapter<Cast, RecyclerView.ViewHolder>(DifferCallBac
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         if (holder is CastViewHolder) {
-//            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path) {
-//                crossfade(true)
-//                error(R.drawable.ic_round_person_24)
-//            }
-//            holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
-//            if (!differ.currentList.getOrNull(position)?.character.isNullOrEmpty()) {
-//                holder.tvCharacterName.text =
-//                    "(" + differ.currentList.getOrNull(position)?.character + ")"
-//            }
             holder.bind(getItem(position))
-
-//            holder.itemView.animation =
-//                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_alpha_anim)
+            holder.itemView.animation =
+                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_alpha_anim)
 
         } else if (holder is FullCastViewHolder) {
-//            holder.iwPhoto.load(Constants.IMAGE_URL + differ.currentList.getOrNull(position)?.profile_path) {
-//                crossfade(true)
-//                error(R.drawable.ic_round_person_24)
-//            }
-//            holder.tvPersonName.text = differ.currentList.getOrNull(position)?.name
-//            holder.tvCharacterName.text = differ.currentList.getOrNull(position)?.character
-//            holder.tvDepartment.text = differ.currentList.getOrNull(position)?.known_for_department
             holder.bindfull(getItem(position))
-//            holder.itemView.animation =
-//                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
+            holder.itemView.animation =
+                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
         }
-//        holder.itemView.setOnClickListener {
-//            differ.currentList.getOrNull(position)?.let {
-//                onItemClickListener?.invoke(it)
-//            }
-//        }
+
     }
 
-    inner class CastViewHolder(val binding: CastListLayoutBinding) :
+    inner class CastViewHolder(private val binding: CastListLayoutBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-//        val iwPhoto: AppCompatImageView = itemView.findViewById(R.id.iwPersonPhoto)
-//        val tvPersonName: AppCompatTextView = itemView.findViewById(R.id.tvPersonName)
-//        val tvCharacterName: AppCompatTextView = itemView.findViewById(R.id.tvCharacterName)
-
         fun bind(model: Cast) {
-            binding.apply {
-                binding.cast = currentList[bindingAdapterPosition]
 
-                root.setOnClickListener {
-                    onItemClickListener?.invoke(model)
+            model.let { cast ->
+
+                binding.cast = cast
+
+                binding.root.setOnClickListener {
+                    onItemClick?.invoke(cast)
                 }
 
             }
+
         }
     }
 
-    inner class FullCastViewHolder(val bindingFull: FullCastListBinding) :
+    inner class FullCastViewHolder(private val bindingFull: FullCastListBinding) :
         RecyclerView.ViewHolder(bindingFull.root) {
-//        val iwPhoto: AppCompatImageView = itemView.findViewById(R.id.iwPersonPhoto)
-//        val tvPersonName: AppCompatTextView = itemView.findViewById(R.id.tvPersonName)
-//        val tvCharacterName: AppCompatTextView = itemView.findViewById(R.id.tvCharacterName)
-//        val tvDepartment: AppCompatTextView = itemView.findViewById(R.id.tvDepartment)
 
         fun bindfull(model: Cast) {
-            bindingFull.apply {
 
-                bindingFull.cast = currentList[bindingAdapterPosition]
+            model.let { cast ->
+                bindingFull.cast = cast
 
-                root.setOnClickListener {
-                    onItemClickListener?.invoke(model)
+                bindingFull.root.setOnClickListener {
+                    onItemClick?.invoke(cast)
                 }
-
             }
         }
-    }
-
-    private var onItemClickListener: ((Cast) -> Unit)? = null
-
-    fun setOnItemClickListener(listener: (Cast) -> Unit) {
-        onItemClickListener = listener
     }
 
     fun sendTypeCast(type: Int) {
@@ -127,6 +96,5 @@ class FullCastAdapter : ListAdapter<Cast, RecyclerView.ViewHolder>(DifferCallBac
         override fun areContentsTheSame(oldItem: Cast, newItem: Cast): Boolean {
             return oldItem == newItem
         }
-
     }
 }

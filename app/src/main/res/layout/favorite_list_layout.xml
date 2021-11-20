@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/_16sdp"
             android:layout_marginBottom="@dimen/_16sdp"
-            app:cardBackgroundColor="@color/white"
+            app:cardBackgroundColor="@color/background_color"
             app:cardCornerRadius="@dimen/_5sdp"
             app:cardElevation="0dp"
             app:layout_constraintBottom_toBottomOf="@id/bottomCard"
@@ -53,7 +53,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 bind:progress="@{progressBar}"
                 bind:setImage="@{model.poster_path}"
-                tools:background="@drawable/movie_poster" />
+                tools:srcCompat="@drawable/movie_poster" />
 
             <ProgressBar
                 android:id="@+id/progressBar"
@@ -111,7 +111,6 @@
                     style="@style/GilroyBoldTextStyle"
                     android:layout_width="wrap_content"
                     android:layout_marginStart="@dimen/_10sdp"
-                    android:text="@{model.vote_average.toString()}"
                     android:textColor="#ffc107"
                     android:textSize="@dimen/_22ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -119,6 +118,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintVertical_bias="0.539"
+                    bind:movieRating="@{model.vote_average}"
                     tools:text="9.5" />
 
                 <androidx.appcompat.widget.AppCompatImageView

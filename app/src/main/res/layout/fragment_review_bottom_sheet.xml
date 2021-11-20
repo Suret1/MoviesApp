@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
@@ -39,6 +38,15 @@
                 app:strokeWidth="1dp"
                 tools:srcCompat="@drawable/ic_round_person_24" />
 
+            <ProgressBar
+                android:id="@+id/progressBar"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="30sp"
+                android:indeterminateTint="@color/white"
+                app:layout_constraintBottom_toBottomOf="@id/iw_profile"
+                app:layout_constraintEnd_toEndOf="@id/iw_profile"
+                app:layout_constraintStart_toStartOf="@id/iw_profile"
+                app:layout_constraintTop_toTopOf="@+id/iw_profile" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_profileName"
