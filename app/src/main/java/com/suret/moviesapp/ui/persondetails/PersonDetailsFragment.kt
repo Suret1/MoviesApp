@@ -24,10 +24,16 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class PersonDetailsFragment : Fragment() {
     private val binding by lazy { FragmentPersonDetailsBinding.inflate(layoutInflater) }
-
     private var castModel: Cast? = null
     private val movieViewModel: MovieViewModel by viewModels()
     private val args: PersonDetailsFragmentArgs by navArgs()
+    private val animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.slide_left_title
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -65,9 +71,7 @@ class PersonDetailsFragment : Fragment() {
             }
         }
         binding.apply {
-            tvTitleActorName.animation =
-                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left_title)
-            personToolbar.setNavigationIcon(R.drawable.back_btn)
+            tvTitleActorName.animation = animation
             personToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }

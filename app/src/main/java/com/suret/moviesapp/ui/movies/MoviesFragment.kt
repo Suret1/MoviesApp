@@ -21,6 +21,7 @@ import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.util.PopUps
+import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -72,7 +73,7 @@ class MoviesFragment : Fragment() {
                             )
                         )
                     )
-                    showSnackBar(view, R.string.add_to_fav)
+                    showSnackBar(requireView(), requireActivity(), R.string.add_to_fav)
                 } else {
                     movieViewModel.removeFavoriteMovie(
                         createFavoriteModel(
@@ -82,7 +83,7 @@ class MoviesFragment : Fragment() {
                             )
                         )
                     )
-                    showSnackBar(view, R.string.remove_favorites)
+                    showSnackBar(requireView(), requireActivity(), R.string.remove_favorites)
                 }
             }
         }
@@ -127,21 +128,6 @@ class MoviesFragment : Fragment() {
                 movieAdapter.submitList(it)
             }
         })
-    }
-
-    private fun showSnackBar(view: View, @StringRes id: Int) {
-        val snack = Snackbar.make(view, getString(id), Snackbar.LENGTH_SHORT)
-        val layoutParams = FrameLayout.LayoutParams(snack.view.layoutParams)
-        layoutParams.gravity = Gravity.TOP
-        snack.view.setPadding(0, 10, 0, 0)
-        snack.view.layoutParams = layoutParams
-        snack.view.startAnimation(
-            AnimationUtils.loadAnimation(
-                requireContext(),
-                R.anim.slide_in_snack_bar
-            )
-        )
-        snack.show()
     }
 
     private fun createFavoriteModel(movie: TrendingMoviesModel): FavoriteMovieModel {

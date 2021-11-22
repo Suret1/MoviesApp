@@ -27,6 +27,7 @@
 
                 <androidx.appcompat.widget.Toolbar
                     android:id="@+id/person_toolbar"
+                    app:navigationIcon="@drawable/back_btn"
                     style="@style/Style.AppBarLayout"
                     app:contentInsetStart="0dp"
                     app:contentInsetStartWithNavigation="0dp"

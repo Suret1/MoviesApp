@@ -35,6 +35,8 @@ import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
 import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
+import com.suret.moviesapp.util.PopUps
+import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import com.suret.moviesapp.util.convertHourAndMinutes
 import com.suret.moviesapp.util.roundForDouble
 import com.suret.moviesapp.util.splitNumber
@@ -122,8 +124,8 @@ class MovieDetailsFragment : Fragment() {
 
     private fun checkFavorite() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            val check = movieViewModel.getFavoriteMovieByID(movieId)
-            isFavorite = if (check == null) {
+            val favModel = movieViewModel.getFavoriteMovieByID(movieId)
+            isFavorite = if (favModel == null) {
                 false
             } else {
                 true
@@ -392,7 +394,7 @@ class MovieDetailsFragment : Fragment() {
                             )
                             isFavorite = true
                             movieSetData(newTrendModel(model, true))
-                            showSnackBar(it, R.string.add_to_fav)
+                            showSnackBar(it, requireActivity(), R.string.add_to_fav)
                         } else {
                             movieViewModel.removeFavoriteMovie(
                                 createFavoriteModel(
@@ -404,27 +406,12 @@ class MovieDetailsFragment : Fragment() {
                             )
                             isFavorite = false
                             movieSetData(newTrendModel(model, false))
-                            showSnackBar(it, R.string.remove_favorites)
+                            showSnackBar(it, requireActivity(), R.string.remove_favorites)
                         }
                     }
                 }
             }
         }
-    }
-
-    private fun showSnackBar(view: View, @StringRes id: Int) {
-        val snack = Snackbar.make(view, getString(id), Snackbar.LENGTH_SHORT)
-        val layoutParams = FrameLayout.LayoutParams(snack.view.layoutParams)
-        layoutParams.gravity = Gravity.TOP
-        snack.view.setPadding(0, 0, 0, 0)
-        snack.view.layoutParams = layoutParams
-        snack.view.startAnimation(
-            AnimationUtils.loadAnimation(
-                requireContext(),
-                R.anim.slide_in_snack_bar
-            )
-        )
-        snack.show()
     }
 
     private fun setFAB(isFavorite: Boolean) {

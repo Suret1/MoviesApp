@@ -5,7 +5,10 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.graphics.Color
 import android.view.Gravity
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.snackbar.Snackbar.SnackbarLayout
@@ -28,6 +31,21 @@ class PopUps {
             pd.setMessage(activity.applicationContext.resources.getString(R.string.loading))
             pd.setCancelable(false)
             return pd
+        }
+
+        fun showSnackBar(view: View, activity: Activity, @StringRes id: Int) {
+            val snack = Snackbar.make(view, activity.resources.getString(id), Snackbar.LENGTH_SHORT)
+            val layoutParams = FrameLayout.LayoutParams(snack.view.layoutParams)
+            layoutParams.gravity = Gravity.TOP
+            snack.view.setPadding(0, 0, 0, 0)
+            snack.view.layoutParams = layoutParams
+            snack.view.startAnimation(
+                AnimationUtils.loadAnimation(
+                    activity,
+                    R.anim.slide_in_snack_bar
+                )
+            )
+            snack.show()
         }
 
         //        fun showSnackbar(activity: Activity, @StringRes id: Int) {

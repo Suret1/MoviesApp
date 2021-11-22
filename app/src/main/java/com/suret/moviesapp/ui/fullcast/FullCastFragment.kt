@@ -14,16 +14,24 @@ import com.suret.moviesapp.data.other.Constants.FULL_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentFullCastBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 
-
 class FullCastFragment : Fragment() {
     private val binding by lazy { FragmentFullCastBinding.inflate(layoutInflater) }
     private lateinit var castAdapter: FullCastAdapter
     private val args: FullCastFragmentArgs by navArgs()
+
+    private val animation by lazy {
+        AnimationUtils.loadAnimation(
+            requireContext(),
+            R.anim.slide_left_title
+        )
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        initAdapter()
         return binding.root
     }
 
@@ -32,17 +40,12 @@ class FullCastFragment : Fragment() {
 
         val castList = args.castList
 
-        castAdapter = FullCastAdapter()
-        castAdapter.sendTypeCast(FULL_CAST_TYPE)
-
         binding.apply {
-            tvTitle.animation =
-                AnimationUtils.loadAnimation(requireContext(), R.anim.slide_left_title)
+            tvTitle.animation = animation
 
             castToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
             }
-            rvFullCast.adapter = castAdapter
 
             castList?.let {
                 castAdapter.submitList(it as List<Cast>)
@@ -54,6 +57,12 @@ class FullCastFragment : Fragment() {
                 )
             }
         }
+    }
+
+    private fun initAdapter() {
+        castAdapter = FullCastAdapter()
+        castAdapter.sendTypeCast(FULL_CAST_TYPE)
+        binding.rvFullCast.adapter = castAdapter
     }
 
 }

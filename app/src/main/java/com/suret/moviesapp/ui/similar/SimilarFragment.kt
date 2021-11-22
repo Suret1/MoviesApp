@@ -23,7 +23,6 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class SimilarFragment : Fragment() {
     private val binding by lazy { FragmentSimilarBinding.inflate(layoutInflater) }
-    private lateinit var similarPagingAdapter: SimilarPagingAdapter
     private val args: SimilarFragmentArgs by navArgs()
     private val similarViewModel: SimilarViewModel by viewModels()
 
@@ -38,13 +37,15 @@ class SimilarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val progressBar = PopUps.progressDialog(requireActivity())
-        similarPagingAdapter = SimilarPagingAdapter()
 
+        val similarPagingAdapter = SimilarPagingAdapter()
 
         binding.rvSimilar.adapter = similarPagingAdapter
+
         binding.similarToolbar.setNavigationOnClickListener {
             activity?.onBackPressed()
         }
+
         hideAndShowFloatingActionButton()
 
         binding.fabArrow.setOnClickListener {

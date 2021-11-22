@@ -21,14 +21,12 @@ class SimilarPagingAdapter :
 
         fun bind(trendingMoviesModel: TrendingMoviesModel?) {
             trendingMoviesModel?.let { model ->
-                binding.apply {
 
-                    binding.movie = model
+                binding.movie = model
 
-                    root.setOnClickListener {
-                        model.let { movie ->
-                            setOnItemClick?.invoke(movie)
-                        }
+                binding.root.setOnClickListener {
+                    model.let { movie ->
+                        setOnItemClick?.invoke(movie)
                     }
                 }
             }
@@ -46,9 +44,7 @@ class SimilarPagingAdapter :
     }
 
     override fun onBindViewHolder(holder: TrendViewHolder, position: Int) {
-        getItem(position)?.let {
-            holder.bind(it)
-        }
+        holder.bind(getItem(position))
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }
