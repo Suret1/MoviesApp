@@ -142,6 +142,7 @@ class MovieDetailsFragment : Fragment() {
         binding.rvCast.adapter = castListAdapter
         binding.rvProductions.adapter = productionsAdapter
         binding.rvReview.adapter = reviewAdapter
+        reviewAdapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY
         castListAdapter.stateRestorationPolicy =
             PREVENT_WHEN_EMPTY
     }

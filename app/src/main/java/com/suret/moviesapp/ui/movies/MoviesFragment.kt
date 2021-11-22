@@ -99,7 +99,6 @@ class MoviesFragment : Fragment() {
                             progressBar.dismiss()
                             Snackbar.make(requireView(), event.errorText, Snackbar.LENGTH_SHORT)
                                 .show()
-                            observeList()
                             swipeRefresh.isRefreshing = false
                         }
                         is MovieViewModel.Event.TrendingSuccess -> {

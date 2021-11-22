@@ -75,6 +75,7 @@ class MovieViewModel @Inject constructor(
     private val trendingMoviesChannel = Channel<Event>()
     val trendingMoviesFlow = trendingMoviesChannel.receiveAsFlow()
 
+
     private val castChannel = Channel<Event>()
     val castFlow = castChannel.receiveAsFlow()
 
