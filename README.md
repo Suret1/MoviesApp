@@ -29,6 +29,9 @@ You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/m
 </li>
   <li><a href=https://github.com/google/dagger>Dagger Hilt</a>
 </li>
+</li>
+  <li><a href=https://developer.android.com/topic/libraries/data-binding>Data Binding</a>
+</li>
   <li><a href=https://developer.android.com/guide/navigation>Navigation Component</a>
 </li>
     <li><a href=https://github.com/google/dagger>Retrofit</a>
