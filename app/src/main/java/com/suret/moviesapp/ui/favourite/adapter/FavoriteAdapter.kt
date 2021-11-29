@@ -1,4 +1,4 @@
-package com.suret.moviesapp.ui.favourite
+package com.suret.moviesapp.ui.favourite.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.databinding.FavoriteListLayoutBinding
-import com.suret.moviesapp.ui.favourite.FavoriteAdapter.FavoriteViewHolder
+import com.suret.moviesapp.ui.favourite.adapter.FavoriteAdapter.FavoriteViewHolder
 
 
 class FavoriteAdapter : ListAdapter<FavoriteMovieModel, FavoriteViewHolder>(DifferCallBack) {

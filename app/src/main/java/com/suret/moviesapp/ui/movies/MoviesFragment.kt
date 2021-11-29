@@ -1,13 +1,9 @@
 package com.suret.moviesapp.ui.movies
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,7 +15,7 @@ import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.ui.movies.viewmodel.MoviesFragmentVM
 import com.suret.moviesapp.util.PopUps
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -30,7 +26,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class MoviesFragment : Fragment() {
     private val binding by lazy { FragmentMoviesBinding.inflate(layoutInflater) }
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val viewModel: MoviesFragmentVM by viewModels()
     private lateinit var movieAdapter: TrendMovieListAdapter
 
     override fun onCreateView(
@@ -50,7 +46,7 @@ class MoviesFragment : Fragment() {
         observeList()
 
         binding.swipeRefresh.setOnRefreshListener {
-            movieViewModel.getTrendingMovies()
+            viewModel.getTrendingMovies()
         }
 
         movieAdapter.setOnItemClick = { movie ->
@@ -63,9 +59,9 @@ class MoviesFragment : Fragment() {
 
         movieAdapter.setOnFavoriteClick = { movie ->
             viewLifecycleOwner.lifecycleScope.launch {
-                movieViewModel.updateMovieModel(setFavoriteStatus(movie, movie.isFavorite))
+                viewModel.updateMovieModel(setFavoriteStatus(movie, movie.isFavorite))
                 if (!movie.isFavorite) {
-                    movieViewModel.insertFavoriteMovie(
+                    viewModel.insertFavoriteMovie(
                         createFavoriteModel(
                             setFavoriteStatus(
                                 movie,
@@ -75,7 +71,7 @@ class MoviesFragment : Fragment() {
                     )
                     showSnackBar(requireView(), requireActivity(), R.string.add_to_fav)
                 } else {
-                    movieViewModel.removeFavoriteMovie(
+                    viewModel.removeFavoriteMovie(
                         createFavoriteModel(
                             setFavoriteStatus(
                                 movie,
@@ -90,18 +86,18 @@ class MoviesFragment : Fragment() {
 
         binding.apply {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                movieViewModel.trendingMoviesFlow.collect { event ->
+                viewModel.trendingMoviesFlow.collect { event ->
                     when (event) {
-                        is MovieViewModel.Event.Loading -> {
+                        is MoviesFragmentVM.Event.Loading -> {
                             progressBar.show()
                         }
-                        is MovieViewModel.Event.Failure -> {
+                        is MoviesFragmentVM.Event.Failure -> {
                             progressBar.dismiss()
                             Snackbar.make(requireView(), event.errorText, Snackbar.LENGTH_SHORT)
                                 .show()
                             swipeRefresh.isRefreshing = false
                         }
-                        is MovieViewModel.Event.TrendingSuccess -> {
+                        is MoviesFragmentVM.Event.TrendingSuccess -> {
                             progressBar.dismiss()
                             movieAdapter.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
@@ -120,9 +116,9 @@ class MoviesFragment : Fragment() {
     }
 
     private fun observeList() {
-        movieViewModel.getMovieList().observe(viewLifecycleOwner, {
+        viewModel.getMovieList().observe(viewLifecycleOwner, {
             if (it.isEmpty()) {
-                movieViewModel.getTrendingMovies()
+                viewModel.getTrendingMovies()
             } else {
                 movieAdapter.submitList(it)
             }

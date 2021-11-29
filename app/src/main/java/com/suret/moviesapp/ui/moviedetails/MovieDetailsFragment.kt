@@ -1,15 +1,13 @@
 package com.suret.moviesapp.ui.moviedetails
 
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.FrameLayout
-import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -33,9 +31,7 @@ import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel.Event
-import com.suret.moviesapp.util.PopUps
+import com.suret.moviesapp.ui.moviedetails.viewmodel.MovieDetailsFragmentVM
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import com.suret.moviesapp.util.convertHourAndMinutes
 import com.suret.moviesapp.util.roundForDouble
@@ -49,7 +45,7 @@ import kotlin.math.abs
 @AndroidEntryPoint
 class MovieDetailsFragment : Fragment() {
     private val binding by lazy { FragmentMovieDetailsBinding.inflate(layoutInflater) }
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val viewModel: MovieDetailsFragmentVM by viewModels()
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
@@ -124,11 +120,11 @@ class MovieDetailsFragment : Fragment() {
 
     private fun checkFavorite() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-            val favModel = movieViewModel.getFavoriteMovieByID(movieId)
-            isFavorite = if (favModel == null) {
-                false
-            } else {
+            val favModel = viewModel.getFavoriteMovieByID(movieId)
+            isFavorite = if (favModel != null) {
                 true
+            } else {
+                false
             }
             setFAB(isFavorite)
         }
@@ -191,13 +187,13 @@ class MovieDetailsFragment : Fragment() {
             movieSetData(model)
             viewLifecycleOwner.lifecycleScope.launch {
                 model.id?.let {
-                    movieViewModel.getMovieDetails(it)
-                    movieViewModel.detailsFlow.collect { event ->
+                    viewModel.getMovieDetails(it)
+                    viewModel.detailsFlow.collect { event ->
                         when (event) {
-                            is Event.Failure -> {
+                            is MovieDetailsFragmentVM.Event.Failure -> {
                                 //
                             }
-                            is Event.DetailsSuccess -> {
+                            is MovieDetailsFragmentVM.Event.DetailsSuccess -> {
                                 binding.apply {
                                     event.details?.let { model ->
                                         setMovieDetails(model)
@@ -210,17 +206,17 @@ class MovieDetailsFragment : Fragment() {
             }
             viewLifecycleOwner.lifecycleScope.launch {
                 model.id?.let {
-                    movieViewModel.getCredits(it)
-                    movieViewModel.castFlow.collect { event ->
+                    viewModel.getCredits(it)
+                    viewModel.castFlow.collect { event ->
                         when (event) {
-                            is Event.CastSuccess -> {
+                            is MovieDetailsFragmentVM.Event.CastSuccess -> {
                                 castList = event.cast
                                 castListAdapter.submitList(event.cast)
                             }
-                            is Event.Failure -> {
+                            is MovieDetailsFragmentVM.Event.Failure -> {
                                 //
                             }
-                            is Event.Loading -> {
+                            is MovieDetailsFragmentVM.Event.Loading -> {
                                 //
                             }
                         }
@@ -228,20 +224,22 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             viewLifecycleOwner.lifecycleScope.launch {
-                model.id?.let { id -> movieViewModel.getMovieTrailer(id) }
-                movieViewModel.trailerFlow.collect { event ->
+                model.id?.let { id -> viewModel.getMovieTrailer(id) }
+                viewModel.trailerFlow.collect { event ->
                     when (event) {
-                        is Event.Loading -> {
-                            //
+                        is MovieDetailsFragmentVM.Event.Loading -> {
+                            progressBar.isVisible = true
                         }
-                        is Event.Failure -> {
+                        is MovieDetailsFragmentVM.Event.Failure -> {
+                            progressBar.isVisible = false
                             Snackbar.make(
                                 requireView(),
                                 event.errorText,
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
-                        is Event.TrailerSuccess -> {
+                        is MovieDetailsFragmentVM.Event.TrailerSuccess -> {
+                            progressBar.isVisible = false
                             event.trailerList?.let { trailerList ->
                                 if (!trailerList.isNullOrEmpty()) {
                                     youtubeKey = trailerList[0].key.toString()
@@ -253,16 +251,16 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             viewLifecycleOwner.lifecycleScope.launch {
-                model.id?.let { id -> movieViewModel.getReviews(id) }
-                movieViewModel.reviewFlow.collect { event ->
+                model.id?.let { id -> viewModel.getReviews(id) }
+                viewModel.reviewFlow.collect { event ->
                     when (event) {
-                        is Event.Loading -> {
+                        is MovieDetailsFragmentVM.Event.Loading -> {
                             //
                         }
-                        is Event.Failure -> {
+                        is MovieDetailsFragmentVM.Event.Failure -> {
                             //
                         }
-                        is Event.ReviewsSuccess -> {
+                        is MovieDetailsFragmentVM.Event.ReviewsSuccess -> {
                             event.reviews.let {
                                 reviewAdapter.submitList(it)
                             }
@@ -378,14 +376,14 @@ class MovieDetailsFragment : Fragment() {
             fabFav.setOnClickListener {
                 viewLifecycleOwner.lifecycleScope.launch {
                     moviesModel.let { model ->
-                        movieViewModel.updateMovieModel(
+                        viewModel.updateMovieModel(
                             setFavoriteStatus(
                                 model,
                                 isFavorite
                             )
                         )
                         if (!isFavorite) {
-                            movieViewModel.insertFavoriteMovie(
+                            viewModel.insertFavoriteMovie(
                                 createFavoriteModel(
                                     setFavoriteStatus(
                                         model,
@@ -397,7 +395,7 @@ class MovieDetailsFragment : Fragment() {
                             movieSetData(newTrendModel(model, true))
                             showSnackBar(it, requireActivity(), R.string.add_to_fav)
                         } else {
-                            movieViewModel.removeFavoriteMovie(
+                            viewModel.removeFavoriteMovie(
                                 createFavoriteModel(
                                     setFavoriteStatus(
                                         model,

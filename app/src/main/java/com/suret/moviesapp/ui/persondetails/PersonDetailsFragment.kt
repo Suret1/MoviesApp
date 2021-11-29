@@ -13,10 +13,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsBinding
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsFragmentVM
 import com.suret.moviesapp.util.downloadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -24,9 +23,9 @@ import kotlinx.coroutines.flow.collect
 @AndroidEntryPoint
 class PersonDetailsFragment : Fragment() {
     private val binding by lazy { FragmentPersonDetailsBinding.inflate(layoutInflater) }
-    private var castModel: Cast? = null
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val viewModel: PersonDetailsFragmentVM by viewModels()
     private val args: PersonDetailsFragmentArgs by navArgs()
+
     private val animation by lazy {
         AnimationUtils.loadAnimation(
             requireContext(),
@@ -44,26 +43,25 @@ class PersonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        castModel = args.castModel
+        val castModel = args.castModel
 
         castModel?.let {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 it.id?.let { personId ->
-                    movieViewModel.getPersonData(personId)
-                    movieViewModel.actorFlow.collect { event ->
+                    viewModel.getPersonData(personId)
+                    viewModel.actorFlow.collect { event ->
                         when (event) {
-                            is MovieViewModel.Event.ActorSuccess -> {
+                            is PersonDetailsFragmentVM.Event.ActorSuccess -> {
                                 event.actor?.let { it1 -> setPersonData(it1) }
                             }
-                            is MovieViewModel.Event.Failure -> {
+                            is PersonDetailsFragmentVM.Event.Failure -> {
                                 Toast.makeText(
                                     requireContext(),
                                     event.errorText,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
-                            is MovieViewModel.Event.Loading -> {
-                                //
+                            is PersonDetailsFragmentVM.Event.Loading -> {
                             }
                         }
                     }
@@ -96,7 +94,7 @@ class PersonDetailsFragment : Fragment() {
                     tvPersonBirthday.text = "(${actor.birthday})"
                 }
                 else -> {
-                    tvPersonBirthday.text = " "
+                    tvPersonBirthday.text = ""
                 }
             }
             tvBirthPlace.text = actor.place_of_birth

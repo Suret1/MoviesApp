@@ -20,5 +20,4 @@ class SimilarViewModel @Inject constructor(getSimilarMoviesUseCase: GetSimilarMo
     ).flow
         .cachedIn(viewModelScope)
 
-
 }

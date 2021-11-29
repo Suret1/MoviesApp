@@ -1,17 +1,10 @@
 package com.suret.moviesapp.util
 
-import android.graphics.drawable.Drawable
-import android.view.View
 import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
-import com.bumptech.glide.Glide
-import com.bumptech.glide.load.DataSource
-import com.bumptech.glide.load.engine.GlideException
-import com.bumptech.glide.request.RequestListener
-import com.bumptech.glide.request.target.Target
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
@@ -87,32 +80,4 @@ fun AppCompatImageView.setAvatar(url: String?, progressBar: ProgressBar?) {
 @BindingAdapter("bind:setDate")
 fun AppCompatTextView.setDate(date: String?) {
     text = toDate(date)
-}
-
-fun downloadImage(iw: AppCompatImageView, url: String?, progressBar: ProgressBar?) {
-    progressBar?.visibility = View.VISIBLE
-    Glide.with(iw)
-        .load(url)
-        .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar?.visibility = View.GONE
-                return false
-            }
-
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar?.visibility = View.GONE
-                return false
-            }
-        }).into(iw)
 }

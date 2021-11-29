@@ -13,7 +13,8 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.databinding.FragmentFavouritesBinding
-import com.suret.moviesapp.ui.movies.viewmodel.MovieViewModel
+import com.suret.moviesapp.ui.favourite.adapter.FavoriteAdapter
+import com.suret.moviesapp.ui.favourite.viewmodel.FavoritesFragmentVM
 import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class FavouritesFragment : Fragment() {
     private val binding by lazy { FragmentFavouritesBinding.inflate(layoutInflater) }
     private var removeAlertDialog: AlertDialog.Builder? = null
-    private val movieViewModel: MovieViewModel by viewModels()
+    private val viewModel: FavoritesFragmentVM by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,7 +39,7 @@ class FavouritesFragment : Fragment() {
 
         binding.rvFavoriteMovies.adapter = favoriteAdapter
 
-        movieViewModel.getFavoriteMovies().observe(viewLifecycleOwner, {
+        viewModel.getFavoriteMovies().observe(viewLifecycleOwner, {
             favoriteAdapter.submitList(it)
         })
         favoriteAdapter.setOnItemClick = { favModel ->
@@ -63,8 +64,8 @@ class FavouritesFragment : Fragment() {
             remove?.setTitle(getString(R.string.remove_movie))
             remove?.setMessage(getString(R.string.remove_question))
             remove?.setPositiveButton(getString(R.string.yes)) { _, _ ->
-                movieViewModel.updateMovieModel(castToTrendingMoviesModel(favoriteMovieModel))
-                movieViewModel.removeFavoriteMovie(favoriteMovieModel)
+                viewModel.updateMovieModel(castToTrendingMoviesModel(favoriteMovieModel))
+                viewModel.removeFavoriteMovie(favoriteMovieModel)
             }
             val alertDialog: AlertDialog = removeAlertDialog!!.create()
             alertDialog.show()

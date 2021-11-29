@@ -39,6 +39,6 @@ class RemoteDataSourceImpl(
         page: Int,
         apiKey: String
     ): Response<TrendingMoviesRoot> =
-       getSimilarAPI.getSimilarMovie(id, page, apiKey)
+        getSimilarAPI.getSimilarMovie(id, page, apiKey)
 
 }
