@@ -1,6 +1,7 @@
 package com.suret.moviesapp.ui.persondetails
 
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -43,7 +44,11 @@ class PersonDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.tvBio.movementMethod = ScrollingMovementMethod()
+
         val castModel = args.castModel
+
+        initMotionLayout()
 
         castModel?.let {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
@@ -72,6 +77,16 @@ class PersonDetailsFragment : Fragment() {
             tvTitleActorName.animation = animation
             personToolbar.setNavigationOnClickListener {
                 activity?.onBackPressed()
+            }
+        }
+    }
+
+    private fun initMotionLayout() {
+        binding.tvBio.setOnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            if (scrollY < oldScrollY) {
+                binding.motionLayout.transitionToStart()
+            } else {
+                binding.motionLayout.transitionToEnd()
             }
         }
     }

@@ -1,145 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.core.widget.NestedScrollView
+    <androidx.constraintlayout.motion.widget.MotionLayout
+        android:id="@+id/motionLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        android:fitsSystemWindows="true">
+        app:layoutDescription="@xml/fragment_person_details_xml_constraintlayout_scene"
+        tools:context=".ui.persondetails.PersonDetailsFragment">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.persondetails.PersonDetailsFragment">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/person_appbar"
+            style="@style/Style.AppBarLayout"
+            android:background="@color/background_color"
+            android:theme="@style/Style.AppBarLayout"
+            app:layout_constraintBottom_toTopOf="@id/iwPersonPhoto"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/person_appbar"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/person_toolbar"
                 style="@style/Style.AppBarLayout"
-                android:background="@color/background_color"
-                android:theme="@style/Style.AppBarLayout"
-                app:layout_constraintBottom_toTopOf="@id/iwPersonPhoto"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:contentInsetStart="0dp"
+                app:contentInsetStartWithNavigation="0dp"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:navigationIcon="@drawable/back_btn">
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/person_toolbar"
-                    app:navigationIcon="@drawable/back_btn"
-                    style="@style/Style.AppBarLayout"
-                    app:contentInsetStart="0dp"
-                    app:contentInsetStartWithNavigation="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways|snap">
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tvTitleActorName"
+                    style="@style/GilroyLightTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_18ssp"
+                    tools:text="Brad Pitt" />
 
-                    <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/tvTitleActorName"
-                        style="@style/GilroyLightTextStyle"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_18ssp"
-                        tools:text="Brad Pitt" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.AppBarLayout>
 
-                </androidx.appcompat.widget.Toolbar>
-            </com.google.android.material.appbar.AppBarLayout>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iwPersonPhoto"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_200sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            app:layout_constraintBottom_toTopOf="@id/tvActorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/person_appbar"
+            tools:scaleType="centerCrop"
+            tools:srcCompat="@drawable/movie_poster" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iwPersonPhoto"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/_200sdp"
-                android:layout_marginTop="@dimen/_10sdp"
-                app:layout_constraintBottom_toTopOf="@id/tvActorName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/person_appbar" />
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@id/iwPersonPhoto"
+            app:layout_constraintEnd_toEndOf="@id/iwPersonPhoto"
+            app:layout_constraintStart_toStartOf="@id/iwPersonPhoto"
+            app:layout_constraintTop_toTopOf="@id/iwPersonPhoto" />
 
-            <ProgressBar
-                android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:indeterminateTint="@color/white"
-                app:layout_constraintBottom_toBottomOf="@id/iwPersonPhoto"
-                app:layout_constraintEnd_toEndOf="@id/iwPersonPhoto"
-                app:layout_constraintStart_toStartOf="@id/iwPersonPhoto"
-                app:layout_constraintTop_toTopOf="@id/iwPersonPhoto" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvActorName"
+            style="@style/GilroyBoldTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            app:layout_constraintBottom_toTopOf="@id/tvBirthPlace"
+            app:layout_constraintEnd_toStartOf="@id/tvPersonBirthday"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iwPersonPhoto"
+            tools:text="Brad Pitt" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvActorName"
-                style="@style/GilroyBoldTextStyle"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:ellipsize="end"
-                android:maxLines="2"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_18ssp"
-                app:layout_constraintBottom_toTopOf="@id/tvBirthPlace"
-                app:layout_constraintEnd_toStartOf="@id/tvPersonBirthday"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/iwPersonPhoto"
-                tools:text="Brad Pitt" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPersonBirthday"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12ssp"
+            app:layout_constraintBottom_toBottomOf="@id/tvActorName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvActorName"
+            app:layout_constraintTop_toTopOf="@id/tvActorName"
+            tools:text="(1984-11-22)" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPersonBirthday"
-                style="@style/GilroyLightTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginEnd="@dimen/_16sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_12ssp"
-                app:layout_constraintBottom_toBottomOf="@id/tvActorName"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvActorName"
-                app:layout_constraintTop_toTopOf="@id/tvActorName"
-                tools:text="(1984-11-22-)" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBirthPlace"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintBottom_toTopOf="@id/tvPersonDepartment"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvActorName"
+            tools:text="New York City, New York, USA" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBirthPlace"
-                style="@style/GilroyLightTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_14ssp"
-                app:layout_constraintBottom_toTopOf="@id/tvPersonDepartment"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvActorName"
-                tools:text="New York City, New York, USA" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvPersonDepartment"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_16ssp"
+            app:layout_constraintBottom_toTopOf="@id/tvBio"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvBirthPlace"
+            tools:text="Actor, Producer" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPersonDepartment"
-                style="@style/GilroyLightTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/_16ssp"
-                app:layout_constraintBottom_toTopOf="@id/tvBio"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvBirthPlace"
-                tools:text="Actor, Producer" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvBio"
-                style="@style/GilroyLightTextStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_16sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:layout_marginBottom="@dimen/_5sdp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvPersonDepartment"
-                tools:text="Scarlett Johansson, born November 22, 1984, is an American actress, model and singer. She made her film debut in North (1994) and was later nominated for the Independent Spirit Award for Best Female Lead for her performance in Manny Lo (1996), garnering further acclaim and prominence with roles in The Horse Whisperer (1998) and Ghost World (2001). She shifted to adult roles with her performances in Girl with a Pearl Earring (2003) and Sofia Coppola's Lost in Translation (2003), for which she won a BAFTA award for Best Actress in a Leading Role; both films earned her Golden Globe Award nominations as well.\n\nA role in A Love Song for Bobby Long (2004) earned Johansson her third Golden Globe for Best Actress nomination. Johansson garnered another Golden Globe nomination for Best Supporting Actress with her role in Woody Allen's Match Point (2005). She has played the Marvel comic book character Black Widow/Natasha Romanoff in Iron Man 2 (2010), The Avengers (2012), and Captain America: The Winter Soldier (2014), Avengers: Age of Ultron (2015), Captain America: Civil War (2016), Avengers: Infinity War (2018), Avengers: Endgame (2019), and Black Widow (2020). The 2010 Broadway revival of Arthur Miller's A View From the Bridge won Johansson the Tony Award for Best Performance by a Featured Actress in a Play. As a singer, Johansson has released two albums, Anywhere I Lay My Head and Break Up.\n\nJohansson was nominated for two Academy Awards in 2020 for her work in Marriage Story (2019), and Jojo Rabbit (2019).  Johansson was born in New York City. Her father, Karsten Johansson, is a Danish-born architect, and her paternal grandfather, Ejner Johansson, was a screenwriter and director. Her mother, Melanie Sloan, a producer, comes from an Ashkenazi Jewish family from the Bronx." />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvBio"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:scrollbars="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvPersonDepartment"
+            tools:text="Scarlett Johansson, born November 22, 1984, is an American actress, model and singer. She made her film debut in North (1994) and was later nominated for the Independent Spirit Award for Best Female Lead for her performance in Manny Lo (1996), garnering further acclaim and prominence with roles in The Horse Whisperer (1998) and Ghost World (2001). She shifted to adult roles with her performances in Girl with a Pearl Earring (2003) and Sofia Coppola's Lost in Translation (2003), for which she won a BAFTA award for Best Actress in a Leading Role; both films earned her Golden Globe Award nominations as well.\n\nA role in A Love Song for Bobby Long (2004) earned Johansson her third Golden Globe for Best Actress nomination. Johansson garnered another Golden Globe nomination for Best Supporting Actress with her role in Woody Allen's Match Point (2005). She has played the Marvel comic book character Black Widow/Natasha Romanoff in Iron Man 2 (2010), The Avengers (2012), and Captain America: The Winter Soldier (2014), Avengers: Age of Ultron (2015), Captain America: Civil War (2016), Avengers: Infinity War (2018), Avengers: Endgame (2019), and Black Widow (2020). The 2010 Broadway revival of Arthur Miller's A View From the Bridge won Johansson the Tony Award for Best Performance by a Featured Actress in a Play. As a singer, Johansson has released two albums, Anywhere I Lay My Head and Break Up.\n\nJohansson was nominated for two Academy Awards in 2020 for her work in Marriage Story (2019), and Jojo Rabbit (2019).  Johansson was born in New York City. Her father, Karsten Johansson, is a Danish-born architect, and her paternal grandfather, Ejner Johansson, was a screenwriter and director. Her mother, Melanie Sloan, a producer, comes from an Ashkenazi Jewish family from the Bronx." />
+    </androidx.constraintlayout.motion.widget.MotionLayout>
 </layout>

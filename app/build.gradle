@@ -91,9 +91,6 @@ dependencies {
     //RatingBar
     implementation 'com.github.ome450901:SimpleRatingBar:1.5.1'
 
-    //Palette API
-    implementation 'androidx.palette:palette-ktx:1.0.0'
-
     //RecyclerView
     implementation "androidx.recyclerview:recyclerview:1.2.1"
 
