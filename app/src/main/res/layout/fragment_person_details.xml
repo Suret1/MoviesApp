@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_color"
-        app:layoutDescription="@xml/fragment_person_details_xml_constraintlayout_scene"
+        app:layoutDescription="@xml/person_details_scene"
         tools:context=".ui.persondetails.PersonDetailsFragment">
 
         <com.google.android.material.appbar.AppBarLayout

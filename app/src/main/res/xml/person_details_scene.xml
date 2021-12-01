@@ -9,7 +9,7 @@
 
         <OnSwipe
             motion:dragDirection="dragUp"
-            motion:touchAnchorId="@+id/tvBio"
+            motion:touchAnchorId="@+id/tvPersonDepartment"
             motion:touchAnchorSide="top" />
 
         <KeyFrameSet>
