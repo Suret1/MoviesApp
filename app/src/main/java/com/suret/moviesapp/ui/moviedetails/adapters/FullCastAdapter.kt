@@ -46,7 +46,7 @@ class FullCastAdapter : ListAdapter<Cast, RecyclerView.ViewHolder>(DifferCallBac
         } else if (holder is FullCastViewHolder) {
             holder.bindfull(getItem(position))
             holder.itemView.animation =
-                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
+                AnimationUtils.loadAnimation(holder.itemView.context, R.anim.animation_one)
         }
 
     }

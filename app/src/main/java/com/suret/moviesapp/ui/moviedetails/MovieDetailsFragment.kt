@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -37,6 +38,7 @@ import com.suret.moviesapp.util.convertHourAndMinutes
 import com.suret.moviesapp.util.roundForDouble
 import com.suret.moviesapp.util.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlin.math.abs
@@ -168,13 +170,13 @@ class MovieDetailsFragment : Fragment() {
                 fabSearch.extend()
                 fabSimilar.startAnimation(bounce)
                 tvSimilar.startAnimation(bounce)
-                fabSimilar.visibility = View.VISIBLE
-                tvSimilar.visibility = View.VISIBLE
+                fabSimilar.isVisible = true
+                tvSimilar.isVisible = true
                 isClicked = true
             } else {
                 fabSearch.shrink()
-                fabSimilar.visibility = View.GONE
-                tvSimilar.visibility = View.GONE
+                tvSimilar.isVisible = false
+                tvSimilar.isVisible = false
                 tvSimilar.startAnimation(bounce_gone)
                 fabSimilar.startAnimation(bounce_gone)
                 isClicked = false
@@ -205,25 +207,7 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             viewLifecycleOwner.lifecycleScope.launch {
-                model.id?.let {
-                    viewModel.getCredits(it)
-                    viewModel.castFlow.collect { event ->
-                        when (event) {
-                            is MovieDetailsFragmentVM.Event.CastSuccess -> {
-                                castList = event.cast
-                                castListAdapter.submitList(event.cast)
-                            }
-                            is MovieDetailsFragmentVM.Event.Failure -> {
-                                //
-                            }
-                            is MovieDetailsFragmentVM.Event.Loading -> {
-                                //
-                            }
-                        }
-                    }
-                }
-            }
-            viewLifecycleOwner.lifecycleScope.launch {
+                delay(300)
                 model.id?.let { id -> viewModel.getMovieTrailer(id) }
                 viewModel.trailerFlow.collect { event ->
                     when (event) {
@@ -251,6 +235,27 @@ class MovieDetailsFragment : Fragment() {
                 }
             }
             viewLifecycleOwner.lifecycleScope.launch {
+                delay(500)
+                model.id?.let {
+                    viewModel.getCredits(it)
+                    viewModel.castFlow.collect { event ->
+                        when (event) {
+                            is MovieDetailsFragmentVM.Event.CastSuccess -> {
+                                castList = event.cast
+                                castListAdapter.submitList(event.cast)
+                            }
+                            is MovieDetailsFragmentVM.Event.Failure -> {
+                                //
+                            }
+                            is MovieDetailsFragmentVM.Event.Loading -> {
+                                //
+                            }
+                        }
+                    }
+                }
+            }
+            viewLifecycleOwner.lifecycleScope.launch {
+                delay(1000)
                 model.id?.let { id -> viewModel.getReviews(id) }
                 viewModel.reviewFlow.collect { event ->
                     when (event) {
@@ -297,7 +302,6 @@ class MovieDetailsFragment : Fragment() {
         }
         productionsAdapter.submitList(model.production_companies)
     }
-
 
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
         tvSeeAll.setOnClickListener {

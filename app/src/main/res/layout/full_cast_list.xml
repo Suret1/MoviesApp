@@ -29,15 +29,17 @@
             bind:setImage="@{cast.profile_path}"
             tools:srcCompat="@drawable/no_photo" />
 
-        <ProgressBar
+        <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:indeterminateTint="@color/white"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_130sdp"
             app:layout_constraintBottom_toBottomOf="@id/iwPersonPhoto"
             app:layout_constraintEnd_toEndOf="@id/iwPersonPhoto"
             app:layout_constraintStart_toStartOf="@id/iwPersonPhoto"
-            app:layout_constraintTop_toTopOf="@id/iwPersonPhoto" />
+            app:layout_constraintTop_toTopOf="@id/iwPersonPhoto"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/tvPersonName"

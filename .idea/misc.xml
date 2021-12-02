@@ -37,9 +37,11 @@
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/review_list_layout.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/trending_movies_list.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/menu/nav_menu.xml" value="0.66125" />
+        <entry key="app/src/main/res/drawable/avd_home.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/back_btn.xml" value="0.3770833333333333" />
         <entry key="app/src/main/res/drawable/ic_baseline_sync_24.xml" value="0.37552083333333336" />
         <entry key="app/src/main/res/drawable/ic_loading_icon.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/drawable/ic_round_home_24.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/ic_round_person_24.xml" value="0.37552083333333336" />
         <entry key="app/src/main/res/drawable/loading_drawable.xml" value="0.37552083333333336" />
         <entry key="app/src/main/res/layout/cast_list_layout.xml" value="0.3609375" />
@@ -49,9 +51,12 @@
         <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/fragment_person_details.xml" value="0.359375" />
+        <entry key="app/src/main/res/layout/fragment_review_bottom_sheet.xml" value="0.35885416666666664" />
+        <entry key="app/src/main/res/layout/fragment_similar.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/full_cast_list.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/production_list_layout.xml" value="0.359375" />
-        <entry key="app/src/main/res/layout/trending_movies_list.xml" value="0.42604166666666665" />
+        <entry key="app/src/main/res/layout/review_list_layout.xml" value="0.16927083333333334" />
+        <entry key="app/src/main/res/layout/trending_movies_list.xml" value="0.45" />
       </map>
     </option>
   </component>

@@ -5,52 +5,73 @@
     android:id="@+id/main_nav"
     app:startDestination="@id/movies">
 
+    <action
+        android:id="@+id/action_movies_to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_favourite_to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_movieDetailsFragment_to_fullCastFragment"
+        app:destination="@id/fullCastFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
+        app:destination="@id/personDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_movieDetailsFragment_to_similarFragment"
+        app:destination="@id/similarFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_movieDetailsFragment_to_reviewBottomSheet"
+        app:destination="@id/reviewBottomSheet" />
+    <action
+        android:id="@+id/action_fullCastFragment_to_personDetailsFragment"
+        app:destination="@id/personDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
+    <action
+        android:id="@+id/action_similarFragment_to_movieDetailsFragment"
+        app:destination="@id/movieDetailsFragment"
+        app:enterAnim="@anim/slide_left"
+        app:exitAnim="@anim/wait_anim"
+        app:popEnterAnim="@anim/wait_anim"
+        app:popExitAnim="@anim/slide_right" />
     <fragment
         android:id="@+id/movies"
-        tools:layout="@layout/fragment_movies"
         android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
-        android:label="MoviesFragment">
-
-        <action
-            android:id="@+id/action_movies_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right"/>
-    </fragment>
+        android:label="MoviesFragment"
+        tools:layout="@layout/fragment_movies" />
     <fragment
         android:id="@+id/favourite"
-        tools:layout="@layout/fragment_favourites"
         android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
-        android:label="FavouritesFragment" >
-        <action
-            android:id="@+id/action_favourite_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right"/>
-    </fragment>
+        android:label="FavouritesFragment"
+        tools:layout="@layout/fragment_favourites" />
     <fragment
         android:id="@+id/movieDetailsFragment"
-        tools:layout="@layout/fragment_movie_details"
         android:name="com.suret.moviesapp.ui.moviedetails.MovieDetailsFragment"
-        android:label="MovieDetailsFragment" >
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_fullCastFragment"
-            app:destination="@id/fullCastFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
-            app:destination="@id/personDetailsFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
+        android:label="MovieDetailsFragment"
+        tools:layout="@layout/fragment_movie_details">
         <argument
             android:name="movieModel"
             app:argType="com.suret.moviesapp.data.model.TrendingMoviesModel"
@@ -59,39 +80,24 @@
             android:name="favModel"
             app:argType="com.suret.moviesapp.data.model.FavoriteMovieModel"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_similarFragment"
-            app:destination="@id/similarFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right"/>
-        <action
-            android:id="@+id/action_movieDetailsFragment_to_reviewBottomSheet"
-            app:destination="@id/reviewBottomSheet" />
+
     </fragment>
     <fragment
         android:id="@+id/fullCastFragment"
-        tools:layout="@layout/fragment_full_cast"
         android:name="com.suret.moviesapp.ui.fullcast.FullCastFragment"
-        android:label="FullCastFragment" >
+        android:label="FullCastFragment"
+        tools:layout="@layout/fragment_full_cast">
         <argument
             android:name="castList"
             app:argType="java.util.ArrayList"
             app:nullable="true" />
-        <action
-            android:id="@+id/action_fullCastFragment_to_personDetailsFragment"
-            app:destination="@id/personDetailsFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right"  />
+
     </fragment>
     <fragment
         android:id="@+id/personDetailsFragment"
-        tools:layout="@layout/fragment_person_details"
         android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsFragment"
-        android:label="PersonDetailsFragment" >
+        android:label="PersonDetailsFragment"
+        tools:layout="@layout/fragment_person_details">
         <argument
             android:name="castModel"
             app:argType="com.suret.moviesapp.data.model.Cast"
@@ -99,26 +105,20 @@
     </fragment>
     <fragment
         android:id="@+id/similarFragment"
-        tools:layout="@layout/fragment_similar"
         android:name="com.suret.moviesapp.ui.similar.SimilarFragment"
-        android:label="SimilarFragment" >
+        android:label="SimilarFragment"
+        tools:layout="@layout/fragment_similar">
         <argument
             android:name="movieID"
-            app:argType="integer"
-            android:defaultValue="385128" />
-        <action
-            android:id="@+id/action_similarFragment_to_movieDetailsFragment"
-            app:destination="@id/movieDetailsFragment"
-            app:enterAnim="@anim/slide_left"
-            app:exitAnim="@anim/wait_anim"
-            app:popEnterAnim="@anim/wait_anim"
-            app:popExitAnim="@anim/slide_right" />
+            android:defaultValue="385128"
+            app:argType="integer" />
+
     </fragment>
     <dialog
-        tools:layout="@layout/fragment_review_bottom_sheet"
         android:id="@+id/reviewBottomSheet"
         android:name="com.suret.moviesapp.ui.reviewbottomsheet.ReviewBottomSheet"
-        android:label="ReviewBottomSheet" >
+        android:label="ReviewBottomSheet"
+        tools:layout="@layout/fragment_review_bottom_sheet">
         <argument
             android:name="reviewModel"
             app:argType="com.suret.moviesapp.data.model.ReviewResult"

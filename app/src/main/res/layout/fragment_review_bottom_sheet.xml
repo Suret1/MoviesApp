@@ -38,15 +38,17 @@
                 app:strokeWidth="1dp"
                 tools:srcCompat="@drawable/ic_round_person_24" />
 
-            <ProgressBar
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/progressBar"
-                android:layout_width="@dimen/_30sdp"
-                android:layout_height="30sp"
-                android:indeterminateTint="@color/white"
+                android:layout_width="@dimen/_60sdp"
+                android:layout_height="@dimen/_60sdp"
                 app:layout_constraintBottom_toBottomOf="@id/iw_profile"
                 app:layout_constraintEnd_toEndOf="@id/iw_profile"
                 app:layout_constraintStart_toStartOf="@id/iw_profile"
-                app:layout_constraintTop_toTopOf="@+id/iw_profile" />
+                app:layout_constraintTop_toTopOf="@+id/iw_profile"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/tv_profileName"

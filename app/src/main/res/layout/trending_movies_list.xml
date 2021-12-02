@@ -42,16 +42,6 @@
                     bind:setImage="@{movie.poster_path}"
                     tools:srcCompat="@drawable/movie_poster" />
 
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:indeterminateTint="@color/white"
-                    app:layout_constraintBottom_toBottomOf="@id/movie_image"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/movie_image" />
-
                 <androidx.appcompat.widget.AppCompatImageView
                     android:id="@+id/iwFavorite"
                     android:layout_width="wrap_content"
@@ -62,6 +52,18 @@
                     app:layout_constraintTop_toTopOf="parent"
                     bind:checkFavorite="@{movie.favorite}"
                     tools:srcCompat="@drawable/ic_favorite_movie" />
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/progressBar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toBottomOf="@id/movie_image"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/movie_image"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/loading" />
 
                 <FrameLayout
                     android:id="@+id/frame_layout_of_genre"

@@ -54,13 +54,14 @@
                 bind:progress="@{progressBar}"
                 bind:setImage="@{model.poster_path}"
                 tools:srcCompat="@drawable/movie_poster" />
-
-            <ProgressBar
+            <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/progressBar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:indeterminateTint="@color/white" />
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView

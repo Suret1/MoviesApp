@@ -5,9 +5,9 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.widget.ProgressBar
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
+import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.GlideException
@@ -77,7 +77,7 @@ fun roundForDouble(value: Double): String {
     return result
 }
 
-fun downloadImage(iw: AppCompatImageView, url: String?, progressBar: ProgressBar?) {
+fun downloadImage(iw: AppCompatImageView, url: String?, progressBar: LottieAnimationView?) {
     progressBar?.isVisible = true
     Glide.with(iw)
         .load(url)

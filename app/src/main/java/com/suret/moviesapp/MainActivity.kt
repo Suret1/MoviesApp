@@ -1,10 +1,9 @@
 package com.suret.moviesapp
 
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.DataBindingUtil
+import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import com.suret.moviesapp.databinding.ActivityMainBinding
@@ -13,7 +12,7 @@ import np.com.susanthapa.curved_bottom_navigation.CbnMenuItem
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-    private val binding by lazy {ActivityMainBinding.inflate(layoutInflater)}
+    private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
     private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,11 +75,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideBottomNav() {
-        binding.bottomNav.visibility = View.GONE
+        binding.bottomNav.isVisible = false
     }
 
     private fun showBottomNav() {
-        binding.bottomNav.visibility = View.VISIBLE
+        binding.bottomNav.isVisible = true
     }
 
 }
