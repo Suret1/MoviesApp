@@ -63,14 +63,11 @@ private object DifferCallBack : DiffUtil.ItemCallback<TrendingMoviesModel>() {
     override fun areItemsTheSame(
         oldItem: TrendingMoviesModel,
         newItem: TrendingMoviesModel
-    ): Boolean {
-        return oldItem.id == newItem.id
-    }
+    ) = oldItem.id == newItem.id
 
     override fun areContentsTheSame(
         oldItem: TrendingMoviesModel,
         newItem: TrendingMoviesModel
-    ): Boolean {
-        return oldItem == newItem
-    }
+    ) = oldItem == newItem
+
 }

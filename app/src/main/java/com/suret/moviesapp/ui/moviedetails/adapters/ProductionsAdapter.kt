@@ -46,16 +46,12 @@ class ProductionsAdapter :
         override fun areItemsTheSame(
             oldItem: ProductionCompany,
             newItem: ProductionCompany
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+        ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
             oldItem: ProductionCompany,
             newItem: ProductionCompany
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ) = oldItem == newItem
 
     }
 }

@@ -53,22 +53,19 @@ class FavoriteAdapter : ListAdapter<FavoriteMovieModel, FavoriteViewHolder>(Diff
     override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int) {
         holder.bind(getItem(position))
         holder.itemView.animation =
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_rotate_anim)
+            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }
 
     private object DifferCallBack : DiffUtil.ItemCallback<FavoriteMovieModel>() {
         override fun areItemsTheSame(
             oldItem: FavoriteMovieModel,
             newItem: FavoriteMovieModel
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+        ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
             oldItem: FavoriteMovieModel,
             newItem: FavoriteMovieModel
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ) = oldItem == newItem
+
     }
 }

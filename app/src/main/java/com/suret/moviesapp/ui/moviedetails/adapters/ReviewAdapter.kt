@@ -68,16 +68,13 @@ class ReviewAdapter : ListAdapter<ReviewResult, ReviewHolder>(DifferCallBack) {
         override fun areItemsTheSame(
             oldItem: ReviewResult,
             newItem: ReviewResult
-        ): Boolean {
-            return oldItem.id == newItem.id
-        }
+        ) = oldItem.id == newItem.id
 
         override fun areContentsTheSame(
             oldItem: ReviewResult,
             newItem: ReviewResult
-        ): Boolean {
-            return oldItem == newItem
-        }
+        ) = oldItem == newItem
+
     }
 
 }
