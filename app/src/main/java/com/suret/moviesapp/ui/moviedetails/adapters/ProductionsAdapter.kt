@@ -27,13 +27,13 @@ class ProductionsAdapter :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductionViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val productionListLayoutBinding =
-            ProductionListLayoutBinding.inflate(layoutInflater, parent, false)
         return ProductionViewHolder(
-            productionListLayoutBinding
+            ProductionListLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
         )
-
     }
 
     override fun onBindViewHolder(holder: ProductionViewHolder, position: Int) {

@@ -15,7 +15,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/_5sdp">
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bottomCard"
@@ -54,10 +56,11 @@
                 bind:progress="@{progressBar}"
                 bind:setImage="@{model.poster_path}"
                 tools:srcCompat="@drawable/movie_poster" />
+
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/progressBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/_100sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:layout_gravity="center"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"

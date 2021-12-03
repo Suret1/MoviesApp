@@ -2,6 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.core.widget.NestedScrollView
@@ -27,9 +28,9 @@
                     android:id="@+id/cast_toolbar"
                     style="@style/Style.AppBarLayout"
                     app:contentInsetStart="0dp"
-                    app:navigationIcon="@drawable/back_btn"
                     app:contentInsetStartWithNavigation="0dp"
-                    app:layout_scrollFlags="scroll|enterAlways|snap">
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:navigationIcon="@drawable/back_btn">
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/tvTitle"
@@ -50,11 +51,12 @@
                 android:layout_marginTop="@dimen/_6sdp"
                 android:clipToPadding="false"
                 android:orientation="vertical"
-                android:padding="@dimen/_4sdp"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cast_appbar"
+                bind:equalSpacing="@{8}"
                 tools:listitem="@layout/full_cast_list" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

@@ -2,6 +2,7 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -39,12 +40,11 @@
                     app:showFullScreenButton="false"
                     app:useWebUi="true" />
 
-
                 <com.airbnb.lottie.LottieAnimationView
                     android:id="@+id/progressBar"
                     android:layout_width="wrap_content"
-                    android:layout_gravity="center"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
                     app:lottie_autoPlay="true"
                     app:lottie_loop="true"
                     app:lottie_rawRes="@raw/loading_animation" />
@@ -99,14 +99,16 @@
                     android:textSize="@dimen/_28ssp"
                     tools:text="Avengers: End Game" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/genre_TV"
-                    style="@style/GilroyLightTextStyle"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvGenre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_8sdp"
-                    android:textColor="@color/main_red"
-                    android:textSize="@dimen/_14ssp"
-                    tools:text="Action, Adventure, Drama" />
+                    android:orientation="horizontal"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    bind:equalSpacing="@{16}"
+                    tools:listitem="@layout/genre_list_layout" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -262,8 +264,9 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_4sdp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    bind:equalSpacing="@{16}"
                     tools:listitem="@layout/cast_list_layout" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -280,8 +283,9 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_4sdp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    bind:equalSpacing="@{16}"
                     tools:listitem="@layout/review_list_layout" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -298,8 +302,9 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
-                    android:padding="@dimen/_4sdp"
+                    android:overScrollMode="never"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    bind:equalSpacing="@{16}"
                     tools:listitem="@layout/production_list_layout" />
 
             </LinearLayout>

@@ -110,9 +110,8 @@ class MoviesFragment : Fragment() {
 
     private fun initAdapter() {
         movieAdapter = TrendMovieListAdapter()
-        movieAdapter.stateRestorationPolicy =
-            PREVENT_WHEN_EMPTY
         binding.rvMovies.adapter = movieAdapter
+        movieAdapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY
     }
 
     private fun observeList() {

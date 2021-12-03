@@ -17,7 +17,7 @@ import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsBinding
 import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsFragmentVM
-import com.suret.moviesapp.util.downloadImage
+import com.suret.moviesapp.util.Util.downloadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 

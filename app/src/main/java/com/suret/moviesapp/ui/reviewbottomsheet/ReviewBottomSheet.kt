@@ -11,8 +11,8 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.databinding.FragmentReviewBottomSheetBinding
-import com.suret.moviesapp.util.downloadImage
-import com.suret.moviesapp.util.toDate
+import com.suret.moviesapp.util.Util.downloadImage
+import com.suret.moviesapp.util.Util.toDate
 
 class ReviewBottomSheet : BottomSheetDialogFragment() {
     private val binding by lazy { FragmentReviewBottomSheetBinding.inflate(layoutInflater) }

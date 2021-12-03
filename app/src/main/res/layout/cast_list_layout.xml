@@ -14,8 +14,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_220sdp"
-        android:layout_margin="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_6sdp">
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.card.MaterialCardView
             style="@style/MyCardViewStyle"

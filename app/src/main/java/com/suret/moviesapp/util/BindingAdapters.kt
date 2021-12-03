@@ -4,11 +4,18 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
+import com.suret.moviesapp.util.Util.downloadImage
+import com.suret.moviesapp.util.Util.dpToPx
+import com.suret.moviesapp.util.Util.roundForDouble
+import com.suret.moviesapp.util.Util.toDate
 import com.willy.ratingbar.ScaleRatingBar
 
 @BindingAdapter("bind:setTextMovie")
@@ -80,4 +87,17 @@ fun AppCompatImageView.setAvatar(url: String?, progressBar: LottieAnimationView?
 @BindingAdapter("bind:setDate")
 fun AppCompatTextView.setDate(date: String?) {
     text = toDate(date)
+}
+
+@BindingAdapter("bind:equalSpacing")
+fun RecyclerView.itemDecoration(dp: Int) {
+    var orientation = 0
+    if (layoutManager is GridLayoutManager) {
+        orientation = -1
+    } else if (layoutManager is LinearLayoutManager) {
+        orientation = (layoutManager as LinearLayoutManager).orientation
+    }
+    if (0 == itemDecorationCount) {
+        addItemDecoration(EqualSpacingItemDecoration(dpToPx(dp), orientation, true))
+    }
 }

@@ -10,7 +10,6 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.asLiveData
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -30,13 +29,14 @@ import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
 import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
+import com.suret.moviesapp.ui.moviedetails.adapters.GenreAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
 import com.suret.moviesapp.ui.moviedetails.viewmodel.MovieDetailsFragmentVM
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
-import com.suret.moviesapp.util.convertHourAndMinutes
-import com.suret.moviesapp.util.roundForDouble
-import com.suret.moviesapp.util.splitNumber
+import com.suret.moviesapp.util.Util.convertHourAndMinutes
+import com.suret.moviesapp.util.Util.roundForDouble
+import com.suret.moviesapp.util.Util.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
@@ -54,9 +54,10 @@ class MovieDetailsFragment : Fragment() {
     private lateinit var reviewAdapter: ReviewAdapter
     private lateinit var productionsAdapter: ProductionsAdapter
     private lateinit var castListAdapter: FullCastAdapter
+    private lateinit var genreAdapter: GenreAdapter
     private var youtubeKey = ""
     private val args: MovieDetailsFragmentArgs by navArgs()
-    private var isClicked = false
+    private var isClicked = true
     private var movieId: Int = 0
 
     companion object {
@@ -88,11 +89,8 @@ class MovieDetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
-
-        binding.fabSearch.shrink()
 
         reviewOnClick()
         favoriteMovieModel?.let {
@@ -105,7 +103,7 @@ class MovieDetailsFragment : Fragment() {
         }
         checkFavorite()
         goToPersonDetailFragment()
-
+        setVisibility()
         setToolBar()
         goToSimilarFragment()
     }
@@ -137,9 +135,11 @@ class MovieDetailsFragment : Fragment() {
         castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
         reviewAdapter = ReviewAdapter()
+        genreAdapter = GenreAdapter()
         binding.rvCast.adapter = castListAdapter
         binding.rvProductions.adapter = productionsAdapter
         binding.rvReview.adapter = reviewAdapter
+        binding.rvGenre.adapter = genreAdapter
         reviewAdapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY
         castListAdapter.stateRestorationPolicy =
             PREVENT_WHEN_EMPTY
@@ -147,6 +147,9 @@ class MovieDetailsFragment : Fragment() {
 
     private fun goToSimilarFragment() {
         binding.apply {
+            fabSearch.setOnClickListener {
+                setVisibility()
+            }
             fabSimilar.setOnClickListener {
                 findNavController().navigate(
                     MovieDetailsFragmentDirections.actionMovieDetailsFragmentToSimilarFragment()
@@ -154,14 +157,7 @@ class MovieDetailsFragment : Fragment() {
                 )
                 isClicked = false
             }
-            fabSearch.setOnClickListener {
-                searchFABClicked()
-            }
         }
-    }
-
-    private fun searchFABClicked() {
-        setVisibility()
     }
 
     private fun setVisibility() {
@@ -177,6 +173,7 @@ class MovieDetailsFragment : Fragment() {
                 fabSearch.shrink()
                 tvSimilar.isVisible = false
                 tvSimilar.isVisible = false
+                fabSimilar.isVisible = false
                 tvSimilar.startAnimation(bounce_gone)
                 fabSimilar.startAnimation(bounce_gone)
                 isClicked = false
@@ -291,15 +288,7 @@ class MovieDetailsFragment : Fragment() {
             tvRuntime.text =
                 convertHourAndMinutes(model.runtime)
         }
-        val list = model.genres
-        val genresString = StringBuilder()
-        list?.forEach { g ->
-            genresString.append(g.name + ", ")
-        }
-        if (genresString.isNotEmpty()) {
-            genresString.deleteCharAt(genresString.length - 2)
-            genreTV.text = genresString
-        }
+        genreAdapter.submitList(model.genres)
         productionsAdapter.submitList(model.production_companies)
     }
 

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.domain.usecase.GetPersonDataUseCase
 import com.suret.moviesapp.util.Resource
-import com.suret.moviesapp.util.isNetworkAvailable
+import com.suret.moviesapp.util.Util.isNetworkAvailable
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler

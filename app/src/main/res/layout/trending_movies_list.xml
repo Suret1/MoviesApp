@@ -9,14 +9,14 @@
         <variable
             name="movie"
             type="com.suret.moviesapp.data.model.TrendingMoviesModel" />
-
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="@dimen/_140sdp"
         android:layout_height="@dimen/_245sdp"
-        android:layout_margin="@dimen/_4sdp"
-        android:layout_marginHorizontal="@dimen/_6sdp">
+        android:background="?selectableItemBackground"
+        android:clickable="true"
+        android:focusable="true">
 
         <com.google.android.material.card.MaterialCardView
             style="@style/MyCardViewStyle"
@@ -122,12 +122,10 @@
                     android:id="@+id/movie_title"
                     style="@style/GilroyBoldTextStyle"
                     android:layout_width="0dp"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:layout_marginTop="@dimen/_6sdp"
-                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:layout_margin="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:maxLines="2"
-                    android:textAlignment="textStart"
+                    android:textAlignment="center"
                     android:textSize="@dimen/_12ssp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"

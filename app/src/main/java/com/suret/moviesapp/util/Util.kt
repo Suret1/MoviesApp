@@ -1,6 +1,7 @@
 package com.suret.moviesapp.util
 
 import android.content.Context
+import android.content.res.Resources
 import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -19,90 +20,99 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-fun isNetworkAvailable(context: Context): Boolean {
-    val connectivityManager =
-        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+object Util {
+    fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
-    // For 29 api or above
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-        val capabilities =
-            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                ?: return false
-        return when {
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
-            else -> false
-        }
-    }
-    // For below 29 api
-    else {
-        if (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting) {
-            return true
-        }
-    }
-    return false
-}
-
-fun splitNumber(budget: Int): String {
-    val integer: BigInteger =
-        BigInteger.valueOf(budget.toLong())
-    return NumberFormat.getNumberInstance(Locale.US).format(
-        integer
-    )
-}
-
-fun convertHourAndMinutes(time: Int): String {
-    var result = ""
-    val hour = time.div(60)
-    val minutes = time.mod(60)
-    result = if (hour > 0) {
-        "$hour h $minutes min"
-    } else {
-        "$minutes min"
-    }
-    return result
-}
-
-fun toDate(dateString: String?): String? {
-    val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-    val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
-    return formatter.format(parser.parse(dateString))
-}
-
-fun roundForDouble(value: Double): String {
-    val df = DecimalFormat("0.0")
-    var result = "0.0"
-    result = df.format(value)
-    return result
-}
-
-fun downloadImage(iw: AppCompatImageView, url: String?, progressBar: LottieAnimationView?) {
-    progressBar?.isVisible = true
-    Glide.with(iw)
-        .load(url)
-        .listener(object : RequestListener<Drawable> {
-            override fun onLoadFailed(
-                e: GlideException?,
-                model: Any?,
-                target: Target<Drawable>?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar?.isVisible = false
-                return false
+        // For 29 api or above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+                    ?: return false
+            return when {
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
             }
-
-            override fun onResourceReady(
-                resource: Drawable?,
-                model: Any?,
-                target: Target<Drawable>?,
-                dataSource: DataSource?,
-                isFirstResource: Boolean
-            ): Boolean {
-                progressBar?.isVisible = false
-                return false
+        }
+        // For below 29 api
+        else {
+            if (connectivityManager.activeNetworkInfo != null && connectivityManager.activeNetworkInfo!!.isConnectedOrConnecting) {
+                return true
             }
-        }).into(iw)
+        }
+        return false
+    }
+
+    fun splitNumber(budget: Int): String {
+        val integer: BigInteger =
+            BigInteger.valueOf(budget.toLong())
+        return NumberFormat.getNumberInstance(Locale.US).format(
+            integer
+        )
+    }
+
+    fun convertHourAndMinutes(time: Int): String {
+        var result = ""
+        val hour = time.div(60)
+        val minutes = time.mod(60)
+        result = if (hour > 0) {
+            "$hour h $minutes min"
+        } else {
+            "$minutes min"
+        }
+        return result
+    }
+
+    fun toDate(dateString: String?): String? {
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        return formatter.format(parser.parse(dateString))
+    }
+
+    fun roundForDouble(value: Double): String {
+        val df = DecimalFormat("0.0")
+        var result = "0.0"
+        result = df.format(value)
+        return result
+    }
+
+    fun downloadImage(iw: AppCompatImageView, url: String?, progressBar: LottieAnimationView?) {
+        progressBar?.isVisible = true
+        Glide.with(iw)
+            .load(url)
+            .listener(object : RequestListener<Drawable> {
+                override fun onLoadFailed(
+                    e: GlideException?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar?.isVisible = false
+                    return false
+                }
+
+                override fun onResourceReady(
+                    resource: Drawable?,
+                    model: Any?,
+                    target: Target<Drawable>?,
+                    dataSource: DataSource?,
+                    isFirstResource: Boolean
+                ): Boolean {
+                    progressBar?.isVisible = false
+                    return false
+                }
+
+            }).into(iw)
+    }
+
+    fun dpToPx(dp: Int): Int {
+        return (dp * Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+    fun pxToDp(px: Int): Int {
+        return (px / Resources.getSystem().displayMetrics.density).toInt()
+    }
 }
-
-
