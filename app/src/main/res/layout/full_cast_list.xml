@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/background_color">
+        android:background="@drawable/item_select_bg">
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/iwPersonPhoto"
@@ -22,6 +22,7 @@
             android:layout_height="@dimen/_130sdp"
             android:layout_margin="@dimen/_8sdp"
             android:scaleType="centerCrop"
+            android:theme="@style/ClickableImageView"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,9 +79,9 @@
             android:id="@+id/tvDepartment"
             style="@style/GilroyLightTextStyle"
             android:layout_width="0dp"
-            android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="@dimen/_8sdp"
             android:layout_marginTop="@dimen/_16sdp"
             android:text="@{cast.known_for_department}"
             android:textAlignment="center"

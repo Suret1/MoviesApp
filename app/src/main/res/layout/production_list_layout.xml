@@ -12,68 +12,61 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        style="@style/MyCardViewStyle"
         android:layout_width="@dimen/_90sdp"
         android:layout_height="@dimen/_90sdp"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true">
+        app:cardCornerRadius="@dimen/_10sdp">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/MyCardViewStyle"
-            app:cardCornerRadius="@dimen/_10sdp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/item_select_bg"
+            android:clickable="true">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iwProductionLogo"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:theme="@style/ClickableImageView"
+                app:layout_constraintBottom_toTopOf="@id/tvProductionName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                bind:progress="@{progressBar}"
+                bind:setImage="@{model.logo_path}"
+                tools:srcCompat="@drawable/movie_poster" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iwProductionLogo"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toTopOf="@id/tvProductionName"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    bind:progress="@{progressBar}"
-                    bind:setImage="@{model.logo_path}"
-                    tools:srcCompat="@drawable/movie_poster" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/progressBar"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/iwProductionLogo"
+                app:layout_constraintEnd_toEndOf="@id/iwProductionLogo"
+                app:layout_constraintStart_toStartOf="@id/iwProductionLogo"
+                app:layout_constraintTop_toTopOf="@id/iwProductionLogo"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/progressBar"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@id/iwProductionLogo"
-                    app:layout_constraintEnd_toEndOf="@id/iwProductionLogo"
-                    app:layout_constraintStart_toStartOf="@id/iwProductionLogo"
-                    app:layout_constraintTop_toTopOf="@id/iwProductionLogo"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/loading" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvProductionName"
+                style="@style/GilroyBoldTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_8sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{model.name}"
+                android:textAlignment="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="Pixar" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvProductionName"
-                    style="@style/GilroyBoldTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_8sdp"
-                    android:layout_marginBottom="@dimen/_6sdp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{model.name}"
-                    android:textAlignment="center"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_10ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:text="Pixar" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>

@@ -60,7 +60,7 @@ class FullCastAdapter : ListAdapter<Cast, RecyclerView.ViewHolder>(DifferCallBac
 
                 binding.cast = cast
 
-                binding.root.setOnClickListener {
+                binding.cardView.setOnClickListener {
                     onItemClick?.invoke(cast)
                 }
 

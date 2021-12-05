@@ -15,15 +15,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:focusable="true">
+        android:background="@drawable/item_fav_select_bg">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/bottomCard"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_120sdp"
             android:layout_margin="@dimen/_10sdp"
+            android:theme="@style/ClickableImageView"
             app:cardBackgroundColor="@color/background_color"
             app:cardCornerRadius="@dimen/_10sdp"
             app:cardElevation="0dp"
@@ -49,6 +48,7 @@
                 android:layout_width="@dimen/_100sdp"
                 android:layout_height="@dimen/_150sdp"
                 android:scaleType="centerCrop"
+                android:theme="@style/ClickableImageView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -81,7 +81,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:background="@drawable/item_select_bg">
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/tvMovieTitle"

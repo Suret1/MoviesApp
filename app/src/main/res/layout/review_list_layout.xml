@@ -11,121 +11,109 @@
             type="com.suret.moviesapp.data.model.ReviewResult" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.card.MaterialCardView
+        style="@style/MyCardViewStyle"
         android:layout_width="@dimen/_250sdp"
-        android:layout_height="@dimen/_130sdp"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:fitsSystemWindows="true"
-        android:focusable="true">
+        android:layout_height="@dimen/_130sdp">
 
-        <com.google.android.material.card.MaterialCardView
-            style="@style/MyCardViewStyle"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/item_select_bg">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iw_profile"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:scaleType="centerCrop"
+                android:theme="@style/ClickableImageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:shapeAppearanceOverlay="@style/RoundedImageViewRounded"
+                app:strokeColor="@android:color/transparent"
+                app:strokeWidth="1dp"
+                bind:avatarProgress="@{progressBar}"
+                bind:setAvatar="@{model.author_details.avatar_path}"
+                tools:srcCompat="@drawable/ic_round_person_24" />
 
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/iw_profile"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    android:layout_marginStart="@dimen/_10sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
-                    android:scaleType="centerCrop"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:shapeAppearanceOverlay="@style/RoundedImageViewRounded"
-                    app:strokeColor="@android:color/transparent"
-                    app:strokeWidth="1dp"
-                    bind:avatarProgress="@{progressBar}"
-                    bind:setAvatar="@{model.author_details.avatar_path}"
-                    tools:srcCompat="@drawable/ic_round_person_24" />
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/progressBar"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                app:layout_constraintBottom_toBottomOf="@id/iw_profile"
+                app:layout_constraintEnd_toEndOf="@id/iw_profile"
+                app:layout_constraintStart_toStartOf="@id/iw_profile"
+                app:layout_constraintTop_toTopOf="@id/iw_profile"
+                app:lottie_autoPlay="true"
+                app:lottie_loop="true"
+                app:lottie_rawRes="@raw/loading" />
 
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/progressBar"
-                    android:layout_width="@dimen/_40sdp"
-                    android:layout_height="@dimen/_40sdp"
-                    app:layout_constraintBottom_toBottomOf="@id/iw_profile"
-                    app:layout_constraintEnd_toEndOf="@id/iw_profile"
-                    app:layout_constraintStart_toStartOf="@id/iw_profile"
-                    app:layout_constraintTop_toTopOf="@id/iw_profile"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/loading" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_profileName"
+                style="@style/GilroyLightTextStyle"
+                android:layout_width="0dp"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{model.author}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintEnd_toStartOf="@id/iwStar"
+                app:layout_constraintStart_toEndOf="@id/iw_profile"
+                app:layout_constraintTop_toTopOf="@id/iw_profile"
+                tools:text="mr_suret" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_profileName"
-                    style="@style/GilroyLightTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:ellipsize="end"
-                    android:maxLines="2"
-                    android:text="@{model.author}"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintEnd_toStartOf="@id/iwStar"
-                    app:layout_constraintStart_toEndOf="@id/iw_profile"
-                    app:layout_constraintTop_toTopOf="@id/iw_profile"
-                    tools:text="mr_suret" />
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iwStar"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_16sdp"
+                app:layout_constraintEnd_toStartOf="@id/tv_rate"
+                app:layout_constraintStart_toEndOf="@+id/tv_profileName"
+                app:layout_constraintTop_toTopOf="@id/iw_profile"
+                app:srcCompat="@drawable/ic_round_star_rate_24" />
 
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/iwStar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/_16sdp"
-                    app:layout_constraintEnd_toStartOf="@id/tv_rate"
-                    app:layout_constraintStart_toEndOf="@+id/tv_profileName"
-                    app:layout_constraintTop_toTopOf="@id/iw_profile"
-                    app:srcCompat="@drawable/ic_round_star_rate_24" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_rate"
+                style="@style/GilroyLightTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_marginEnd="@dimen/_10sdp"
+                android:text="@{model.author_details.rating.toString()}"
+                android:textAlignment="textStart"
+                android:textSize="@dimen/_10ssp"
+                app:layout_constraintBottom_toBottomOf="@id/iwStar"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/iwStar"
+                app:layout_constraintTop_toTopOf="@id/iwStar"
+                tools:text="8.5" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_rate"
-                    style="@style/GilroyLightTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_marginEnd="@dimen/_10sdp"
-                    android:text="@{model.author_details.rating.toString()}"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/_10ssp"
-                    app:layout_constraintBottom_toBottomOf="@id/iwStar"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/iwStar"
-                    app:layout_constraintTop_toTopOf="@id/iwStar"
-                    tools:text="8.5" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_date"
+                style="@style/GilroyLightTextStyle"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="@dimen/_5sdp"
+                android:textSize="@dimen/_9ssp"
+                app:layout_constraintBottom_toBottomOf="@id/iw_profile"
+                app:layout_constraintStart_toEndOf="@id/iw_profile"
+                bind:setDate="@{model.created_at}"
+                tools:text="2021-08-29 15:54" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_date"
-                    style="@style/GilroyLightTextStyle"
-                    android:layout_width="wrap_content"
-                    android:layout_marginStart="@dimen/_5sdp"
-                    android:textSize="@dimen/_9ssp"
-                    app:layout_constraintBottom_toBottomOf="@id/iw_profile"
-                    app:layout_constraintStart_toEndOf="@id/iw_profile"
-                    bind:setDate="@{model.created_at}"
-                    tools:text="2021-08-29 15:54" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tv_review"
-                    style="@style/GilroyLightTextStyle"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_margin="@dimen/_10sdp"
-                    android:scrollbars="vertical"
-                    android:text="@{model.content}"
-                    android:textSize="@dimen/_12ssp"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_date"
-                    tools:text="The Suicide Squad stayed true to the hype of the anti-hero teams in DC.\r\n\r\nI feel like it wasn't really a sequel but rather a reboot and ignoring the first film.\r\nThe action was insane and BLOODY brilliant, with a stellar cast. And they LITERALLY killed off the first team at the very start of the film! To be honest, I wasn't really surprised as I didn't see more of them in later scenes of the trailer. But I was surprised they killed off Captain Boomerang - he was basically the primary member of the team! And I especially wanted to see more character build up with Savant, learn more of his backstory. Instead, he just turned out to be a totally wuss that's only good at killing small birds! But what shocked me the most was Rick Flagg's death!\r\n\r\nStill, Idris Elba and John Cena were fucking awesome as Bloodsport and Peacemaker, respectively. And King Shark was hilariously awesome. Funnier that Groot because at least he says more than three words - although, would have to be my favourite moment!\r\n\r\nI did had mixed feelings
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_review"
+                style="@style/GilroyLightTextStyle"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/_10sdp"
+                android:scrollbars="vertical"
+                android:text="@{model.content}"
+                android:textSize="@dimen/_12ssp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_date"
+                tools:text="The Suicide Squad stayed true to the hype of the anti-hero teams in DC.\r\n\r\nI feel like it wasn't really a sequel but rather a reboot and ignoring the first film.\r\nThe action was insane and BLOODY brilliant, with a stellar cast. And they LITERALLY killed off the first team at the very start of the film! To be honest, I wasn't really surprised as I didn't see more of them in later scenes of the trailer. But I was surprised they killed off Captain Boomerang - he was basically the primary member of the team! And I especially wanted to see more character build up with Savant, learn more of his backstory. Instead, he just turned out to be a totally wuss that's only good at killing small birds! But what shocked me the most was Rick Flagg's death!\r\n\r\nStill, Idris Elba and John Cena were fucking awesome as Bloodsport and Peacemaker, respectively. And King Shark was hilariously awesome. Funnier that Groot because at least he says more than three words - although, would have to be my favourite moment!\r\n\r\nI did had mixed feelings
                 from the start, but then I started to really get into it all!" />
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.card.MaterialCardView>
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
 </layout>
