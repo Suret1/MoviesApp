@@ -95,6 +95,11 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="ShapeableImageViewRadius">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8%</item>
+    </style>
+
     <style name="ClickableView">
         <item name="colorControlHighlight">@color/orange_a200</item>
     </style>

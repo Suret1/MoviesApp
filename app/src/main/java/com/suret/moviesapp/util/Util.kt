@@ -6,8 +6,11 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.view.isVisible
+import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
@@ -19,6 +22,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 object Util {
     fun isNetworkAvailable(context: Context): Boolean {
@@ -114,5 +118,22 @@ object Util {
 
     fun pxToDp(px: Int): Int {
         return (px / Resources.getSystem().displayMetrics.density).toInt()
+    }
+
+    fun hideSystemUI(activity: FragmentActivity) {
+        activity.window.setFlags(
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
+            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
+        )
+        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        activity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_FULLSCREEN
+                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+    }
+
+    fun showSystemUI(activity: FragmentActivity) {
+        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        activity.window.decorView.systemUiVisibility = View.VISIBLE
     }
 }

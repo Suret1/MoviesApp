@@ -3,16 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable-v24/cardview_bg.xml" value="0.59625" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable-v24/fullcast_bg.xml" value="0.59625" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable-v24/item_select_bg.xml" value="0.625" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/alert_dialog_bg.xml" value="0.6395833333333333" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_anim.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/avd_fav.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.6395833333333333" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/cardview_bg.xml" value="0.59625" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/favorite.xml" value="0.7" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/fullcast_bg.xml" value="0.59625" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_arrow_up.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_disable_favorite.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_favorite_movie.xml" value="0.7" />
@@ -21,8 +16,6 @@
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_home_24.xml" value="0.5125" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_search_24.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/ic_round_star_rate_24.xml" value="0.7" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/item_fav_select_bg.xml" value="0.59625" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/item_select_bg.xml" value="0.59625" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/line.xml" value="0.6395833333333333" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/movies.xml" value="0.7" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/drawable/star_full.xml" value="0.7" />
@@ -40,7 +33,6 @@
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_review_bottom_sheet.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/fragment_similar.xml" value="0.48115079365079366" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/full_cast_list.xml" value="0.536" />
-        <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/genre_list_layout.xml" value="1.6" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/production_list_layout.xml" value="0.8800000000000001" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/review_list_layout.xml" value="0.67" />
         <entry key="..\:/Users/suret/AndroidStudioProjects/MoviesApp/app/src/main/res/layout/trending_movies_list.xml" value="0.67" />
@@ -49,15 +41,21 @@
         <entry key="app/src/main/res/drawable/genre_bg.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/ic_baseline_sync_24.xml" value="0.37552083333333336" />
         <entry key="app/src/main/res/drawable/ic_loading_icon.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/drawable/ic_opacity.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/ic_round_person_24.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/drawable/item_fav_select_bg.xml" value="0.375" />
+        <entry key="app/src/main/res/drawable/item_select_bg.xml" value="0.375" />
         <entry key="app/src/main/res/drawable/loading_drawable.xml" value="0.37552083333333336" />
+        <entry key="app/src/main/res/drawable/title_bg.xml" value="0.375" />
         <entry key="app/src/main/res/layout/cast_list_layout.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/favorite_list_layout.xml" value="0.359375" />
+        <entry key="app/src/main/res/layout/filmography_list_layout.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/fragment_favourites.xml" value="0.359375" />
         <entry key="app/src/main/res/layout/fragment_full_cast.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/fragment_movie_details.xml" value="0.375" />
         <entry key="app/src/main/res/layout/fragment_movies.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/fragment_person_details.xml" value="0.359375" />
+        <entry key="app/src/main/res/layout/fragment_person_details_new.xml" value="0.335" />
         <entry key="app/src/main/res/layout/fragment_similar.xml" value="0.35885416666666664" />
         <entry key="app/src/main/res/layout/full_cast_list.xml" value="0.3609375" />
         <entry key="app/src/main/res/layout/genre_list_layout.xml" value="0.5" />

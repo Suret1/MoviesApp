@@ -311,7 +311,6 @@ class MovieDetailsFragment : Fragment() {
         castListAdapter.onItemClick = {
             findNavController().navigate(
                 MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(
-                    it
                 )
             )
         }

@@ -12,7 +12,6 @@
     </data>
 
     <com.google.android.material.card.MaterialCardView
-        android:id="@+id/cardView"
         style="@style/MyCardViewStyle"
         android:layout_width="@dimen/_120sdp"
         android:layout_height="@dimen/_220sdp">

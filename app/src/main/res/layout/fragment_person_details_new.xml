@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/background_color"
+        tools:context=".ui.persondetails.PersonDetailsNewFragment">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/actorPoster"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_240sdp"
+            android:foreground="@drawable/title_bg"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/robert_downey" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarDetails"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:contentInsetStart="0dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:layout_collapseMode="pin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:navigationIcon="@drawable/back_btn"
+            app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/actorName"
+            style="@style/GilroyBoldTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_24sdp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Robert Downey Jr."
+            android:textSize="@dimen/_40ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbarDetails" />
+
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/actorProfile"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_16sdp"
+            android:scaleType="centerCrop"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actorName"
+            app:shapeAppearanceOverlay="@style/ShapeableImageViewRadius"
+            app:srcCompat="@drawable/robert_downey" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/actorBirthday"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="1984-11-22"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintStart_toEndOf="@id/actorProfile"
+            app:layout_constraintTop_toTopOf="@id/actorProfile" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/actorBirthPlace"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="New York City, New York, USA"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/actorProfile"
+            app:layout_constraintTop_toBottomOf="@id/actorBirthday" />
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/actorDepartment"
+            style="@style/GilroyLightTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:text="Actor, Producer"
+            android:textColor="@color/main_red"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/actorProfile"
+            app:layout_constraintTop_toBottomOf="@id/actorBirthPlace" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvFilmography"
+            style="@style/GilroyBoldTextStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginTop="@dimen/_32sdp"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="Filmography"
+            android:textSize="@dimen/_14ssp"
+            app:layout_constraintEnd_toStartOf="@id/tvSeeAll"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/actorProfile" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSeeAll"
+            style="@style/GilroyLightTextStyle"
+            android:layout_marginEnd="@dimen/_16sdp"
+            android:text="@string/see_all"
+            android:textAlignment="textEnd"
+            android:textColor="@color/main_grey"
+            app:layout_constraintBottom_toBottomOf="@id/tvFilmography"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tvFilmography"
+            app:layout_constraintTop_toTopOf="@id/tvFilmography" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvFilmography"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:clipToPadding="false"
+            android:orientation="horizontal"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/tvFilmography"
+            bind:equalSpacing="@{16}"
+            tools:listitem="@layout/trending_movies_list" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

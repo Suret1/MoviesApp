@@ -27,7 +27,7 @@ class TrendMovieListAdapter :
 
                 binding.movie = model
 
-                binding.cardView.setOnClickListener {
+                binding.root.setOnClickListener {
                     model.let { movies ->
                         setOnItemClick?.invoke(movies)
                     }

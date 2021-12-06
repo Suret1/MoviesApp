@@ -92,6 +92,7 @@ class PersonDetailsFragment : Fragment() {
     }
 
     private fun setPersonData(actor: ActorModel) {
+
         binding.apply {
             if (!actor.profile_path.isNullOrEmpty()) {
                 downloadImage(iwPersonPhoto, IMAGE_URL + actor.profile_path, progressBar)

@@ -28,7 +28,7 @@
         app:popExitAnim="@anim/slide_right" />
     <action
         android:id="@+id/action_movieDetailsFragment_to_personDetailsFragment"
-        app:destination="@id/personDetailsFragment"
+        app:destination="@id/personDetailsNewFragment"
         app:enterAnim="@anim/slide_left"
         app:exitAnim="@anim/wait_anim"
         app:popEnterAnim="@anim/wait_anim"
@@ -124,4 +124,9 @@
             app:argType="com.suret.moviesapp.data.model.ReviewResult"
             app:nullable="true" />
     </dialog>
+    <fragment
+        tools:layout="@layout/fragment_person_details_new"
+        android:id="@+id/personDetailsNewFragment"
+        android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsNewFragment"
+        android:label="PersonDetailsNewFragment" />
 </navigation>
