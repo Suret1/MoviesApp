@@ -310,8 +310,7 @@ class MovieDetailsFragment : Fragment() {
     private fun goToPersonDetailFragment() {
         castListAdapter.onItemClick = {
             findNavController().navigate(
-                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(
-                )
+                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(it)
             )
         }
     }

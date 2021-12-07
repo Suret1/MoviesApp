@@ -2,6 +2,7 @@ package com.suret.moviesapp.data.repository.datasource
 
 import com.suret.moviesapp.data.model.*
 import retrofit2.Response
+import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -40,4 +41,9 @@ interface RemoteDataSource {
         @Query("page") page: Int,
         @Query("api_key") apiKey: String
     ): Response<TrendingMoviesRoot>
+
+    suspend fun getPersonMovieCredits(
+        @Path("person_id") id: Int,
+        @Query("api_key") apiKey: String
+    ): Response<FilmographyRoot>
 }

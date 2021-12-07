@@ -128,5 +128,10 @@
         tools:layout="@layout/fragment_person_details_new"
         android:id="@+id/personDetailsNewFragment"
         android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsNewFragment"
-        android:label="PersonDetailsNewFragment" />
+        android:label="PersonDetailsNewFragment" >
+        <argument
+            android:name="castModel"
+            app:argType="com.suret.moviesapp.data.model.Cast"
+            app:nullable="true" />
+    </fragment>
 </navigation>

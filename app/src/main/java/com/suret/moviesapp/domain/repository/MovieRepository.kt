@@ -3,12 +3,17 @@ package com.suret.moviesapp.domain.repository
 import androidx.lifecycle.LiveData
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
+import retrofit2.Response
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MovieRepository {
 
     suspend fun getTrendingMovies(): Resource<List<TrendingMoviesModel>>
 
     suspend fun getMovieDetails(movieId: Int): Resource<MovieDetailsModel>
+
+    suspend fun getPersonMovieCredits(id: Int): Resource<List<Filmography>>
 
     fun getAllMovies(): LiveData<List<TrendingMoviesModel>>
 

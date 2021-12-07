@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.airbnb.lottie.LottieAnimationView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
+import com.suret.moviesapp.data.model.Filmography
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.util.Util.downloadImage
@@ -25,6 +26,15 @@ fun AppCompatTextView.setTitle(movie: TrendingMoviesModel) {
         if (movie.name == null) {
             text = movie.original_title
         }
+    } else {
+        text = movie.title
+    }
+}
+
+@BindingAdapter("bind:setTextActorMovie")
+fun AppCompatTextView.setTitle(movie: Filmography) {
+    if (movie.title == null) {
+        text = movie.original_language
     } else {
         text = movie.title
     }

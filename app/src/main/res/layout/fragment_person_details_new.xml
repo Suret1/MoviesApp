@@ -146,7 +146,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/tvFilmography"
             bind:equalSpacing="@{16}"
-            tools:listitem="@layout/trending_movies_list" />
+            tools:listitem="@layout/filmography_movies_list" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

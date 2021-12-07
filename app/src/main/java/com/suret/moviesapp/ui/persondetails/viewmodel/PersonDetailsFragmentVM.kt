@@ -1,10 +1,14 @@
 package com.suret.moviesapp.ui.persondetails.viewmodel
 
 import android.content.Context
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.model.ActorModel
+import com.suret.moviesapp.data.model.Filmography
+import com.suret.moviesapp.data.model.FilmographyRoot
 import com.suret.moviesapp.domain.usecase.GetPersonDataUseCase
+import com.suret.moviesapp.domain.usecase.GetPersonMovieCreditsUseCase
 import com.suret.moviesapp.util.Resource
 import com.suret.moviesapp.util.Util.isNetworkAvailable
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,12 +24,17 @@ import javax.inject.Inject
 class PersonDetailsFragmentVM @Inject constructor(
     @ApplicationContext val context: Context,
     private val getPersonDataUseCase: GetPersonDataUseCase,
+    private val getPersonMovieCreditsUseCase: GetPersonMovieCreditsUseCase
 ) : ViewModel() {
 
     sealed class Event {
 
         class ActorSuccess(
             val actor: ActorModel?
+        ) : Event()
+
+        class FilmographySuccess(
+            val movie: List<Filmography>?
         ) : Event()
 
         class Failure(
@@ -38,6 +47,10 @@ class PersonDetailsFragmentVM @Inject constructor(
 
     private val actorChannel = Channel<Event>()
     val actorFlow = actorChannel.receiveAsFlow()
+
+    private val movieChannel = Channel<Event>()
+    val movieFlow = movieChannel.receiveAsFlow()
+
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
@@ -77,4 +90,29 @@ class PersonDetailsFragmentVM @Inject constructor(
                 )
             }
         }
+
+    fun getPersonMovieCredits(personId: Int) {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
+            if (isNetworkAvailable(context)) {
+                movieChannel.send(Event.Loading)
+                when (val response = getPersonMovieCreditsUseCase.execute(personId)) {
+                    is Resource.Success -> {
+                        response.data?.let {
+                            Log.d("asdadsa",it.toString())
+                            movieChannel.send(Event.FilmographySuccess(it))
+                        }
+                    }
+                    is Resource.Error -> {
+                        movieChannel.send(Event.Failure(response.message ?: ""))
+                    }
+                }
+            } else {
+                movieChannel.send(
+                    Event.Failure(
+                        "No Internet"
+                    )
+                )
+            }
+        }
+    }
 }

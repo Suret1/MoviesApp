@@ -40,6 +40,19 @@ class MovieRepositoryImpl(
         return Resource.Error(response.message())
     }
 
+    override suspend fun getPersonMovieCredits(id: Int): Resource<List<Filmography>> {
+        val response = remoteDataSource.getPersonMovieCredits(id, BuildConfig.API_KEY)
+        val result = response.body()
+        result?.let {
+            return if (response.isSuccessful) {
+                Resource.Success(it.filmography!!)
+            } else {
+                Resource.Error(response.message())
+            }
+        }
+        return Resource.Error(response.message())
+    }
+
     override fun getAllMovies(): LiveData<List<TrendingMoviesModel>> =
         localDataSource.getAllMovies()
 

@@ -80,4 +80,9 @@ object NetModule {
     fun provideGetSimilarAPI(retrofit: Retrofit): GetSimilarAPI {
         return retrofit.create(GetSimilarAPI::class.java)
     }
+    @Provides
+    @Singleton
+    fun provideGetPersonMovieCreditsAPI(retrofit: Retrofit): GetPersonMovieCreditsAPI {
+        return retrofit.create(GetPersonMovieCreditsAPI::class.java)
+    }
 }

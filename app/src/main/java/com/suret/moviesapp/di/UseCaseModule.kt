@@ -100,4 +100,12 @@ object UseCaseModule {
     fun provideGetSimilarUseCase(movieRepository: MovieRepository): GetSimilarMoviesUseCase {
         return GetSimilarMoviesUseCase(movieRepository)
     }
+
+    @Singleton
+    @Provides
+    fun provideGetPersonMovieCreditsUseCase(movieRepository: MovieRepository): GetPersonMovieCreditsUseCase {
+        return GetPersonMovieCreditsUseCase(movieRepository)
+    }
+
+
 }
