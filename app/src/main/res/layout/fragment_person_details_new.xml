@@ -14,17 +14,6 @@
         android:background="@color/background_color"
         tools:context=".ui.persondetails.PersonDetailsNewFragment">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/actorPoster"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/_240sdp"
-            android:foreground="@drawable/title_bg"
-            android:scaleType="centerCrop"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@drawable/robert_downey" />
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbarDetails"
             android:layout_width="match_parent"
@@ -38,8 +27,19 @@
             app:navigationIcon="@drawable/back_btn"
             app:popupTheme="@style/ThemeOverlay.MaterialComponents.Light" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/actorPoster"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_240sdp"
+            android:foreground="@drawable/title_bg"
+            android:scaleType="centerCrop"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@drawable/robert_downey" />
+
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/actorName"
+            android:id="@+id/actorNameTV"
             style="@style/GilroyBoldTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -47,12 +47,11 @@
             android:layout_marginTop="@dimen/_24sdp"
             android:ellipsize="end"
             android:maxLines="3"
-            android:text="Robert Downey Jr."
             android:textSize="@dimen/_40ssp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/toolbarDetails" />
-
+            app:layout_constraintTop_toBottomOf="@id/toolbarDetails"
+            tools:text="Robert Downey Jr." />
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/actorProfile"
@@ -62,9 +61,21 @@
             android:layout_marginTop="@dimen/_16sdp"
             android:scaleType="centerCrop"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/actorName"
+            app:layout_constraintTop_toBottomOf="@id/actorNameTV"
             app:shapeAppearanceOverlay="@style/ShapeableImageViewRadius"
-            app:srcCompat="@drawable/robert_downey" />
+            tools:srcCompat="@drawable/robert_downey" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressBar"
+            android:layout_width="@dimen/_80sdp"
+            android:layout_height="@dimen/_80sdp"
+            app:layout_constraintBottom_toBottomOf="@id/actorProfile"
+            app:layout_constraintEnd_toEndOf="@id/actorProfile"
+            app:layout_constraintStart_toStartOf="@id/actorProfile"
+            app:layout_constraintTop_toTopOf="@id/actorProfile"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/loading" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/actorBirthday"
