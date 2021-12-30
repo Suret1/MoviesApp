@@ -17,46 +17,48 @@ import com.suret.moviesapp.databinding.FragmentPersonDetailsNewBinding
 import com.suret.moviesapp.ui.persondetails.adapter.FilmographyAdapter
 import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsFragmentVM
 import com.suret.moviesapp.util.Util.downloadImage
+import com.suret.moviesapp.util.Util.hideSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class PersonDetailsNewFragment : Fragment() {
     private val binding by lazy { FragmentPersonDetailsNewBinding.inflate(layoutInflater) }
-    private val viewModel: PersonDetailsFragmentVM by viewModels()
+    private val viewModel by viewModels<PersonDetailsFragmentVM>()
     private val args by navArgs<PersonDetailsNewFragmentArgs>()
+    private val adapter = FilmographyAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.executePendingBindings()
+
+        initAdapter()
+        sendRequest()
+        hideSystemUI(requireActivity())
+        initObservers()
+        onBack()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        val adapter = FilmographyAdapter()
-
-        binding.toolbarDetails.setNavigationOnClickListener {
-            activity?.onBackPressed()
-        }
-
-        val castModel = args.castModel
-
-        binding.actorPoster.setImageResource(R.drawable.robert_downey)
-
+    private fun initAdapter() {
         binding.rvFilmography.adapter = adapter
+    }
 
-        args.castModel?.id?.let { id ->
-            viewModel.getPersonMovieCredits(id)
+    private fun sendRequest() {
+        args.castModel?.id?.let { personId ->
+            viewModel.getPersonMovieCredits(personId)
+            viewModel.getPersonData(personId)
         }
+    }
 
+    private fun initObservers() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.movieFlow.collect { event ->
                 when (event) {
                     is PersonDetailsFragmentVM.Event.Loading -> {
-                        //
                     }
                     is PersonDetailsFragmentVM.Event.Failure -> {
                     }
@@ -67,28 +69,30 @@ class PersonDetailsNewFragment : Fragment() {
 
             }
         }
-        castModel?.let {
-            viewLifecycleOwner.lifecycleScope.launchWhenCreated {
-                it.id?.let { personId ->
-                    viewModel.getPersonData(personId)
-                    viewModel.actorFlow.collect { event ->
-                        when (event) {
-                            is PersonDetailsFragmentVM.Event.ActorSuccess -> {
-                                event.actor?.let { it1 -> setPersonData(it1) }
-                            }
-                            is PersonDetailsFragmentVM.Event.Failure -> {
-                                Toast.makeText(
-                                    requireContext(),
-                                    event.errorText,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                            is PersonDetailsFragmentVM.Event.Loading -> {
-                            }
-                        }
+        viewLifecycleOwner.lifecycleScope.launchWhenCreated {
+            viewModel.actorFlow.collect { event ->
+                when (event) {
+                    is PersonDetailsFragmentVM.Event.ActorSuccess -> {
+                        event.actor?.let { it1 -> setPersonData(it1) }
+                    }
+                    is PersonDetailsFragmentVM.Event.Failure -> {
+                        Toast.makeText(
+                            requireContext(),
+                            event.errorText,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    is PersonDetailsFragmentVM.Event.Loading -> {
+
                     }
                 }
             }
+        }
+    }
+
+    private fun onBack() {
+        binding.toolbarDetails.setNavigationOnClickListener {
+            activity?.onBackPressed()
         }
     }
 
@@ -96,8 +100,7 @@ class PersonDetailsNewFragment : Fragment() {
         binding.apply {
             if (actor.profile_path.isNullOrEmpty().not()) {
                 downloadImage(
-                    actorPoster,
-                    Constants.IMAGE_URL + actor.profile_path,
+                    actorPoster, Constants.IMAGE_URL + actor.profile_path,
                     progressBar
                 )
                 downloadImage(
@@ -110,22 +113,20 @@ class PersonDetailsNewFragment : Fragment() {
                 actorPoster.setImageResource(R.drawable.ic_round_person_24)
             }
             actorNameTV.text = actor.name
-//            tvTitleActorName.text = actor.name
-//            tvActorName.text = actor.name
-//            when {
-//                actor.deathday != null -> {
-//                    tvPersonBirthday.text = "(${actor.birthday} - ${actor.deathday})"
-//                }
-//                actor.birthday != null -> {
-//                    tvPersonBirthday.text = "(${actor.birthday})"
-//                }
-//                else -> {
-//                    tvPersonBirthday.text = ""
-//                }
-//            }
-//            tvBirthPlace.text = actor.place_of_birth
-//            tvPersonDepartment.text = actor.known_for_department
-//            tvBio.text = actor.biography
+            when {
+                actor.deathday != null -> {
+                    actorBirthday.text = "${actor.birthday} - ${actor.deathday}"
+                }
+                actor.birthday != null -> {
+                    actorBirthday.text = "${actor.birthday}"
+                }
+                else -> {
+                    actorBirthday.text = ""
+                }
+            }
+            actorBirthPlace.text = actor.place_of_birth
+            actorDepartment.text = actor.known_for_department
+            actorBio.text = actor.biography
         }
     }
 }

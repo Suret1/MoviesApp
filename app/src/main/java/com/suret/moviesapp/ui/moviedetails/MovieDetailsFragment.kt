@@ -36,6 +36,7 @@ import com.suret.moviesapp.ui.moviedetails.viewmodel.MovieDetailsFragmentVM
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import com.suret.moviesapp.util.Util.convertHourAndMinutes
 import com.suret.moviesapp.util.Util.roundForDouble
+import com.suret.moviesapp.util.Util.showSystemUI
 import com.suret.moviesapp.util.Util.splitNumber
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
@@ -548,4 +549,8 @@ class MovieDetailsFragment : Fragment() {
         movieTitle.setColor(R.color.white, R.color.silver)
     }
 
+    override fun onResume() {
+        super.onResume()
+        showSystemUI(requireActivity())
+    }
 }

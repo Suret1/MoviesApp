@@ -1,12 +1,10 @@
 package com.suret.moviesapp.ui.persondetails.viewmodel
 
 import android.content.Context
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.model.Filmography
-import com.suret.moviesapp.data.model.FilmographyRoot
 import com.suret.moviesapp.domain.usecase.GetPersonDataUseCase
 import com.suret.moviesapp.domain.usecase.GetPersonMovieCreditsUseCase
 import com.suret.moviesapp.util.Resource
@@ -98,7 +96,6 @@ class PersonDetailsFragmentVM @Inject constructor(
                 when (val response = getPersonMovieCreditsUseCase.execute(personId)) {
                     is Resource.Success -> {
                         response.data?.let {
-                            Log.d("asdadsa",it.toString())
                             movieChannel.send(Event.FilmographySuccess(it))
                         }
                     }
