@@ -33,11 +33,7 @@ fun AppCompatTextView.setTitle(movie: TrendingMoviesModel) {
 
 @BindingAdapter("bind:setTextActorMovie")
 fun AppCompatTextView.setTitle(movie: Filmography) {
-    if (movie.title == null) {
-        text = movie.original_language
-    } else {
-        text = movie.title
-    }
+    text = movie.title ?: movie.original_language
 }
 
 @BindingAdapter("bind:setTextFavMovie")
@@ -72,7 +68,7 @@ fun AppCompatImageView.setImage(isFavorite: Boolean) {
 
 @BindingAdapter("bind:setImage", "bind:progress")
 fun AppCompatImageView.setImage(url: String?, progressBar: LottieAnimationView?) {
-    if (!url.isNullOrEmpty()) {
+    if (url.isNullOrEmpty().not()) {
         downloadImage(this, IMAGE_URL + url, progressBar)
     } else {
         progressBar?.isVisible = false
@@ -82,8 +78,8 @@ fun AppCompatImageView.setImage(url: String?, progressBar: LottieAnimationView?)
 
 @BindingAdapter("bind:setAvatar", "bind:avatarProgress")
 fun AppCompatImageView.setAvatar(url: String?, progressBar: LottieAnimationView?) {
-    if (!url.isNullOrEmpty()) {
-        if (url.startsWith("/https:", true)) {
+    if (url.isNullOrEmpty().not()) {
+        if (url!!.startsWith("/https:", true)) {
             downloadImage(this, url.removePrefix("/"), progressBar)
         } else {
             downloadImage(this, IMAGE_URL + url, progressBar)
