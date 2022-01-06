@@ -22,7 +22,7 @@ object DatabaseModule {
     fun provideMovieDatabase(@ApplicationContext context: Context) = Room.databaseBuilder(
         context, MovieDatabase::class.java,
         Constants.DB_NAME
-    ).allowMainThreadQueries().addMigrations(MIGRATION_1_2).build()
+    ).allowMainThreadQueries().build()
 
     @Provides
     @Singleton
