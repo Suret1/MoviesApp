@@ -1,6 +1,7 @@
 package com.suret.moviesapp.ui.moviedetails
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +33,7 @@ import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.GenreAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
-import com.suret.moviesapp.ui.moviedetails.viewmodel.MovieDetailsFragmentVM
+import com.suret.moviesapp.ui.moviedetails.viewmodel.MovieDetailsVM
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import com.suret.moviesapp.util.Util.convertHourAndMinutes
 import com.suret.moviesapp.util.Util.roundForDouble
@@ -42,22 +43,23 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import kotlin.math.abs
 
 
 @AndroidEntryPoint
-class MovieDetailsFragment : Fragment() {
+class MovieDetails : Fragment() {
     private val binding by lazy { FragmentMovieDetailsBinding.inflate(layoutInflater) }
-    private val viewModel: MovieDetailsFragmentVM by viewModels()
+    private val viewModel by viewModels<MovieDetailsVM>()
     private var movieModel: TrendingMoviesModel? = null
     private var favoriteMovieModel: FavoriteMovieModel? = null
     private var castList: List<Cast>? = null
-    private lateinit var reviewAdapter: ReviewAdapter
-    private lateinit var productionsAdapter: ProductionsAdapter
-    private lateinit var castListAdapter: FullCastAdapter
-    private lateinit var genreAdapter: GenreAdapter
+    private val reviewAdapter = ReviewAdapter()
+    private val productionsAdapter = ProductionsAdapter()
+    private val castListAdapter = FullCastAdapter()
+    private val genreAdapter = GenreAdapter()
     private var youtubeKey = ""
-    private val args: MovieDetailsFragmentArgs by navArgs()
+    private val args by navArgs<MovieDetailsArgs>()
     private var isClicked = true
     private var movieId: Int = 0
 
@@ -112,7 +114,7 @@ class MovieDetailsFragment : Fragment() {
     private fun reviewOnClick() {
         reviewAdapter.onItemClick = { review ->
             findNavController().navigate(
-                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToReviewBottomSheet(
+                MovieDetailsDirections.actionMovieDetailsFragmentToReviewBottomSheet(
                     review
                 )
             )
@@ -132,11 +134,7 @@ class MovieDetailsFragment : Fragment() {
     }
 
     private fun initAdapters() {
-        productionsAdapter = ProductionsAdapter()
-        castListAdapter = FullCastAdapter()
         castListAdapter.sendTypeCast(SIMPLE_CAST_TYPE)
-        reviewAdapter = ReviewAdapter()
-        genreAdapter = GenreAdapter()
         binding.rvCast.adapter = castListAdapter
         binding.rvProductions.adapter = productionsAdapter
         binding.rvReview.adapter = reviewAdapter
@@ -153,7 +151,7 @@ class MovieDetailsFragment : Fragment() {
             }
             fabSimilar.setOnClickListener {
                 findNavController().navigate(
-                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentToSimilarFragment()
+                    MovieDetailsDirections.actionMovieDetailsFragmentToSimilarFragment()
                         .setMovieID(movieId)
                 )
                 isClicked = false
@@ -190,10 +188,7 @@ class MovieDetailsFragment : Fragment() {
                     viewModel.getMovieDetails(it)
                     viewModel.detailsFlow.collect { event ->
                         when (event) {
-                            is MovieDetailsFragmentVM.Event.Failure -> {
-                                //
-                            }
-                            is MovieDetailsFragmentVM.Event.DetailsSuccess -> {
+                            is MovieDetailsVM.Event.DetailsSuccess -> {
                                 binding.apply {
                                     event.details?.let { model ->
                                         setMovieDetails(model)
@@ -209,10 +204,10 @@ class MovieDetailsFragment : Fragment() {
                 model.id?.let { id -> viewModel.getMovieTrailer(id) }
                 viewModel.trailerFlow.collect { event ->
                     when (event) {
-                        is MovieDetailsFragmentVM.Event.Loading -> {
+                        is MovieDetailsVM.Event.Loading -> {
                             progressBar.isVisible = true
                         }
-                        is MovieDetailsFragmentVM.Event.Failure -> {
+                        is MovieDetailsVM.Event.Failure -> {
                             progressBar.isVisible = false
                             Snackbar.make(
                                 requireView(),
@@ -220,7 +215,7 @@ class MovieDetailsFragment : Fragment() {
                                 Snackbar.LENGTH_SHORT
                             ).show()
                         }
-                        is MovieDetailsFragmentVM.Event.TrailerSuccess -> {
+                        is MovieDetailsVM.Event.TrailerSuccess -> {
                             progressBar.isVisible = false
                             event.trailerList?.let { trailerList ->
                                 if (!trailerList.isNullOrEmpty()) {
@@ -238,15 +233,9 @@ class MovieDetailsFragment : Fragment() {
                     viewModel.getCredits(it)
                     viewModel.castFlow.collect { event ->
                         when (event) {
-                            is MovieDetailsFragmentVM.Event.CastSuccess -> {
+                            is MovieDetailsVM.Event.CastSuccess -> {
                                 castList = event.cast
                                 castListAdapter.submitList(event.cast)
-                            }
-                            is MovieDetailsFragmentVM.Event.Failure -> {
-                                //
-                            }
-                            is MovieDetailsFragmentVM.Event.Loading -> {
-                                //
                             }
                         }
                     }
@@ -257,14 +246,9 @@ class MovieDetailsFragment : Fragment() {
                 model.id?.let { id -> viewModel.getReviews(id) }
                 viewModel.reviewFlow.collect { event ->
                     when (event) {
-                        is MovieDetailsFragmentVM.Event.Loading -> {
-                            //
-                        }
-                        is MovieDetailsFragmentVM.Event.Failure -> {
-                            //
-                        }
-                        is MovieDetailsFragmentVM.Event.ReviewsSuccess -> {
+                        is MovieDetailsVM.Event.ReviewsSuccess -> {
                             event.reviews.let {
+                                Log.d("sadasd", "$it")
                                 reviewAdapter.submitList(it)
                             }
                         }
@@ -278,19 +262,19 @@ class MovieDetailsFragment : Fragment() {
 
     private fun FragmentMovieDetailsBinding.setMovieDetails(model: MovieDetailsModel) {
         if (model.budget != null) {
-            tvBudget.text =
-                splitNumber(model.budget) + getString(R.string.dollar)
+            tvBudget.text = "${splitNumber(model.budget)} ${getString(R.string.dollar)}"
+
+            if (model.revenue != null) {
+                tvRevenue.text =
+                    "${splitNumber(model.revenue)} ${getString(R.string.dollar)}"
+            }
+            if (model.runtime != null) {
+                tvRuntime.text =
+                    convertHourAndMinutes(model.runtime)
+            }
+            genreAdapter.submitList(model.genres)
+            productionsAdapter.submitList(model.production_companies)
         }
-        if (model.revenue != null) {
-            tvRevenue.text =
-                splitNumber(model.revenue) + getString(R.string.dollar)
-        }
-        if (model.runtime != null) {
-            tvRuntime.text =
-                convertHourAndMinutes(model.runtime)
-        }
-        genreAdapter.submitList(model.genres)
-        productionsAdapter.submitList(model.production_companies)
     }
 
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
@@ -299,7 +283,7 @@ class MovieDetailsFragment : Fragment() {
                 val array = arrayListOf<Cast>()
                 array.addAll(it)
                 findNavController().navigate(
-                    MovieDetailsFragmentDirections.actionMovieDetailsFragmentToFullCastFragment(
+                    MovieDetailsDirections.actionMovieDetailsFragmentToFullCastFragment(
                         array
                     )
                 )
@@ -311,7 +295,7 @@ class MovieDetailsFragment : Fragment() {
     private fun goToPersonDetailFragment() {
         castListAdapter.onItemClick = {
             findNavController().navigate(
-                MovieDetailsFragmentDirections.actionMovieDetailsFragmentToPersonDetailsFragment(it)
+                MovieDetailsDirections.actionMovieDetailsFragmentToPersonDetailsFragment(it)
             )
         }
     }
@@ -526,11 +510,11 @@ class MovieDetailsFragment : Fragment() {
         appbarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             if (appBarLayout != null) {
                 if (abs(verticalOffset) - appBarLayout.totalScrollRange == 0) {
-                    movieTitle.visibility = View.GONE
+                    movieTitle.isVisible = false
                     collapsingToolbar.title = movieTitle.text
                     collapsingToolbar.setCollapsedTitleTextAppearance(R.style.CollapsingTitleStyle)
                 } else {
-                    movieTitle.visibility = View.VISIBLE
+                    movieTitle.isVisible = true
                     collapsingToolbar.title = ""
                 }
             }

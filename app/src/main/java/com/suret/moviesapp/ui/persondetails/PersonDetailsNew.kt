@@ -13,19 +13,20 @@ import androidx.navigation.fragment.navArgs
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.other.Constants
+import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsNewBinding
 import com.suret.moviesapp.ui.persondetails.adapter.FilmographyAdapter
-import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsFragmentVM
+import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsVM
 import com.suret.moviesapp.util.Util.downloadImage
 import com.suret.moviesapp.util.Util.hideSystemUI
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class PersonDetailsNewFragment : Fragment() {
+class PersonDetailsNew : Fragment() {
     private val binding by lazy { FragmentPersonDetailsNewBinding.inflate(layoutInflater) }
-    private val viewModel by viewModels<PersonDetailsFragmentVM>()
-    private val args by navArgs<PersonDetailsNewFragmentArgs>()
+    private val viewModel by viewModels<PersonDetailsVM>()
+    private val args by navArgs<PersonDetailsNewArgs>()
     private val adapter = FilmographyAdapter()
 
     override fun onCreateView(
@@ -58,11 +59,7 @@ class PersonDetailsNewFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.movieFlow.collect { event ->
                 when (event) {
-                    is PersonDetailsFragmentVM.Event.Loading -> {
-                    }
-                    is PersonDetailsFragmentVM.Event.Failure -> {
-                    }
-                    is PersonDetailsFragmentVM.Event.FilmographySuccess -> {
+                    is PersonDetailsVM.Event.FilmographySuccess -> {
                         adapter.submitList(event.movie)
                     }
                 }
@@ -72,18 +69,15 @@ class PersonDetailsNewFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.actorFlow.collect { event ->
                 when (event) {
-                    is PersonDetailsFragmentVM.Event.ActorSuccess -> {
+                    is PersonDetailsVM.Event.ActorSuccess -> {
                         event.actor?.let { it1 -> setPersonData(it1) }
                     }
-                    is PersonDetailsFragmentVM.Event.Failure -> {
+                    is PersonDetailsVM.Event.Failure -> {
                         Toast.makeText(
                             requireContext(),
                             event.errorText,
                             Toast.LENGTH_SHORT
                         ).show()
-                    }
-                    is PersonDetailsFragmentVM.Event.Loading -> {
-
                     }
                 }
             }
@@ -100,12 +94,12 @@ class PersonDetailsNewFragment : Fragment() {
         binding.apply {
             if (actor.profile_path.isNullOrEmpty().not()) {
                 downloadImage(
-                    actorPoster, Constants.IMAGE_URL + actor.profile_path,
+                    actorPoster, "$IMAGE_URL${actor.profile_path}",
                     progressBar
                 )
                 downloadImage(
                     actorProfile,
-                    Constants.IMAGE_URL + actor.profile_path,
+                    "$IMAGE_URL${actor.profile_path}",
                     progressBar
                 )
             } else {

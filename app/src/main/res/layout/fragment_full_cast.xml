@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/background_color"
-            tools:context=".ui.fullcast.FullCastFragment">
+            tools:context=".ui.fullcast.FullCast">
 
             <com.google.android.material.appbar.AppBarLayout
                 android:id="@+id/cast_appbar"

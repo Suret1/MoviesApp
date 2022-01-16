@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.domain.usecase.*
+import com.suret.moviesapp.domain.usecase.UseCases
 import com.suret.moviesapp.util.Resource
 import com.suret.moviesapp.util.Util.isNetworkAvailable
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,16 +20,9 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class MoviesFragmentVM @Inject constructor(
+class MoviesVM @Inject constructor(
     @ApplicationContext val context: Context,
-    private val deleteMoviesUseCase: DeleteMoviesUseCase,
-    private val getAllMoviesUseCase: GetAllMoviesUseCase,
-    private val getFavoriteMovieByIdUseCase: GetFavoriteMovieByIdUseCase,
-    private val getTrendingMoviesUseCase: GetTrendingMoviesUseCase,
-    private val insertFavoriteMovieUseCase: InsertFavoriteMovieUseCase,
-    private val insertMoviesListUseCase: InsertMoviesListUseCase,
-    private val remoteFavoriteMovieUseCase: RemoteFavoriteMovieUseCase,
-    private val updateFavoriteStatusUseCase: UpdateFavoriteStatusUseCase,
+    private val useCases: UseCases
 ) : ViewModel() {
 
     sealed class Event {
@@ -63,18 +56,18 @@ class MoviesFragmentVM @Inject constructor(
     fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
         if (isNetworkAvailable(context)) {
             trendingMoviesChannel.send(Event.Loading)
-            when (val response = getTrendingMoviesUseCase.execute()) {
+            when (val response = useCases.getTrendingMoviesUseCase.execute()) {
                 is Resource.Success -> {
                     response.data?.let {
                         it.map { model ->
                             model.id?.let { id ->
-                                val favModel = getFavoriteMovieByIdUseCase.execute(id)
+                                val favModel = useCases.getFavoriteMovieByIdUseCase.execute(id)
                                 model.isFavorite = favModel != null
                             }
                         }
-                        deleteMoviesUseCase.execute()
+                        useCases.deleteMoviesUseCase.execute()
                         trendingMoviesChannel.send(Event.TrendingSuccess(it))
-                        insertMoviesListUseCase.execute(it)
+                        useCases.insertMoviesListUseCase.execute(it)
                     } ?: kotlin.run {
                         trendingMoviesChannel.send(
                             Event.Failure(
@@ -103,19 +96,19 @@ class MoviesFragmentVM @Inject constructor(
 
     fun updateMovieModel(movieModel: TrendingMoviesModel) =
         viewModelScope.launch(Dispatchers.IO) {
-            updateFavoriteStatusUseCase.execute(movieModel)
+            useCases.updateFavoriteStatusUseCase.execute(movieModel)
         }
 
-    fun getMovieList(): LiveData<List<TrendingMoviesModel>> = getAllMoviesUseCase.execute()
+    fun getMovieList(): LiveData<List<TrendingMoviesModel>> = useCases.getAllMoviesUseCase.execute()
 
 
     fun insertFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) =
         viewModelScope.launch(Dispatchers.IO) {
-            insertFavoriteMovieUseCase.execute(favoriteMovieModel)
+            useCases.insertFavoriteMovieUseCase.execute(favoriteMovieModel)
         }
 
     fun removeFavoriteMovie(favoriteMovieModel: FavoriteMovieModel) =
         viewModelScope.launch(Dispatchers.IO) {
-            remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
+            useCases.remoteFavoriteMovieUseCase.execute(favoriteMovieModel)
         }
 }

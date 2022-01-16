@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/background_color"
         app:layoutDescription="@xml/person_details_scene"
-        tools:context=".ui.persondetails.PersonDetailsFragment">
+        tools:context=".ui.persondetails.PersonDetails">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/person_appbar"

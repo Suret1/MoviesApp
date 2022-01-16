@@ -9,7 +9,7 @@
         android:layout_height="match_parent"
         android:background="@color/background_color"
         android:fitsSystemWindows="true"
-        tools:context=".ui.similar.SimilarFragment">
+        tools:context=".ui.similar.Similar">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/similarToolbar"

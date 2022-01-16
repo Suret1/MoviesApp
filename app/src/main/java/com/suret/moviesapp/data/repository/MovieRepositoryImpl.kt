@@ -16,9 +16,9 @@ class MovieRepositoryImpl(
     override suspend fun getTrendingMovies(): Resource<List<TrendingMoviesModel>> {
         val response = remoteDataSource.getTrendingMovies(BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.results?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.results!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }
@@ -43,9 +43,9 @@ class MovieRepositoryImpl(
     override suspend fun getPersonMovieCredits(id: Int): Resource<List<Filmography>> {
         val response = remoteDataSource.getPersonMovieCredits(id, BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.filmography?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.filmography!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }
@@ -75,9 +75,9 @@ class MovieRepositoryImpl(
     override suspend fun getCredits(movieId: Int): Resource<List<Cast>> {
         val response = remoteDataSource.getCredits(movieId, BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.cast?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.cast!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }
@@ -101,9 +101,9 @@ class MovieRepositoryImpl(
     override suspend fun getMovieTrailer(movieId: Int): Resource<List<Result>> {
         val response = remoteDataSource.getMovieTrailer(movieId, BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.results?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.results!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }
@@ -114,9 +114,9 @@ class MovieRepositoryImpl(
     override suspend fun getReviews(movieId: Int): Resource<List<ReviewResult>> {
         val response = remoteDataSource.getReviews(movieId, BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.results?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.results!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }
@@ -131,9 +131,9 @@ class MovieRepositoryImpl(
     ): Resource<List<TrendingMoviesModel>> {
         val response = remoteDataSource.getSimilarMovie(movieId, page, BuildConfig.API_KEY)
         val result = response.body()
-        result?.let {
+        result?.results?.let {
             return if (response.isSuccessful) {
-                Resource.Success(it.results!!)
+                Resource.Success(it)
             } else {
                 Resource.Error(response.message())
             }

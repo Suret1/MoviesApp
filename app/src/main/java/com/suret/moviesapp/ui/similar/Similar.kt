@@ -14,17 +14,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.data.repository.datasourceimpl.SimilarMoviesPagingDataSource
 import com.suret.moviesapp.databinding.FragmentSimilarBinding
 import com.suret.moviesapp.ui.similar.adapter.SimilarPagingAdapter
-import com.suret.moviesapp.ui.similar.viewmodel.SimilarViewModel
+import com.suret.moviesapp.ui.similar.viewmodel.SimilarVM
 import com.suret.moviesapp.util.PopUps
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class SimilarFragment : Fragment() {
+class Similar : Fragment() {
     private val binding by lazy { FragmentSimilarBinding.inflate(layoutInflater) }
-    private val args: SimilarFragmentArgs by navArgs()
-    private val similarViewModel: SimilarViewModel by viewModels()
+    private val args by navArgs<SimilarArgs>()
+    private val similarVM by viewModels<SimilarVM>()
 
 
     override fun onCreateView(
@@ -54,7 +54,7 @@ class SimilarFragment : Fragment() {
 
         similarPagingAdapter.setOnItemClick = {
             findNavController().navigate(
-                SimilarFragmentDirections.actionSimilarFragmentToMovieDetailsFragment(
+                SimilarDirections.actionSimilarFragmentToMovieDetailsFragment(
                     it,
                     null
                 )
@@ -64,7 +64,7 @@ class SimilarFragment : Fragment() {
         SimilarMoviesPagingDataSource.ID = args.movieID
 
         viewLifecycleOwner.lifecycleScope.launch {
-            similarViewModel.listData.collect {
+            similarVM.listData.collect {
                 similarPagingAdapter.submitData(lifecycle, it)
             }
         }

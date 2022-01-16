@@ -8,25 +8,21 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.databinding.FragmentFavouritesBinding
 import com.suret.moviesapp.ui.favourite.adapter.FavoriteAdapter
-import com.suret.moviesapp.ui.favourite.viewmodel.FavoritesFragmentVM
-import com.suret.moviesapp.util.EqualSpacingItemDecoration
+import com.suret.moviesapp.ui.favourite.viewmodel.FavoritesVM
 import com.suret.moviesapp.util.PopUps
-import com.suret.moviesapp.util.Util
-import com.suret.moviesapp.util.Util.dpToPx
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FavouritesFragment : Fragment() {
+class Favourites : Fragment() {
     private val binding by lazy { FragmentFavouritesBinding.inflate(layoutInflater) }
     private var removeAlertDialog: AlertDialog.Builder? = null
-    private val viewModel: FavoritesFragmentVM by viewModels()
+    private val viewModel by viewModels<FavoritesVM>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +44,7 @@ class FavouritesFragment : Fragment() {
         })
         favoriteAdapter.setOnItemClick = { favModel ->
             view.findNavController().navigate(
-                FavouritesFragmentDirections.actionFavouriteToMovieDetailsFragment(null, favModel)
+                FavouritesDirections.actionFavouriteToMovieDetailsFragment(null, favModel)
             )
         }
         favoriteAdapter.setOnFavoriteClick = {

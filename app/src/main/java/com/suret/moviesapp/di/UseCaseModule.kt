@@ -11,101 +11,27 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object UseCaseModule {
-    @Singleton
-    @Provides
-    fun provideDeleteMoviesUseCase(movieRepository: MovieRepository): DeleteMoviesUseCase {
-        return DeleteMoviesUseCase(movieRepository)
-    }
 
     @Singleton
     @Provides
-    fun provideGetAllMoviesUseCase(movieRepository: MovieRepository): GetAllMoviesUseCase {
-        return GetAllMoviesUseCase(movieRepository)
+    fun provideUseCases(movieRepository: MovieRepository): UseCases {
+        return UseCases(
+            DeleteMoviesUseCase(movieRepository = movieRepository),
+            GetAllMoviesUseCase(movieRepository = movieRepository),
+            GetCreditsUseCase(movieRepository = movieRepository),
+            GetFavoriteMovieByIdUseCase(movieRepository = movieRepository),
+            GetFavoriteMoviesUseCase(movieRepository = movieRepository),
+            GetMovieDetailsUseCase(movieRepository = movieRepository),
+            GetMovieTrailerUseCase(movieRepository = movieRepository),
+            GetPersonDataUseCase(movieRepository = movieRepository),
+            GetPersonMovieCreditsUseCase(movieRepository = movieRepository),
+            GetReviewsUseCase(movieRepository = movieRepository),
+            GetSimilarMoviesUseCase(movieRepository = movieRepository),
+            GetTrendingMoviesUseCase(movieRepository = movieRepository),
+            InsertFavoriteMovieUseCase(movieRepository = movieRepository),
+            InsertMoviesListUseCase(movieRepository = movieRepository),
+            RemoteFavoriteMovieUseCase(movieRepository = movieRepository),
+            UpdateFavoriteStatusUseCase(movieRepository = movieRepository)
+        )
     }
-
-    @Singleton
-    @Provides
-    fun provideGetCreditsUseCase(movieRepository: MovieRepository): GetCreditsUseCase {
-        return GetCreditsUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetFavoriteMovieByIdUseCase(movieRepository: MovieRepository): GetFavoriteMovieByIdUseCase {
-        return GetFavoriteMovieByIdUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetFavoriteMoviesUseCase(movieRepository: MovieRepository): GetFavoriteMoviesUseCase {
-        return GetFavoriteMoviesUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetMovieTrailerUseCase(movieRepository: MovieRepository): GetMovieTrailerUseCase {
-        return GetMovieTrailerUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetPersonDataUseCase(movieRepository: MovieRepository): GetPersonDataUseCase {
-        return GetPersonDataUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetTrendingMoviesUseCase(movieRepository: MovieRepository): GetTrendingMoviesUseCase {
-        return GetTrendingMoviesUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideInsertFavoriteMovieUseCase(movieRepository: MovieRepository): InsertFavoriteMovieUseCase {
-        return InsertFavoriteMovieUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideInsertMoviesListUseCase(movieRepository: MovieRepository): InsertMoviesListUseCase {
-        return InsertMoviesListUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideRemoveFavoriteMovieUseCase(movieRepository: MovieRepository): RemoteFavoriteMovieUseCase {
-        return RemoteFavoriteMovieUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUpdateFavoriteStatusUseCase(movieRepository: MovieRepository): UpdateFavoriteStatusUseCase {
-        return UpdateFavoriteStatusUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetMovieDetailsUseCase(movieRepository: MovieRepository): GetMovieDetailsUseCase {
-        return GetMovieDetailsUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetReviewsUseCase(movieRepository: MovieRepository): GetReviewsUseCase {
-        return GetReviewsUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetSimilarUseCase(movieRepository: MovieRepository): GetSimilarMoviesUseCase {
-        return GetSimilarMoviesUseCase(movieRepository)
-    }
-
-    @Singleton
-    @Provides
-    fun provideGetPersonMovieCreditsUseCase(movieRepository: MovieRepository): GetPersonMovieCreditsUseCase {
-        return GetPersonMovieCreditsUseCase(movieRepository)
-    }
-
-
 }

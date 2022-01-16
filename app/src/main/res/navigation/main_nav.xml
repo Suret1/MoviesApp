@@ -59,17 +59,17 @@
         app:popExitAnim="@anim/slide_right" />
     <fragment
         android:id="@+id/movies"
-        android:name="com.suret.moviesapp.ui.movies.MoviesFragment"
+        android:name="com.suret.moviesapp.ui.movies.Movies"
         android:label="MoviesFragment"
         tools:layout="@layout/fragment_movies" />
     <fragment
         android:id="@+id/favourite"
-        android:name="com.suret.moviesapp.ui.favourite.FavouritesFragment"
+        android:name="com.suret.moviesapp.ui.favourite.Favourites"
         android:label="FavouritesFragment"
         tools:layout="@layout/fragment_favourites" />
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.suret.moviesapp.ui.moviedetails.MovieDetailsFragment"
+        android:name="com.suret.moviesapp.ui.moviedetails.MovieDetails"
         android:label="MovieDetailsFragment"
         tools:layout="@layout/fragment_movie_details">
         <argument
@@ -84,7 +84,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullCastFragment"
-        android:name="com.suret.moviesapp.ui.fullcast.FullCastFragment"
+        android:name="com.suret.moviesapp.ui.fullcast.FullCast"
         android:label="FullCastFragment"
         tools:layout="@layout/fragment_full_cast">
         <argument
@@ -95,7 +95,7 @@
     </fragment>
     <fragment
         android:id="@+id/personDetailsFragment"
-        android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsFragment"
+        android:name="com.suret.moviesapp.ui.persondetails.PersonDetails"
         android:label="PersonDetailsFragment"
         tools:layout="@layout/fragment_person_details">
         <argument
@@ -105,7 +105,7 @@
     </fragment>
     <fragment
         android:id="@+id/similarFragment"
-        android:name="com.suret.moviesapp.ui.similar.SimilarFragment"
+        android:name="com.suret.moviesapp.ui.similar.Similar"
         android:label="SimilarFragment"
         tools:layout="@layout/fragment_similar">
         <argument
@@ -127,7 +127,7 @@
     <fragment
         tools:layout="@layout/fragment_person_details_new"
         android:id="@+id/personDetailsNewFragment"
-        android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsNewFragment"
+        android:name="com.suret.moviesapp.ui.persondetails.PersonDetailsNew"
         android:label="PersonDetailsNewFragment" >
         <argument
             android:name="castModel"

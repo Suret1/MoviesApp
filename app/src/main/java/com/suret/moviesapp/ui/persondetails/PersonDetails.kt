@@ -16,16 +16,16 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsBinding
-import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsFragmentVM
+import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsVM
 import com.suret.moviesapp.util.Util.downloadImage
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
-class PersonDetailsFragment : Fragment() {
+class PersonDetails : Fragment() {
     private val binding by lazy { FragmentPersonDetailsBinding.inflate(layoutInflater) }
-    private val viewModel: PersonDetailsFragmentVM by viewModels()
-    private val args: PersonDetailsFragmentArgs by navArgs()
+    private val viewModel by viewModels<PersonDetailsVM>()
+    private val args by navArgs<PersonDetailsArgs>()
 
     private val animation by lazy {
         AnimationUtils.loadAnimation(
@@ -56,17 +56,15 @@ class PersonDetailsFragment : Fragment() {
                     viewModel.getPersonData(personId)
                     viewModel.actorFlow.collect { event ->
                         when (event) {
-                            is PersonDetailsFragmentVM.Event.ActorSuccess -> {
+                            is PersonDetailsVM.Event.ActorSuccess -> {
                                 event.actor?.let { it1 -> setPersonData(it1) }
                             }
-                            is PersonDetailsFragmentVM.Event.Failure -> {
+                            is PersonDetailsVM.Event.Failure -> {
                                 Toast.makeText(
                                     requireContext(),
                                     event.errorText,
                                     Toast.LENGTH_SHORT
                                 ).show()
-                            }
-                            is PersonDetailsFragmentVM.Event.Loading -> {
                             }
                         }
                     }
@@ -95,7 +93,7 @@ class PersonDetailsFragment : Fragment() {
 
         binding.apply {
             if (actor.profile_path.isNullOrEmpty().not()) {
-                downloadImage(iwPersonPhoto, IMAGE_URL + actor.profile_path, progressBar)
+                downloadImage(iwPersonPhoto, "$IMAGE_URL${actor.profile_path}", progressBar)
             } else {
                 progressBar.isVisible = false
                 iwPersonPhoto.setImageResource(R.drawable.ic_round_person_24)

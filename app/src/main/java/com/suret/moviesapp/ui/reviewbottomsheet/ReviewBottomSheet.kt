@@ -10,14 +10,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.data.other.Constants
+import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentReviewBottomSheetBinding
 import com.suret.moviesapp.util.Util.downloadImage
 import com.suret.moviesapp.util.Util.toDate
 
 class ReviewBottomSheet : BottomSheetDialogFragment() {
     private val binding by lazy { FragmentReviewBottomSheetBinding.inflate(layoutInflater) }
-    private val args: ReviewBottomSheetArgs by navArgs()
+    private val args by navArgs<ReviewBottomSheetArgs>()
 
+    private val reviewModel by lazy {
+        args.reviewModel
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,10 +32,8 @@ class ReviewBottomSheet : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val model = args.reviewModel
-
         binding.apply {
-            setData(model)
+            setData(reviewModel)
         }
 
     }
@@ -44,7 +46,7 @@ class ReviewBottomSheet : BottomSheetDialogFragment() {
                 if (path.startsWith("/https:", true)) {
                     downloadImage(iwProfile, path.removePrefix("/"), progressBar)
                 } else {
-                    downloadImage(iwProfile, Constants.IMAGE_URL + path, progressBar)
+                    downloadImage(iwProfile, "$IMAGE_URL${path}", progressBar)
                 }
             } else {
                 progressBar.isVisible = false

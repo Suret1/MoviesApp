@@ -4,7 +4,7 @@ import com.suret.moviesapp.data.model.ReviewResult
 import com.suret.moviesapp.domain.repository.MovieRepository
 import com.suret.moviesapp.util.Resource
 
-class GetReviewsUseCase(private val repository: MovieRepository) {
+class GetReviewsUseCase(private val movieRepository: MovieRepository) {
     suspend fun execute(movieId: Int): Resource<List<ReviewResult>> =
-        repository.getReviews(movieId)
+        movieRepository.getReviews(movieId)
 }

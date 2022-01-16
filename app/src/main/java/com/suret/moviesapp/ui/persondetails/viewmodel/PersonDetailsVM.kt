@@ -7,6 +7,7 @@ import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.model.Filmography
 import com.suret.moviesapp.domain.usecase.GetPersonDataUseCase
 import com.suret.moviesapp.domain.usecase.GetPersonMovieCreditsUseCase
+import com.suret.moviesapp.domain.usecase.UseCases
 import com.suret.moviesapp.util.Resource
 import com.suret.moviesapp.util.Util.isNetworkAvailable
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,10 +20,9 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class PersonDetailsFragmentVM @Inject constructor(
+class PersonDetailsVM @Inject constructor(
     @ApplicationContext val context: Context,
-    private val getPersonDataUseCase: GetPersonDataUseCase,
-    private val getPersonMovieCreditsUseCase: GetPersonMovieCreditsUseCase
+    private val useCases : UseCases
 ) : ViewModel() {
 
     sealed class Event {
@@ -64,7 +64,7 @@ class PersonDetailsFragmentVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             if (isNetworkAvailable(context)) {
                 actorChannel.send(Event.Loading)
-                when (val response = getPersonDataUseCase.execute(personId)) {
+                when (val response = useCases.getPersonDataUseCase.execute(personId)) {
                     is Resource.Success -> {
                         response.data?.let {
                             actorChannel.send(Event.ActorSuccess(it))
@@ -93,7 +93,7 @@ class PersonDetailsFragmentVM @Inject constructor(
         viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             if (isNetworkAvailable(context)) {
                 movieChannel.send(Event.Loading)
-                when (val response = getPersonMovieCreditsUseCase.execute(personId)) {
+                when (val response = useCases.getPersonMovieCreditsUseCase.execute(personId)) {
                     is Resource.Success -> {
                         response.data?.let {
                             movieChannel.send(Event.FilmographySuccess(it))

@@ -15,7 +15,7 @@ import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
-import com.suret.moviesapp.ui.movies.viewmodel.MoviesFragmentVM
+import com.suret.moviesapp.ui.movies.viewmodel.MoviesVM
 import com.suret.moviesapp.util.PopUps
 import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
 import dagger.hilt.android.AndroidEntryPoint
@@ -24,10 +24,10 @@ import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint
-class MoviesFragment : Fragment() {
+class Movies : Fragment() {
     private val binding by lazy { FragmentMoviesBinding.inflate(layoutInflater) }
-    private val viewModel: MoviesFragmentVM by viewModels()
-    private lateinit var movieAdapter: TrendMovieListAdapter
+    private val viewModel by viewModels<MoviesVM>()
+    private val movieAdapter = TrendMovieListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +52,7 @@ class MoviesFragment : Fragment() {
         movieAdapter.setOnItemClick = { movie ->
             movie.let {
                 findNavController().navigate(
-                    MoviesFragmentDirections.actionMoviesToMovieDetailsFragment(movie, null)
+                    MoviesDirections.actionMoviesToMovieDetailsFragment(movie, null)
                 )
             }
         }
@@ -88,16 +88,16 @@ class MoviesFragment : Fragment() {
             viewLifecycleOwner.lifecycleScope.launchWhenCreated {
                 viewModel.trendingMoviesFlow.collect { event ->
                     when (event) {
-                        is MoviesFragmentVM.Event.Loading -> {
+                        is MoviesVM.Event.Loading -> {
                             progressBar.show()
                         }
-                        is MoviesFragmentVM.Event.Failure -> {
+                        is MoviesVM.Event.Failure -> {
                             progressBar.dismiss()
                             Snackbar.make(requireView(), event.errorText, Snackbar.LENGTH_SHORT)
                                 .show()
                             swipeRefresh.isRefreshing = false
                         }
-                        is MoviesFragmentVM.Event.TrendingSuccess -> {
+                        is MoviesVM.Event.TrendingSuccess -> {
                             progressBar.dismiss()
                             movieAdapter.submitList(event.trendingMoviesModel)
                             swipeRefresh.isRefreshing = false
@@ -109,7 +109,6 @@ class MoviesFragment : Fragment() {
     }
 
     private fun initAdapter() {
-        movieAdapter = TrendMovieListAdapter()
         binding.rvMovies.adapter = movieAdapter
         movieAdapter.stateRestorationPolicy = PREVENT_WHEN_EMPTY
     }
