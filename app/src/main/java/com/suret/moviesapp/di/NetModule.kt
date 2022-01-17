@@ -42,47 +42,16 @@ object NetModule {
 
     @Provides
     @Singleton
-    fun provideGetTrendingMoviesAPI(retrofit: Retrofit): GetTrendingMoviesAPI {
-        return retrofit.create(GetTrendingMoviesAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetCreditsAPI(retrofit: Retrofit): GetCreditsAPI {
-        return retrofit.create(GetCreditsAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetPersonDataAPI(retrofit: Retrofit): GetPersonDataAPI {
-        return retrofit.create(GetPersonDataAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetMovieTrailerAPI(retrofit: Retrofit): GetMovieTrailerAPI {
-        return retrofit.create(GetMovieTrailerAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetMovieDetailsAPI(retrofit: Retrofit): GetMovieDetailsAPI {
-        return retrofit.create(GetMovieDetailsAPI::class.java)
-    }
-
-    @Provides
-    @Singleton
-    fun provideGetReviewsAPI(retrofit: Retrofit): GetReviewsAPI {
-        return retrofit.create(GetReviewsAPI::class.java)
-    }
-    @Provides
-    @Singleton
-    fun provideGetSimilarAPI(retrofit: Retrofit): GetSimilarAPI {
-        return retrofit.create(GetSimilarAPI::class.java)
-    }
-    @Provides
-    @Singleton
-    fun provideGetPersonMovieCreditsAPI(retrofit: Retrofit): GetPersonMovieCreditsAPI {
-        return retrofit.create(GetPersonMovieCreditsAPI::class.java)
+    fun provideApi(retrofit: Retrofit): API {
+        return API(
+            getCreditsAPI = retrofit.create(GetCreditsAPI::class.java),
+            getMovieDetailsAPI = retrofit.create(GetMovieDetailsAPI::class.java),
+            getMovieTrailerAPI = retrofit.create(GetMovieTrailerAPI::class.java),
+            getPersonDataAPI = retrofit.create(GetPersonDataAPI::class.java),
+            getPersonMovieCreditsAPI = retrofit.create(GetPersonMovieCreditsAPI::class.java),
+            getReviewsAPI = retrofit.create(GetReviewsAPI::class.java),
+            getSimilarAPI = retrofit.create(GetSimilarAPI::class.java),
+            getTrendingMoviesAPI = retrofit.create(GetTrendingMoviesAPI::class.java)
+        )
     }
 }

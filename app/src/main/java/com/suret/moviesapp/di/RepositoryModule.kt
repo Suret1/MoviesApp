@@ -22,5 +22,4 @@ object RepositoryModule {
     ): MovieRepository {
         return MovieRepositoryImpl(localDataSource, remoteDataSource)
     }
-
 }

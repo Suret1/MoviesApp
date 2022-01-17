@@ -1,6 +1,6 @@
 package com.suret.moviesapp.di
 
-import com.suret.moviesapp.data.api.*
+import com.suret.moviesapp.data.api.API
 import com.suret.moviesapp.data.db.MovieDao
 import com.suret.moviesapp.data.repository.datasource.LocalDataSource
 import com.suret.moviesapp.data.repository.datasource.RemoteDataSource
@@ -25,24 +25,10 @@ object DataSourceModule {
     @Singleton
     @Provides
     fun providesRemoteDataSource(
-        getTrendingMoviesAPI: GetTrendingMoviesAPI,
-        getCreditsAPI: GetCreditsAPI,
-        getMovieTrailerAPI: GetMovieTrailerAPI,
-        getPersonDataAPI: GetPersonDataAPI,
-        getMovieDetailsAPI: GetMovieDetailsAPI,
-        getReviewsAPI: GetReviewsAPI,
-        getSimilarAPI: GetSimilarAPI,
-        getPersonMovieCreditsAPI: GetPersonMovieCreditsAPI
+        api: API
     ): RemoteDataSource {
         return RemoteDataSourceImpl(
-            getTrendingMoviesAPI,
-            getCreditsAPI,
-            getMovieTrailerAPI,
-            getPersonDataAPI,
-            getMovieDetailsAPI,
-            getReviewsAPI,
-            getSimilarAPI,
-            getPersonMovieCreditsAPI
+            api
         )
     }
 
