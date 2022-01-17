@@ -1,59 +1,27 @@
 package com.suret.moviesapp.ui.movies.adapter
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.TrendingMoviesModel
-import com.suret.moviesapp.databinding.TrendingMoviesListBinding
-import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter.TrendViewHolder
 
 class TrendMovieListAdapter :
-    ListAdapter<TrendingMoviesModel, TrendViewHolder>(DifferCallBack) {
+    ListAdapter<TrendingMoviesModel, TrendVH>(DifferCallBack) {
 
     var setOnItemClick: ((TrendingMoviesModel) -> Unit)? = null
     var setOnFavoriteClick: ((TrendingMoviesModel) -> Unit)? = null
 
-    inner class TrendViewHolder(
-        private val binding: TrendingMoviesListBinding
-    ) :
-        RecyclerView.ViewHolder(binding.root) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendVH =
+        TrendVH.from(parent)
 
-        fun bind(trendingMoviesModel: TrendingMoviesModel?) {
-            trendingMoviesModel?.let { model ->
-
-                binding.movie = model
-
-                binding.root.setOnClickListener {
-                    model.let { movies ->
-                        setOnItemClick?.invoke(movies)
-                    }
-                }
-                binding.iwFavorite.setOnClickListener {
-                    model.let { movies ->
-                        setOnFavoriteClick?.invoke(movies)
-                    }
-                }
-
-            }
-        }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TrendViewHolder {
-        return TrendViewHolder(
-            TrendingMoviesListBinding.inflate(
-                LayoutInflater.from(parent.context),
-                parent,
-                false
-            )
+    override fun onBindViewHolder(holder: TrendVH, position: Int) {
+        holder.bind(
+            getItem(position),
+            onItemClick = setOnItemClick,
+            onFavClick = setOnFavoriteClick
         )
-    }
-
-    override fun onBindViewHolder(holder: TrendViewHolder, position: Int) {
-        holder.bind(getItem(position))
         holder.itemView.animation =
             AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }

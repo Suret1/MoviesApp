@@ -12,7 +12,7 @@ import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.data.other.Constants.FULL_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentFullCastBinding
-import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
+import com.suret.moviesapp.ui.fullcast.adapter.FullCastAdapter
 
 class FullCast : Fragment() {
     private val binding by lazy { FragmentFullCastBinding.inflate(layoutInflater) }

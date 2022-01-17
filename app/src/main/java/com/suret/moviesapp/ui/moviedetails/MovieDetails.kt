@@ -29,7 +29,7 @@ import com.suret.moviesapp.data.other.Constants.INITIAL_IS_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.MAX_LINES_COLLAPSED
 import com.suret.moviesapp.data.other.Constants.SIMPLE_CAST_TYPE
 import com.suret.moviesapp.databinding.FragmentMovieDetailsBinding
-import com.suret.moviesapp.ui.moviedetails.adapters.FullCastAdapter
+import com.suret.moviesapp.ui.fullcast.adapter.FullCastAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.GenreAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ProductionsAdapter
 import com.suret.moviesapp.ui.moviedetails.adapters.ReviewAdapter
@@ -43,7 +43,6 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import kotlin.math.abs
 
 
