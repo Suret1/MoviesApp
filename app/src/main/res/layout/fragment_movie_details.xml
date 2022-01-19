@@ -106,6 +106,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
+                    android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     bind:equalSpacing="@{16}"
                     tools:listitem="@layout/genre_list_layout" />
@@ -265,6 +266,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
+                    android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     bind:equalSpacing="@{16}"
                     tools:listitem="@layout/cast_list_layout" />
@@ -284,6 +286,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
+                    android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     bind:equalSpacing="@{16}"
                     tools:listitem="@layout/review_list_layout" />
@@ -303,6 +306,7 @@
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:overScrollMode="never"
+                    android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     bind:equalSpacing="@{16}"
                     tools:listitem="@layout/production_list_layout" />

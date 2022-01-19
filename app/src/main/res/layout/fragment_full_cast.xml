@@ -52,6 +52,7 @@
                 android:clipToPadding="false"
                 android:orientation="vertical"
                 android:overScrollMode="never"
+                android:splitMotionEvents="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

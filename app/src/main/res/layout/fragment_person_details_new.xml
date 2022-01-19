@@ -172,6 +172,7 @@
                 android:clipToPadding="false"
                 android:orientation="horizontal"
                 android:overScrollMode="never"
+                android:splitMotionEvents="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintTop_toBottomOf="@id/tvFilmography"
                 bind:equalSpacing="@{16}"
