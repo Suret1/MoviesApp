@@ -1,6 +1,9 @@
 package com.suret.moviesapp.ui.persondetails
 
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,9 +13,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
+import androidx.palette.graphics.Palette
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
-import com.suret.moviesapp.data.other.Constants
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
 import com.suret.moviesapp.databinding.FragmentPersonDetailsNewBinding
 import com.suret.moviesapp.ui.persondetails.adapter.FilmographyAdapter
@@ -102,6 +105,7 @@ class PersonDetailsNew : Fragment() {
                     "$IMAGE_URL${actor.profile_path}",
                     progressBar
                 )
+
             } else {
                 progressBar.isVisible = false
                 actorPoster.setImageResource(R.drawable.ic_round_person_24)

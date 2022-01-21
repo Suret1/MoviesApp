@@ -87,9 +87,10 @@
         android:name="com.suret.moviesapp.ui.fullcast.FullCast"
         android:label="FullCastFragment"
         tools:layout="@layout/fragment_full_cast">
+
         <argument
             android:name="castList"
-            app:argType="java.util.ArrayList"
+            app:argType="com.suret.moviesapp.data.model.Cast[]"
             app:nullable="true" />
 
     </fragment>

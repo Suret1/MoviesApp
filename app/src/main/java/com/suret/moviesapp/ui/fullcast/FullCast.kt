@@ -48,7 +48,7 @@ class FullCast : Fragment() {
             }
 
             castList?.let {
-                castAdapter.submitList(it as List<Cast>)
+                castAdapter.submitList(it.toList())
             }
 
             castAdapter.onItemClick = {

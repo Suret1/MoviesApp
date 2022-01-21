@@ -1,7 +1,6 @@
 package com.suret.moviesapp.ui.moviedetails
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -247,7 +246,6 @@ class MovieDetails : Fragment() {
                     when (event) {
                         is MovieDetailsVM.Event.ReviewsSuccess -> {
                             event.reviews.let {
-                                Log.d("sadasd", "$it")
                                 reviewAdapter.submitList(it)
                             }
                         }
@@ -279,15 +277,12 @@ class MovieDetails : Fragment() {
     private fun FragmentMovieDetailsBinding.goToFullCastFragment() {
         tvSeeAll.setOnClickListener {
             castList?.let {
-                val array = arrayListOf<Cast>()
-                array.addAll(it)
                 findNavController().navigate(
                     MovieDetailsDirections.actionMovieDetailsFragmentToFullCastFragment(
-                        array
+                        it.toTypedArray()
                     )
                 )
             }
-
         }
     }
 

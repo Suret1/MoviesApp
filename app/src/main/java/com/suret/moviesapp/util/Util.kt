@@ -22,6 +22,7 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.time.Duration.Companion.minutes
 
 
 object Util {
@@ -60,14 +61,14 @@ object Util {
 
     fun convertHourAndMinutes(time: Int): String {
         var result = ""
-        val hour = time.div(60)
-        val minutes = time.mod(60)
-        result = if (hour > 0) {
-            "$hour h $minutes min"
-        } else {
-            "$minutes min"
+        time.minutes.toComponents { hours, minutes, _, _ ->
+            result = if (hours > 0) {
+                "$hours h $minutes min"
+            } else {
+                "$minutes min"
+            }
+            return result
         }
-        return result
     }
 
     fun toDate(dateString: String?): String? {
