@@ -3,9 +3,6 @@ package com.suret.moviesapp.domain.repository
 import androidx.lifecycle.LiveData
 import com.suret.moviesapp.data.model.*
 import com.suret.moviesapp.util.Resource
-import retrofit2.Response
-import retrofit2.http.Path
-import retrofit2.http.Query
 
 interface MovieRepository {
 

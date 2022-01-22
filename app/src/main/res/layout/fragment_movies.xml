@@ -4,6 +4,14 @@
     xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.suret.moviesapp.ui.movies.viewmodel.MoviesVM" />
+
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayout"
         android:layout_width="match_parent"
@@ -17,7 +25,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:onRefreshListener="@{() -> viewModel.trendingMovies}"
+            bind:refreshing="@{viewModel.isLoading()}"
+            bind:scope="@{viewModel.scope}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMovies"

@@ -6,11 +6,10 @@ import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.data.repository.datasource.LocalDataSource
 
-class LocalDataSourceImpl (private val movieDao: MovieDao) : LocalDataSource {
+class LocalDataSourceImpl(private val movieDao: MovieDao) : LocalDataSource {
 
     override fun getAllMovies(): LiveData<List<TrendingMoviesModel>> =
         movieDao.getAllMovies()
-
 
     override fun getFavoriteMovies(): LiveData<List<FavoriteMovieModel>> =
         movieDao.getFavoriteMovies()

@@ -34,7 +34,7 @@
                 app:shapeAppearanceOverlay="@style/RoundedImageViewRounded"
                 app:strokeColor="@android:color/transparent"
                 app:strokeWidth="1dp"
-                bind:avatarProgress="@{progressBar}"
+                bind:progress="@{progressBar}"
                 bind:setAvatar="@{model.author_details.avatar_path}"
                 tools:srcCompat="@drawable/ic_round_person_24" />
 

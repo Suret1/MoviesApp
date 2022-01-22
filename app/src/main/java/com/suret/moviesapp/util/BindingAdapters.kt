@@ -7,6 +7,7 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.airbnb.lottie.LottieAnimationView
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
@@ -18,6 +19,10 @@ import com.suret.moviesapp.util.Util.dpToPx
 import com.suret.moviesapp.util.Util.roundForDouble
 import com.suret.moviesapp.util.Util.toDate
 import com.willy.ratingbar.ScaleRatingBar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 
 @BindingAdapter("bind:setTextMovie")
 fun AppCompatTextView.setTitle(movie: TrendingMoviesModel) {
@@ -76,7 +81,7 @@ fun AppCompatImageView.setImage(url: String?, progressBar: LottieAnimationView?)
     }
 }
 
-@BindingAdapter("bind:setAvatar", "bind:avatarProgress")
+@BindingAdapter("bind:setAvatar", "bind:progress")
 fun AppCompatImageView.setAvatar(url: String?, progressBar: LottieAnimationView?) {
     if (url.isNullOrEmpty().not()) {
         if (url!!.startsWith("/https:", true)) {
@@ -105,5 +110,14 @@ fun RecyclerView.itemDecoration(dp: Int) {
     }
     if (0 == itemDecorationCount) {
         addItemDecoration(EqualSpacingItemDecoration(dpToPx(dp), orientation, true))
+    }
+}
+
+@BindingAdapter("bind:refreshing", "bind:scope")
+fun SwipeRefreshLayout.isRefreshing(isRefresh: SharedFlow<Boolean>, scope: CoroutineScope) {
+    scope.launch {
+        isRefresh.collect {
+            isRefreshing = it
+        }
     }
 }
