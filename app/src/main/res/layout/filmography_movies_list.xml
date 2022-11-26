@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -30,8 +29,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:progress="@{progressBar}"
-                bind:setImage="@{movie.poster_path}"
+                app:progress="@{progressBar}"
+                app:setImage="@{movie.poster_path}"
                 tools:srcCompat="@drawable/movie_poster" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -81,7 +80,7 @@
                         app:srb_starPadding="@dimen/_1sdp"
                         app:srb_starWidth="@dimen/_6sdp"
                         app:srb_stepSize="0.1"
-                        bind:ratingForRatingBar="@{movie.vote_average.floatValue()}"
+                        app:ratingForRatingBar="@{movie.vote_average.floatValue()}"
                         tools:srb_rating="6.7" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -93,7 +92,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:movieRating="@{movie.vote_average}"
+                        app:movieRating="@{movie.vote_average}"
                         tools:text="6.7" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -113,7 +112,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frame_layout_of_genre"
-                bind:setTextActorMovie="@{movie}"
+                app:setTextActorMovie="@{movie}"
                 tools:text="Avengers: End Game" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

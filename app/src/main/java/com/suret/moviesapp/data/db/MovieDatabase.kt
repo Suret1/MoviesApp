@@ -13,7 +13,7 @@ import com.suret.moviesapp.util.GenreConverter
     version = 5,
     exportSchema = true,
     autoMigrations = [
-        AutoMigration(from = 5, to = 6)
+        AutoMigration(from =  5, to = 6)
     ]
 )
 @TypeConverters(GenreConverter::class)

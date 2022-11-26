@@ -3,15 +3,15 @@ package com.suret.moviesapp.util
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Context
-import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
 import com.google.android.material.snackbar.Snackbar
-import com.google.android.material.snackbar.Snackbar.SnackbarLayout
 import com.suret.moviesapp.R
 
 class PopUps {
@@ -47,6 +47,20 @@ class PopUps {
             )
             snack.show()
         }
+
+        fun customSnackBar(
+            view: View,
+            @DrawableRes icon: Int,
+            text: String,
+            duration: Int
+        ): Snackbar {
+            val snack = Snackbar.make(view, text, duration)
+            val tv = snack.view.findViewById<TextView>(com.google.android.material.R.id.snackbar_action)
+            tv.setCompoundDrawablesWithIntrinsicBounds(0, 0, icon, 0)
+            tv.gravity = Gravity.CENTER
+            return snack
+        }
+
 
         //        fun showSnackbar(activity: Activity, @StringRes id: Int) {
 //            val snackbar =

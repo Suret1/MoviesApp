@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -34,8 +33,8 @@
                 app:shapeAppearanceOverlay="@style/RoundedImageViewRounded"
                 app:strokeColor="@android:color/transparent"
                 app:strokeWidth="1dp"
-                bind:progress="@{progressBar}"
-                bind:setAvatar="@{model.author_details.avatar_path}"
+                app:progress="@{progressBar}"
+                app:setAvatar="@{model.author_details.avatar_path}"
                 tools:srcCompat="@drawable/ic_round_person_24" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -95,7 +94,7 @@
                 android:textSize="@dimen/_9ssp"
                 app:layout_constraintBottom_toBottomOf="@id/iw_profile"
                 app:layout_constraintStart_toEndOf="@id/iw_profile"
-                bind:setDate="@{model.created_at}"
+                app:setDate="@{model.created_at}"
                 tools:text="2021-08-29 15:54" />
 
             <androidx.appcompat.widget.AppCompatTextView

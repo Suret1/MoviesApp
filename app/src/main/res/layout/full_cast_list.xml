@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -26,8 +25,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            bind:progress="@{progressBar}"
-            bind:setImage="@{cast.profile_path}"
+            app:progress="@{progressBar}"
+            app:setImage="@{cast.profile_path}"
             tools:srcCompat="@drawable/no_photo" />
 
         <com.airbnb.lottie.LottieAnimationView

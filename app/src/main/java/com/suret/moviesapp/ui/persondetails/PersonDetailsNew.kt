@@ -1,19 +1,18 @@
 package com.suret.moviesapp.ui.persondetails
 
-import android.graphics.drawable.BitmapDrawable
-import android.graphics.drawable.Drawable
+import android.animation.TimeInterpolator
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.animation.PathInterpolatorCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
-import androidx.palette.graphics.Palette
+import androidx.transition.*
 import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.ActorModel
 import com.suret.moviesapp.data.other.Constants.IMAGE_URL
@@ -23,7 +22,6 @@ import com.suret.moviesapp.ui.persondetails.viewmodel.PersonDetailsVM
 import com.suret.moviesapp.util.Util.downloadImage
 import com.suret.moviesapp.util.Util.hideSystemUI
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class PersonDetailsNew : Fragment() {
@@ -65,10 +63,12 @@ class PersonDetailsNew : Fragment() {
                     is PersonDetailsVM.Event.FilmographySuccess -> {
                         adapter.submitList(event.movie)
                     }
+                    else -> {}
                 }
 
             }
         }
+
         viewLifecycleOwner.lifecycleScope.launchWhenCreated {
             viewModel.actorFlow.collect { event ->
                 when (event) {
@@ -82,6 +82,7 @@ class PersonDetailsNew : Fragment() {
                             Toast.LENGTH_SHORT
                         ).show()
                     }
+                    else -> {}
                 }
             }
         }

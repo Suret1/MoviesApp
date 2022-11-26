@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -30,19 +29,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:progress="@{progressBar}"
-                bind:setImage="@{movie.poster_path}"
+                app:progress="@{progressBar}"
+                app:setImage="@{movie.poster_path}"
                 tools:srcCompat="@drawable/movie_poster" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iwFavorite"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="48dp"
+                android:layout_height="44dp"
                 android:layout_margin="@dimen/_10sdp"
                 android:padding="@dimen/_5sdp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:checkFavorite="@{movie.favorite}"
+                app:checkFavorite="@{movie.favorite}"
                 tools:srcCompat="@drawable/ic_favorite_movie" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -92,7 +91,7 @@
                         app:srb_starPadding="@dimen/_2sdp"
                         app:srb_starWidth="@dimen/_8sdp"
                         app:srb_stepSize="0.1"
-                        bind:ratingForRatingBar="@{movie.vote_average.floatValue()}"
+                        app:ratingForRatingBar="@{movie.vote_average.floatValue()}"
                         tools:srb_rating="6.7" />
 
                     <androidx.appcompat.widget.AppCompatTextView
@@ -104,7 +103,7 @@
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        bind:movieRating="@{movie.vote_average}"
+                        app:movieRating="@{movie.vote_average}"
                         tools:text="6.7" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
@@ -124,7 +123,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/frame_layout_of_genre"
-                bind:setTextMovie="@{movie}"
+                app:setTextMovie="@{movie}"
                 tools:text="Avengers: End Game" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
     </data>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+        android:fitsSystemWindows="true"
         android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -110,7 +110,6 @@
                 app:layout_constraintStart_toEndOf="@id/actorProfile"
                 app:layout_constraintTop_toBottomOf="@id/actorBirthday" />
 
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/actorDepartment"
                 style="@style/GilroyLightTextStyle"
@@ -174,9 +173,10 @@
                 android:overScrollMode="never"
                 android:splitMotionEvents="false"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvFilmography"
-                bind:equalSpacing="@{16}"
+                app:equalSpacing="@{16}"
                 tools:listitem="@layout/filmography_movies_list" />
         </androidx.constraintlayout.widget.ConstraintLayout>
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 </layout>

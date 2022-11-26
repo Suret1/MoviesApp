@@ -2,11 +2,16 @@ package com.suret.moviesapp.ui.fullcast.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.suret.moviesapp.data.model.Cast
 import com.suret.moviesapp.databinding.CastListLayoutBinding
 
 class CastVH(val binding: CastListLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
+
+    private val banner: ImageView = binding.iwPersonPhoto
+    private val title: TextView = binding.tvPersonName
 
     fun bind(
         model: Cast,

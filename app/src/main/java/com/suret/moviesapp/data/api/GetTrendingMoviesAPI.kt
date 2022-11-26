@@ -10,4 +10,5 @@ interface GetTrendingMoviesAPI {
     @GET("/3/trending/movie/week")
     suspend fun getTrendingMovies(@Query("api_key") apiKey: String): Response<TrendingMoviesRoot>
 
+
 }

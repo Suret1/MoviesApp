@@ -22,8 +22,8 @@ class TrendMovieListAdapter :
             onItemClick = setOnItemClick,
             onFavClick = setOnFavoriteClick
         )
-        holder.itemView.animation =
-            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
+//        holder.itemView.animation =
+//            AnimationUtils.loadAnimation(holder.itemView.context, R.anim.recycler_animation)
     }
 }
 

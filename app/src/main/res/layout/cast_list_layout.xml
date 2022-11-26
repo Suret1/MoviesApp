@@ -30,8 +30,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:progress="@{progressBar}"
-                bind:setImage="@{cast.profile_path}"
+                app:progress="@{progressBar}"
+                app:setImage="@{cast.profile_path}"
                 tools:srcCompat="@drawable/movie_poster" />
 
             <com.airbnb.lottie.LottieAnimationView

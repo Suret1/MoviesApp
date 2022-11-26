@@ -83,13 +83,12 @@ class MovieDetails : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        initAdapters()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        initAdapters()
         movieModel = args.movieModel
         favoriteMovieModel = args.favModel
 
@@ -193,6 +192,7 @@ class MovieDetails : Fragment() {
                                     }
                                 }
                             }
+                            else -> {}
                         }
                     }
                 }
@@ -222,6 +222,7 @@ class MovieDetails : Fragment() {
                                 }
                             }
                         }
+                        else -> {}
                     }
                 }
             }
@@ -235,6 +236,7 @@ class MovieDetails : Fragment() {
                                 castList = event.cast
                                 castListAdapter.submitList(event.cast)
                             }
+                            else -> {}
                         }
                     }
                 }
@@ -250,6 +252,7 @@ class MovieDetails : Fragment() {
                             }
                         }
 
+                        else -> {}
                     }
                 }
             }

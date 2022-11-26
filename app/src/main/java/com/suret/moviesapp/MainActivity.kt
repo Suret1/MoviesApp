@@ -41,6 +41,11 @@ class MainActivity : AppCompatActivity() {
             bottomNav.setMenuItems(menuItems, 0)
             bottomNav.setupWithNavController(navController)
         }
+        
+        if (FAVORITE_PACKAGE == intent.action) {
+            navController.navigate(R.id.favourite)
+        }
+
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.movieDetailsFragment, R.id.fullCastFragment, R.id.personDetailsFragment, R.id.similarFragment, R.id.reviewBottomSheet, R.id.personDetailsNewFragment -> hideBottomNav()
@@ -80,6 +85,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun showBottomNav() {
         binding.bottomNav.isVisible = true
+    }
+
+    companion object {
+        const val FAVORITE_PACKAGE = "com.suret.moviesapp.ui.favourite"
     }
 
 }

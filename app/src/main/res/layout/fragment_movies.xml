@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -26,9 +25,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:onRefreshListener="@{() -> viewModel.trendingMovies}"
-            bind:refreshing="@{viewModel.isLoading()}"
-            bind:scope="@{viewModel.scope}">
+            app:onRefreshListener="@{() -> viewModel.getTrendingMovies()}"
+            app:refreshing="@{viewModel.isLoading}">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMovies"
@@ -39,7 +37,7 @@
                 android:splitMotionEvents="false"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                bind:equalSpacing="@{8}"
+                app:equalSpacing="@{8}"
                 tools:listitem="@layout/trending_movies_list" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

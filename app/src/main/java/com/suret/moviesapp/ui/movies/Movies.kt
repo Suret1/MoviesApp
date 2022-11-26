@@ -1,9 +1,13 @@
 package com.suret.moviesapp.ui.movies
 
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.asLiveData
@@ -16,7 +20,7 @@ import com.suret.moviesapp.databinding.FragmentMoviesBinding
 import com.suret.moviesapp.ui.movies.adapter.TrendMovieListAdapter
 import com.suret.moviesapp.ui.movies.viewmodel.MoviesVM
 import com.suret.moviesapp.util.PopUps
-import com.suret.moviesapp.util.PopUps.Companion.showSnackBar
+import com.suret.moviesapp.util.PopUps.Companion.customSnackBar
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -36,6 +40,7 @@ class Movies : Fragment() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -51,22 +56,21 @@ class Movies : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.Q)
     private fun initObservers() {
-        viewModel.localList().observe(viewLifecycleOwner, {
-            if (it.isEmpty()) {
-                viewModel.getTrendingMovies()
-            } else {
+        viewModel.localList().observe(viewLifecycleOwner) {
+            if (it.isNotEmpty()) {
                 adapter.submitList(it)
             }
-        })
+        }
 
-        viewModel.listTrendingMovies
-            .asLiveData()
-            .observe(viewLifecycleOwner) {
+        viewLifecycleOwner.lifecycleScope.launchWhenStarted {
+            viewModel.listTrendingMovies.collect {
                 if (it.isNotEmpty()) {
                     adapter.submitList(it)
                 }
             }
+        }
 
         viewModel.isLoading
             .asLiveData()
@@ -82,8 +86,14 @@ class Movies : Fragment() {
             .asLiveData()
             .observe(viewLifecycleOwner) {
                 if (it.isNotEmpty()) {
-                    Snackbar.make(requireView(), it, Snackbar.LENGTH_SHORT)
-                        .show()
+                    binding.swipeRefresh.isRefreshing = false
+                    customSnackBar(
+                        requireView(), R.drawable.ic_baseline_wifi_off_, it,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction(" ") {
+                        val panelIntent = Intent(Settings.Panel.ACTION_INTERNET_CONNECTIVITY)
+                        startActivity(panelIntent)
+                    }.show()
                 }
             }
     }
@@ -108,7 +118,13 @@ class Movies : Fragment() {
                             )
                         )
                     )
-                    showSnackBar(requireView(), requireActivity(), R.string.add_to_fav)
+                    val favStr = getString(R.string.add_to_fav)
+                    customSnackBar(
+                        requireView(),
+                        R.drawable.ic_favorite_movie,
+                        favStr,
+                        Snackbar.LENGTH_SHORT
+                    ).setAction(" ") {}.show()
                 } else {
                     viewModel.removeFavoriteMovie(
                         viewModel.createFavoriteModel(
@@ -118,7 +134,13 @@ class Movies : Fragment() {
                             )
                         )
                     )
-                    showSnackBar(requireView(), requireActivity(), R.string.remove_favorites)
+                    val removeStr = getString(R.string.remove_favorites)
+                    customSnackBar(
+                        requireView(),
+                        R.drawable.ic_disable_favorite,
+                        removeStr,
+                        Snackbar.LENGTH_SHORT
+                    ).setAction(" ") {}.show()
                 }
             }
         }

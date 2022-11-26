@@ -67,6 +67,7 @@
         android:name="com.suret.moviesapp.ui.favourite.Favourites"
         android:label="FavouritesFragment"
         tools:layout="@layout/fragment_favourites" />
+
     <fragment
         android:id="@+id/movieDetailsFragment"
         android:name="com.suret.moviesapp.ui.moviedetails.MovieDetails"

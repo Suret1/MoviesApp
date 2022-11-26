@@ -67,7 +67,6 @@ class MovieRepositoryImpl(
         localDataSource.updateFavoriteStatus(movieModel)
     }
 
-
     override suspend fun insertMovieList(movieModel: List<TrendingMoviesModel>) {
         localDataSource.insertMovieList(movieModel)
     }

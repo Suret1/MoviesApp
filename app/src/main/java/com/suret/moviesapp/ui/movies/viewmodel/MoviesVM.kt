@@ -1,35 +1,32 @@
 package com.suret.moviesapp.ui.movies.viewmodel
 
-import android.content.Context
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.suret.moviesapp.R
 import com.suret.moviesapp.data.model.FavoriteMovieModel
 import com.suret.moviesapp.data.model.TrendingMoviesModel
 import com.suret.moviesapp.domain.usecase.UseCases
 import com.suret.moviesapp.util.Resource
 import com.suret.moviesapp.util.Util.isNetworkAvailable
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineExceptionHandler
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 
 @HiltViewModel
 class MoviesVM @Inject constructor(
-    @ApplicationContext val context: Context,
+    private val app: Application,
     private val useCases: UseCases
-) : ViewModel() {
-
-    val scope: CoroutineScope
-        get() = viewModelScope
+) : AndroidViewModel(app) {
 
     private val _listTrendingMovies = MutableStateFlow<List<TrendingMoviesModel>>(emptyList())
     val listTrendingMovies = _listTrendingMovies.asStateFlow()
@@ -37,17 +34,18 @@ class MoviesVM @Inject constructor(
     private val _errorMessage = MutableSharedFlow<String>()
     val errorMessage = _errorMessage.asSharedFlow()
 
-    private val _isLoading = MutableSharedFlow<Boolean>()
-    val isLoading = _isLoading.asSharedFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading.asStateFlow()
 
     private val coroutineExceptionHandler = CoroutineExceptionHandler { _, _ ->
         viewModelScope.launch {
-            _errorMessage.emit("Unknown Error Occurred")
+            _errorMessage.emit(app.getString(R.string.unknown_error))
+            _isLoading.emit(false)
         }
     }
 
     fun getTrendingMovies() = viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
-        if (isNetworkAvailable(context)) {
+        if (isNetworkAvailable(app)) {
             _isLoading.emit(true)
             when (val response = useCases.getTrendingMoviesUseCase.execute()) {
                 is Resource.Success -> {
@@ -60,8 +58,8 @@ class MoviesVM @Inject constructor(
                         }
                         useCases.deleteMoviesUseCase.execute()
                         _listTrendingMovies.emit(it)
-                        _isLoading.emit(false)
                         useCases.insertMoviesListUseCase.execute(it)
+                        _isLoading.emit(false)
                     }
                 }
                 is Resource.Error -> {
@@ -71,7 +69,7 @@ class MoviesVM @Inject constructor(
             }
         } else {
             _isLoading.emit(false)
-            _errorMessage.emit("Your offline")
+            _errorMessage.emit(app.getString(R.string.offline_message))
         }
     }
 

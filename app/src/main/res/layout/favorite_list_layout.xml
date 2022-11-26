@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -53,8 +52,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                bind:progress="@{progressBar}"
-                bind:setImage="@{model.poster_path}"
+                app:progress="@{progressBar}"
+                app:setImage="@{model.poster_path}"
                 tools:srcCompat="@drawable/movie_poster" />
 
             <com.airbnb.lottie.LottieAnimationView
@@ -98,7 +97,7 @@
                     app:layout_constraintEnd_toStartOf="@id/iwFavorite"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    bind:setTextFavMovie="@{model}"
+                    app:setTextFavMovie="@{model}"
                     tools:text="Avengers: End Game" />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -123,7 +122,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvMovieTitle"
                     app:layout_constraintVertical_bias="0.539"
-                    bind:movieRating="@{model.vote_average}"
+                    app:movieRating="@{model.vote_average}"
                     tools:text="9.5" />
 
                 <androidx.appcompat.widget.AppCompatImageView

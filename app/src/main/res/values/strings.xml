@@ -26,5 +26,7 @@
     <string name="similar_fab">Similar FAB</string>
     <string name="favorite_fab">Favorite FAB</string>
     <string name="filmography">Filmography</string>
-
+    <string name="offline_message">You\'re offline. Click icon and open the settings</string>
+    <string name="unknown_error">Unknown Error Occurred</string>
+    <string name="empty_list">Oops! Your list empty. Click icon for refresh</string>
 </resources>

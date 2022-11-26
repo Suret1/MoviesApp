@@ -1,0 +1,20 @@
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_favorite_movie"
+        android:shortcutDisabledMessage="@string/menu_favourite"
+        android:shortcutId="favorites"
+        android:shortcutLongLabel="@string/menu_favourite"
+        android:shortcutShortLabel="@string/menu_favourite">
+
+        <intent
+            android:action="com.suret.moviesapp.ui.favourite"
+            android:targetClass="com.suret.moviesapp.MainActivity"
+            android:targetPackage="com.suret.moviesapp" />
+
+
+    </shortcut>
+
+
+</shortcuts>

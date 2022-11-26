@@ -2,7 +2,6 @@
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:bind="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -108,7 +107,7 @@
                     android:overScrollMode="never"
                     android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    bind:equalSpacing="@{16}"
+                    app:equalSpacing="@{16}"
                     tools:listitem="@layout/genre_list_layout" />
 
                 <LinearLayout
@@ -268,7 +267,7 @@
                     android:overScrollMode="never"
                     android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    bind:equalSpacing="@{16}"
+                    app:equalSpacing="@{16}"
                     tools:listitem="@layout/cast_list_layout" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -288,7 +287,7 @@
                     android:overScrollMode="never"
                     android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    bind:equalSpacing="@{16}"
+                    app:equalSpacing="@{16}"
                     tools:listitem="@layout/review_list_layout" />
 
                 <androidx.appcompat.widget.AppCompatTextView
@@ -308,7 +307,7 @@
                     android:overScrollMode="never"
                     android:splitMotionEvents="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    bind:equalSpacing="@{16}"
+                    app:equalSpacing="@{16}"
                     tools:listitem="@layout/production_list_layout" />
 
             </LinearLayout>

@@ -6,9 +6,10 @@ import android.graphics.drawable.Drawable
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.view.View
-import android.view.WindowManager
 import androidx.appcompat.widget.AppCompatImageView
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.FragmentActivity
 import com.airbnb.lottie.LottieAnimationView
@@ -72,8 +73,8 @@ object Util {
     }
 
     fun toDate(dateString: String?): String? {
-        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+        val parser = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.getDefault())
+        val formatter = SimpleDateFormat("yyyy-MM-dd HH:mm:ss",Locale.getDefault())
         return formatter.format(parser.parse(dateString))
     }
 
@@ -122,19 +123,21 @@ object Util {
     }
 
     fun hideSystemUI(activity: FragmentActivity) {
-        activity.window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-        activity.window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        activity.window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_FULLSCREEN
-                or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
+        val window = activity.window
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+        WindowInsetsControllerCompat(window, window.decorView).let { controller ->
+            controller.hide(WindowInsetsCompat.Type.statusBars())
+            controller.systemBarsBehavior =
+                WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        }
     }
 
     fun showSystemUI(activity: FragmentActivity) {
-        activity.window.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        activity.window.decorView.systemUiVisibility = View.VISIBLE
+        val window = activity.window
+        WindowCompat.setDecorFitsSystemWindows(window, true)
+        WindowInsetsControllerCompat(
+            window,
+            window.decorView
+        ).show(WindowInsetsCompat.Type.statusBars())
     }
 }
