@@ -13,18 +13,11 @@ android {
 
     signingConfigs {
         release {
-//            storePassword 'raK1I0CaEjOFJpVutuGm'
-//            keyAlias 'rabitabank'
-//            keyPassword 'raK1I0CaEjOFJpVutuGm'
-//            storeFile file('..\\rabitabank.jks')
+
         }
 
         debug {
-//            storePassword 'raK1I0CaEjOFJpVutuGm'
-//            keyAlias 'rabitabank'
-//            keyPassword 'raK1I0CaEjOFJpVutuGm'
-//
-//            storeFile file('..\\rabitabank.jks')
+
         }
     }
 
