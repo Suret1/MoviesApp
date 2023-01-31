@@ -62,3 +62,5 @@ See the License for the specific language governing permissions and
 limitations under the License.
   </code>
   </pre>
+  
+  <a href="https://www.murphysec.com/accept?code=b7d6a0cc61f9ed6b56a577a95a5a29ed&type=1&from=2&t=2" alt="Güvenlik Durumu"><img src="https://www.murphysec.com/platform3 /v3/rozet/1618167117673693184.svg?t=1" /></a>
