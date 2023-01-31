@@ -42,7 +42,7 @@ You can download APK <a href=https://github.com/Suret1/MoviesApp/blob/main/apk/m
 </li>
         <li><a href=https://developer.android.com/jetpack/androidx/releases/paging>Paging</a>
 </li>
-  <li> <a href="https://www.murphysec.com/accept?code=b7d6a0cc61f9ed6b56a577a95a5a29ed&type=1&from=2&t=2" alt="Güvenlik Durumu"><img src="https://www.murphysec.com/platform3 /v3/rozet/1618167117673693184.svg?t=1" /></a>
+  <li> <a href="https://www.murphysec.com/accept?code=b7d6a0cc61f9ed6b56a577a95a5a29ed&type=1&from=2&t=2" alt="Security Status"><img src="https://www.murphysec.com/platform3/v3/badge/1618167117673693184.svg?t=1" /></a>
   </li>
 </ul>
   
